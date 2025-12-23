@@ -11,14 +11,14 @@ export function WomenInitiative() {
           <img
             src="/women_init.png"
             alt="A Woman Initiative"
-            className="h-32 w-auto mx-auto mb-6"
-            title="Proudly a Women's Initiative"
+            className="h-48 w-auto mx-auto mb-6"
+            title="Proudly a Woman Initiative"
           />
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
             Empowered by Women
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Roots & Rope Nutriment is proudly a women-led initiative, bringing together passion,
+            Roots & Rope Nutriment is proudly a woman-led initiative, bringing together passion,
             tradition, and dedication to deliver nature's finest products to your family.
           </p>
         </div>
@@ -71,7 +71,7 @@ export function WomenInitiative() {
                 Our Commitment
               </h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                As a women's initiative, we're committed to fostering economic independence,
+                As a woman initiative, we're committed to fostering economic independence,
                 preserving traditional wisdom, and creating opportunities for women in every
                 step of our supply chain.
               </p>
@@ -85,7 +85,7 @@ export function WomenInitiative() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#004606] mb-2">100%</div>
-                  <p className="text-sm text-gray-600">Women-Led</p>
+                  <p className="text-sm text-gray-600">Woman-Led</p>
                 </div>
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#004606] mb-2">Local</div>

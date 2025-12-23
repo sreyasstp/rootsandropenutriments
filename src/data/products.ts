@@ -14,7 +14,7 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 1,
-    name: 'Badam',
+    name: 'Almonds',
     packSizes: ['250', '500'],
     category: 'Dry Fruits & Nuts',
     unit: 'g',
@@ -26,7 +26,7 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: 'Cashew',
+    name: 'Cashews',
     packSizes: ['250', '500'],
     category: 'Dry Fruits & Nuts',
     unit: 'g',
@@ -98,36 +98,36 @@ export const products: Product[] = [
   },
   {
     id: 8,
-    name: 'Wheat',
+    name: 'Wheat Flour',
     packSizes: ['500', '1000'],
     category: 'Grains & Cereals',
     unit: 'g',
     image: '/wheat.jpg',
-    description: 'Premium quality whole wheat, sourced from organic farms.',
+    description: 'Premium quality whole wheat flour, sourced from organic farms.',
     benefits: ['High in fiber', 'Good source of B vitamins', 'Supports digestion', 'Provides sustained energy'],
-    usage: 'Grind into flour for making rotis, breads, and other traditional dishes.',
+    usage: 'Perfect for making rotis, breads, and other traditional dishes.',
     features: ['100% Natural', 'No Preservatives', 'Organically Sourced']
   },
   {
     id: 9,
-    name: 'Rice',
+    name: 'Rice Flour',
     packSizes: ['500', '1000'],
     category: 'Grains & Cereals',
     unit: 'g',
     image: '/rice.jpg',
-    description: 'Premium quality rice, a staple for every household.',
+    description: 'Premium quality rice flour, a staple for every household.',
     benefits: ['Good source of energy', 'Easy to digest', 'Gluten-free', 'Versatile cooking ingredient'],
-    usage: 'Cook as steamed rice, make pulao, biryani, or use for traditional dishes.',
+    usage: 'Perfect for making dosas, idlis, and various traditional dishes.',
     features: ['100% Natural', 'No Preservatives', 'Premium Quality']
   },
   {
     id: 10,
-    name: 'Ragi',
+    name: 'Ragi Flour',
     packSizes: ['500', '1000'],
     category: 'Grains & Cereals',
     unit: 'g',
     image: '/ragi.jpg',
-    description: 'Nutrient-rich finger millet, perfect for health-conscious individuals.',
+    description: 'Nutrient-rich finger millet flour, perfect for health-conscious individuals.',
     benefits: ['High in calcium', 'Rich in iron', 'Good for diabetes management', 'Promotes bone health'],
     usage: 'Make ragi porridge, dosa, roti, or add to smoothies.',
     features: ['100% Natural', 'No Preservatives', 'Nutrient Dense']
@@ -146,7 +146,7 @@ export const products: Product[] = [
   },
   {
     id: 12,
-    name: 'Puttu',
+    name: 'Puttu Podi',
     packSizes: ['500', '1000'],
     category: 'Grains & Cereals',
     unit: 'g',
