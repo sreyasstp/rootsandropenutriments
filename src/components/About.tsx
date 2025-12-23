@@ -6,9 +6,17 @@ export function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
-              Our Story
-            </h2>
+            <div className="flex items-center gap-4 mb-6">
+              <h2 className="text-4xl lg:text-5xl font-bold text-[#004606]">
+                Our Story
+              </h2>
+              <img
+                src="/women_init.png"
+                alt="A Woman Initiative"
+                className="h-20 w-auto"
+                title="Proudly a Women's Initiative"
+              />
+            </div>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
               At Roots & Rope Nutriment, we believe in the power of nature's simplicity. Our journey began with a simple mission: to bring pure, unadulterated natural products from the farm directly to your family's table.
             </p>
