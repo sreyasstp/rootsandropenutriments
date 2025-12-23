@@ -73,11 +73,11 @@ export function FeaturedProducts() {
               className="group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
               onClick={() => navigate(`/product/${product.id}`)}
             >
-              <div className="relative h-72 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+              <div className="relative h-72 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 p-6">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
