@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Package } from 'lucide-react';
 import { products, categories } from '../data/products';
 
 export function Products() {
@@ -43,9 +42,12 @@ export function Products() {
               key={product.id}
               className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1"
             >
-              <div className="bg-gradient-to-br from-[#004606] to-[#005708] p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-white/5 transform -skew-y-6"></div>
-                <Package className="w-16 h-16 text-white mx-auto relative z-10 group-hover:scale-110 transition-transform duration-300" />
+              <div className="relative overflow-hidden bg-[#f2ecdc] h-64 flex items-center justify-center p-6">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
               <div className="p-6">
