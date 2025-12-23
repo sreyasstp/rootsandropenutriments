@@ -12,8 +12,8 @@ export function Products() {
     ? products
     : products.filter(p => p.category === selectedCategory);
 
-  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 9);
-  const hasMoreProducts = filteredProducts.length > 9;
+  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 12);
+  const hasMoreProducts = filteredProducts.length > 12;
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
