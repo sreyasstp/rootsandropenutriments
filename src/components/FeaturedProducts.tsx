@@ -1,5 +1,5 @@
-import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const featuredProducts = [
   {
@@ -80,13 +80,6 @@ export function FeaturedProducts() {
                   loading="lazy"
                   className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                  <button className="w-full bg-white text-[#004606] font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-[#f2ecdc] transition-colors">
-                    View Details
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
 
               <div className="p-6">

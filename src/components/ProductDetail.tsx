@@ -58,10 +58,10 @@ export function ProductDetail() {
               <div className="inline-block bg-[#004606]/10 text-[#004606] px-4 py-2 rounded-full text-sm font-semibold mb-4">
                 {product.category}
               </div>
-              <h1 className="text-5xl font-bold text-[#004606] mb-4">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
                 {product.name}
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -81,13 +81,13 @@ export function ProductDetail() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-[#004606] mb-4">Available Sizes</h3>
+            <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#004606] mb-4">Available Sizes</h3>
               <div className="flex flex-wrap gap-3">
                 {product.packSizes.map((size, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-br from-[#004606] to-[#006609] text-white px-6 py-4 rounded-xl font-bold text-lg shadow-md hover:shadow-xl transition-shadow"
+                    className="bg-gradient-to-br from-[#004606] to-[#006609] text-white px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-shadow"
                   >
                     {size}{product.unit}
                   </div>
@@ -99,16 +99,16 @@ export function ProductDetail() {
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {product.benefits && product.benefits.length > 0 && (
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-3xl font-bold text-[#004606] mb-6 flex items-center gap-3">
-                <Heart className="w-8 h-8" />
+            <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#004606] mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
                 Health Benefits
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4">
                 {product.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <span className="text-gray-700 text-lg">{benefit}</span>
+                  <li key={index} className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 text-sm sm:text-base lg:text-lg">{benefit}</span>
                   </li>
                 ))}
               </ul>
@@ -116,16 +116,16 @@ export function ProductDetail() {
           )}
 
           {product.features && product.features.length > 0 && (
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-3xl font-bold text-[#004606] mb-6 flex items-center gap-3">
-                <Shield className="w-8 h-8" />
+            <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#004606] mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                <Shield className="w-6 h-6 sm:w-8 sm:h-8" />
                 Product Features
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4">
                 {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="w-6 h-6 text-[#004606] flex-shrink-0 mt-1" />
-                    <span className="text-gray-700 text-lg">{feature}</span>
+                  <li key={index} className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-5 h-5 sm:w-6 sm:h-6 text-[#004606] flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 text-sm sm:text-base lg:text-lg">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -134,9 +134,9 @@ export function ProductDetail() {
         </div>
 
         {product.usage && (
-          <div className="bg-gradient-to-br from-[#004606] to-[#006609] rounded-3xl p-8 md:p-12 shadow-2xl">
-            <h3 className="text-3xl font-bold text-white mb-6">How to Use</h3>
-            <p className="text-white/95 text-lg leading-relaxed">
+          <div className="bg-gradient-to-br from-[#004606] to-[#006609] rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-4 sm:mb-6">How to Use</h3>
+            <p className="text-white/95 text-sm sm:text-base lg:text-lg leading-relaxed">
               {product.usage}
             </p>
           </div>
