@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 import { products, categories } from '../data/products';
 
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
+  const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
 
   const filteredProducts = selectedCategory === 'All Products'
     ? products
     : products.filter(p => p.category === selectedCategory);
+
+  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 9);
+  const hasMoreProducts = filteredProducts.length > 9;
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setShowAll(false);
+  };
 
   return (
     <section id="products" className="py-20 bg-[#f2ecdc]/30">
@@ -26,7 +36,7 @@ export function Products() {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                 selectedCategory === category
                   ? 'bg-[#004606] text-white shadow-lg scale-105'
@@ -39,7 +49,7 @@ export function Products() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
+          {displayedProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 cursor-pointer"
@@ -86,6 +96,18 @@ export function Products() {
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No products found in this category</p>
+          </div>
+        )}
+
+        {hasMoreProducts && !showAll && (
+          <div className="text-center mt-12">
+            <button
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-2 bg-[#004606] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              Load More Products
+              <ChevronDown className="w-5 h-5" />
+            </button>
           </div>
         )}
       </div>
