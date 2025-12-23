@@ -49,6 +49,7 @@ export function Products() {
                 <img
                   src={product.image}
                   alt={product.name}
+                  loading="lazy"
                   className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
