@@ -6,12 +6,6 @@ export function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <img
-              src="/women_init.png"
-              alt="A Woman Initiative"
-              className="h-24 w-auto mb-4"
-              title="Proudly a Women's Initiative"
-            />
             <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
               Our Story
             </h2>
