@@ -1,20 +1,20 @@
-import { Sprout, PackageCheck, Award, Users, Shield, Leaf } from 'lucide-react';
+import { Heart, Wheat, Leaf, Award, Users, Shield } from 'lucide-react';
 
 const features = [
   {
-    icon: Sprout,
-    title: 'Farm Fresh',
-    description: 'Directly sourced from trusted farmers ensuring freshness and authenticity'
-  },
-  {
     icon: Leaf,
-    title: 'Traditional Methods',
-    description: 'Processed using time-tested traditional techniques for maximum nutrition'
+    title: 'Easy to Digest',
+    description: 'Naturally processed for optimal digestibility and nutrient absorption'
   },
   {
-    icon: PackageCheck,
-    title: 'Hygienically Packed',
-    description: 'Carefully packaged in clean facilities maintaining highest hygiene standards'
+    icon: Wheat,
+    title: '100% Gluten-Free',
+    description: 'Safe options for those with gluten sensitivities and celiac disease'
+  },
+  {
+    icon: Heart,
+    title: 'Heart Healthy',
+    description: 'Supports cardiovascular health with natural, wholesome ingredients'
   },
   {
     icon: Award,
