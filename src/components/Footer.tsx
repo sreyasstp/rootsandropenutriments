@@ -74,7 +74,7 @@ export function Footer() {
 
         <div className="border-t border-gray-300 pt-8 text-center">
           <p className="text-gray-600 flex items-center justify-center gap-2 mb-2">
-            Made in India 🇮🇳
+            Make in India 🇮🇳
           </p>
           <p className="text-gray-600 flex items-center justify-center gap-2">
             Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by{' '}
