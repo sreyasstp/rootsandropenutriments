@@ -50,18 +50,18 @@ export function FeaturedProducts() {
   const navigate = useNavigate();
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#004606] to-[#006609]">
+    <section className="py-20 bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-block bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-            <span className="text-[#f2ecdc] text-sm font-semibold uppercase tracking-wide">
+          <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
+            <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
               Featured Collection
             </span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
             Our Premium Products
           </h2>
-          <p className="text-lg text-white/90 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             100% Natural • Preservative Free • Traditionally Sourced
           </p>
         </div>
@@ -108,7 +108,7 @@ export function FeaturedProducts() {
         <div className="text-center">
           <a
             href="#products"
-            className="inline-flex items-center gap-2 bg-white text-[#004606] font-bold px-8 py-4 rounded-xl hover:bg-[#f2ecdc] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
           >
             Explore All Products
             <ArrowRight className="w-5 h-5" />
