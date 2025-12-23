@@ -163,10 +163,10 @@ export const products: Product[] = [
     category: 'Health Powders',
     unit: 'g',
     image: '/raw_banana_powder.jpg',
-    description: 'Pure raw banana powder, a natural superfood rich in resistant starch. Perfect for gut health.',
-    benefits: ['Rich in resistant starch', 'Improves gut health', 'Regulates blood sugar', 'Aids in weight management', 'Boosts energy levels', 'Easy to digest'],
-    usage: 'Mix with milk, smoothies, or porridge. Can be used in baby food or added to baking recipes.',
-    features: ['100% Natural', 'No Preservatives', 'No Additives', 'Gluten-Free', 'Rich in Nutrients']
+    description: 'Gentle and nutritious raw banana powder, ideal for babies and growing children. Easy to digest and naturally wholesome.',
+    benefits: ['Gentle on tiny tummies', 'Easy to digest', 'Rich in essential nutrients', 'Supports healthy growth', 'Natural energy source', 'Ideal for weaning babies'],
+    usage: 'Mix with milk, water, or cereal for baby food. Perfect for porridge and traditional infant recipes.',
+    features: ['100% Natural', 'No Preservatives', 'No Additives', 'Gluten-Free', 'Baby-Friendly']
   },
   {
     id: 14,
