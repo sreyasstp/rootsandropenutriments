@@ -73,8 +73,19 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-300 pt-8 text-center">
+          <p className="text-gray-600 flex items-center justify-center gap-2 mb-2">
+            Made in India 🇮🇳
+          </p>
           <p className="text-gray-600 flex items-center justify-center gap-2">
-            Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by Roots & Rope Nutriment
+            Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by{' '}
+            <a
+              href="https://zeevocdigital.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#004606] hover:text-[#006608] font-semibold transition-colors"
+            >
+              Zeevoc Digital
+            </a>
           </p>
           <p className="text-gray-500 text-sm mt-2">
             © {new Date().getFullYear()} Roots & Rope Nutriment. All rights reserved.
