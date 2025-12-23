@@ -33,7 +33,7 @@ export function ProductDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-[#004606] hover:text-[#006609] mb-8 font-medium transition-colors"
+          className="hidden sm:flex items-center gap-2 text-[#004606] hover:text-[#006609] mb-8 font-medium transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
           Back to Products
