@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { products, categories } from '../data/products';
 
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
+  const navigate = useNavigate();
 
   const filteredProducts = selectedCategory === 'All Products'
     ? products
@@ -40,7 +42,8 @@ export function Products() {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1"
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 cursor-pointer"
+              onClick={() => navigate(`/product/${product.id}`)}
             >
               <div className="relative overflow-hidden bg-white h-64">
                 <img

@@ -1,10 +1,25 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
+import { ProductDetail } from './components/ProductDetail';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main className="pt-20">
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
   </StrictMode>
 );
