@@ -45,11 +45,11 @@ export function Products() {
               className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 cursor-pointer"
               onClick={() => navigate(`/product/${product.id}`)}
             >
-              <div className="relative overflow-hidden bg-white h-64">
+              <div className="relative overflow-hidden bg-[#f2ecdc] h-64 flex items-center justify-center">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
 
