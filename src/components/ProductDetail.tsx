@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { products } from '../data/products';
 import { ArrowLeft, Check, Leaf, Shield, Heart } from 'lucide-react';
 
@@ -6,6 +7,10 @@ export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [id]);
 
   if (!product) {
     return (
