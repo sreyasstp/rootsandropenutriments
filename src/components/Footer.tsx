@@ -80,7 +80,7 @@ export function Footer() {
             className="h-14 object-contain"
           />
           <span className="text-gray-700 font-semibold tracking-wide text-sm sm:text-base">
-            Make in India
+            Make in India 🇮🇳
           </span>
         </div>
 
