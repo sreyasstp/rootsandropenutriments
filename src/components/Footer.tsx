@@ -75,7 +75,7 @@ export function Footer() {
         <div className="border-t border-gray-300 pt-8 text-center">
           <div className="flex items-center justify-center mb-4">
             <img
-              src="/make_in_india.png"
+              src="/make_in_india.jpg"
               alt="Make in India"
               className="h-16 object-contain"
             />
