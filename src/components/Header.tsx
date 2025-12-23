@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import type { Page } from '../App';
 
-interface HeaderProps {
-  currentPage: Page;
-  onNavigate: (page: Page) => void;
-}
-
-export function Header({ currentPage, onNavigate }: HeaderProps) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -19,16 +13,10 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (page: Page) => {
-    onNavigate(page);
-    setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navLinks: { page: Page; label: string }[] = [
-    { page: 'home', label: 'Home' },
-    { page: 'about', label: 'About' },
-    { page: 'contact', label: 'Contact' }
+  const navLinks = [
+    { href: '#products', label: 'Products' },
+    { href: '#about', label: 'About' },
+    { href: 'tel:+918606441950', label: 'Contact' }
   ];
 
   return (
@@ -39,29 +27,20 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <button
-            onClick={() => handleNavClick('home')}
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-          >
+          <div className="flex items-center gap-3">
             <img src="/roots_logo.jpg" alt="Roots & Rope" className="h-12 w-auto" />
-          </button>
+          </div>
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
-                key={link.page}
-                onClick={() => handleNavClick(link.page)}
-                className={`text-[#004606] font-medium hover:text-[#005708] transition-colors relative group ${
-                  currentPage === link.page ? 'text-[#005708]' : ''
-                }`}
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[#004606] font-medium hover:text-[#005708] transition-colors relative group"
               >
                 {link.label}
-                <span
-                  className={`absolute bottom-0 left-0 h-0.5 bg-[#004606] transition-all duration-300 ${
-                    currentPage === link.page ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                ></span>
-              </button>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#004606] group-hover:w-full transition-all duration-300"></span>
+              </a>
             ))}
           </div>
 
@@ -76,15 +55,14 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             {navLinks.map((link) => (
-              <button
-                key={link.page}
-                onClick={() => handleNavClick(link.page)}
-                className={`block w-full text-left py-3 text-[#004606] font-medium hover:text-[#005708] transition-colors ${
-                  currentPage === link.page ? 'text-[#005708]' : ''
-                }`}
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-3 text-[#004606] font-medium hover:text-[#005708] transition-colors"
               >
                 {link.label}
-              </button>
+              </a>
             ))}
           </div>
         )}

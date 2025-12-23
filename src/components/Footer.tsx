@@ -1,16 +1,6 @@
 import { Heart } from 'lucide-react';
-import type { Page } from '../App';
 
-interface FooterProps {
-  onNavigate: (page: Page) => void;
-}
-
-export function Footer({ onNavigate }: FooterProps) {
-  const handleNavClick = (page: Page) => {
-    onNavigate(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+export function Footer() {
   return (
     <footer className="bg-[#004606] text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,28 +16,19 @@ export function Footer({ onNavigate }: FooterProps) {
             <h4 className="text-lg font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => handleNavClick('home')}
-                  className="text-white/80 hover:text-white transition-colors"
-                >
-                  Home
-                </button>
+                <a href="#products" className="text-white/80 hover:text-white transition-colors">
+                  Products
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => handleNavClick('about')}
-                  className="text-white/80 hover:text-white transition-colors"
-                >
+                <a href="#about" className="text-white/80 hover:text-white transition-colors">
                   About Us
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => handleNavClick('contact')}
-                  className="text-white/80 hover:text-white transition-colors"
-                >
+                <a href="tel:+918606441950" className="text-white/80 hover:text-white transition-colors">
                   Contact
-                </button>
+                </a>
               </li>
             </ul>
           </div>
