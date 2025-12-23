@@ -42,11 +42,11 @@ export function Products() {
               key={product.id}
               className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1"
             >
-              <div className="relative overflow-hidden bg-[#f2ecdc]/50 h-64">
+              <div className="relative overflow-hidden bg-[#f2ecdc] h-64 flex items-center justify-center p-6">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                  className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
 
