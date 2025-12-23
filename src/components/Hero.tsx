@@ -6,17 +6,17 @@ export function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-6">
+            <div className="mb-6">
+              <img
+                src="/women_init.png"
+                alt="A Woman Initiative"
+                className="h-28 w-auto mx-auto lg:mx-0 mb-4"
+                title="Proudly a Women's Initiative"
+              />
               <div className="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
                 <Leaf className="w-5 h-5 text-[#004606]" />
                 <span className="text-[#004606] font-medium text-sm tracking-wide">100% Natural & Pure</span>
               </div>
-              <img
-                src="/women_init.png"
-                alt="A Woman Initiative"
-                className="h-16 w-auto"
-                title="Proudly a Women's Initiative"
-              />
             </div>
 
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-[#004606] mb-6 leading-tight">
