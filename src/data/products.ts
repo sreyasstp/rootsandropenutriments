@@ -91,11 +91,24 @@ export const products: Product[] = [
     category: 'Natural Products',
     unit: 'ml',
     image: '/virgin_coconut_oil.jpg',
-    description: 'Premium cold-pressed virgin coconut oil. Extracted naturally without heat to retain all nutrients.',
-    benefits: ['High in lauric acid', 'Supports immune system', 'Improves cholesterol levels', 'Excellent for skin and hair', 'Natural antimicrobial', 'Aids digestion'],
-    usage: 'Use for light cooking, salad dressings, or consume directly. Apply on skin and hair for nourishment.',
-    features: ['Cold Pressed', '100% Pure', 'No Preservatives', 'No Chemicals', 'Premium Quality']
-  },
+    description: 'High-quality virgin coconut oil produced using controlled hot processing to ensure purity, stability, and rich coconut aroma.',
+    benefits: [
+      'Good source of healthy fats',
+      'Supports energy levels',
+      'Helps maintain skin and hair health',
+      'Naturally antimicrobial',
+      'Easily digestible'
+    ],
+    usage: 'Ideal for regular cooking, sautéing, and frying. Can also be used for oil pulling, hair care, and skin massage.',
+    features: [
+      'Hot Processed',
+      '100% Pure',
+      'No Preservatives',
+      'No Added Chemicals',
+      'Stable for Cooking'
+    ]
+  }
+  ,
   {
     id: 8,
     name: 'Wheat Flour',
@@ -175,11 +188,25 @@ export const products: Product[] = [
     category: 'Health Powders',
     unit: 'g',
     image: '/arrowroot_powder.jpg',
-    description: 'Pure arrowroot powder, easily digestible and ideal for all ages. Gluten-free goodness.',
-    benefits: ['Gluten-free', 'Easy to digest', 'Suitable for infants', 'Rich in B vitamins', 'Helps with diarrhea', 'Promotes healthy weight gain'],
-    usage: 'Mix with milk or water to make porridge. Use as a thickening agent in soups and gravies. Perfect for baby food.',
-    features: ['100% Natural', 'No Preservatives', 'Gluten-Free', 'Easily Digestible', 'Safe for All Ages']
-  },
+    description: 'Pure arrowroot powder that is gentle on the stomach, easily digestible, and traditionally used as a nourishing food for infants and adults. Naturally gluten-free.',
+    benefits: [
+      'Gluten-free',
+      'Easy to digest',
+      'Traditionally used for baby food',
+      'Soothes digestive discomfort',
+      'Helps during diarrhea',
+      'Supports healthy weight gain'
+    ],
+    usage: 'Mix with water or milk to prepare porridge. Commonly used in infant foods, recovery diets, and as a natural thickening agent in soups and gravies.',
+    features: [
+      '100% Natural',
+      'No Preservatives',
+      'Gluten-Free',
+      'Easily Digestible',
+      'Suitable for All Age Groups'
+    ]
+  }
+  ,
   {
     id: 15,
     name: 'Turmeric Powder',
