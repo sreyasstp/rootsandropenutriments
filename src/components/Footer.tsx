@@ -83,7 +83,7 @@ export function Footer() {
             Make in India 🇮🇳
           </span>
         </div>
-
+{/* 
           <p className="text-gray-600 flex items-center justify-center gap-2">
             Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by{' '}
             <a
@@ -94,7 +94,7 @@ export function Footer() {
             >
               Zeevoc Digital
             </a>
-          </p>
+          </p> */}
           <p className="text-gray-500 text-sm mt-2">
             © {new Date().getFullYear()} Roots & Rope Nutriment. All rights reserved.
           </p>
