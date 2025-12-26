@@ -1,8 +1,11 @@
 import { Heart, Users, Sparkles } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export function WomenInitiative() {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section className="py-20 bg-gradient-to-br from-[#f2ecdc] to-white relative overflow-hidden">
+    <section ref={ref} className="py-20 bg-gradient-to-br from-[#f2ecdc] to-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
 
@@ -24,8 +27,8 @@ export function WomenInitiative() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mt-16">
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <div className={`glass rounded-3xl p-8 hover-lift border border-white/40 transition-all duration-500 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
+            <div className="bg-gradient-to-br from-[#004606] to-[#006609] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg animate-glow">
               <Heart className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-[#004606] mb-4 text-center">
@@ -37,8 +40,8 @@ export function WomenInitiative() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <div className={`glass rounded-3xl p-8 hover-lift border border-white/40 transition-all duration-500 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+            <div className="bg-gradient-to-br from-[#004606] to-[#006609] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg animate-glow">
               <Users className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-[#004606] mb-4 text-center">
@@ -50,8 +53,8 @@ export function WomenInitiative() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <div className={`glass rounded-3xl p-8 hover-lift border border-white/40 transition-all duration-500 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
+            <div className="bg-gradient-to-br from-[#004606] to-[#006609] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg animate-glow">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-[#004606] mb-4 text-center">
@@ -64,7 +67,7 @@ export function WomenInitiative() {
           </div>
         </div>
 
-        <div className="mt-16 bg-white rounded-2xl p-8 md:p-12 shadow-xl">
+        <div className={`mt-16 glass rounded-3xl p-8 md:p-12 shadow-2xl border border-white/40 hover-lift ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-3xl font-bold text-[#004606] mb-4">
@@ -81,23 +84,23 @@ export function WomenInitiative() {
                 building a future where quality, care, and empowerment go hand in hand.
               </p>
             </div>
-            <div className="bg-[#f2ecdc] rounded-xl p-8">
+            <div className="glass-dark rounded-2xl p-8 backdrop-blur-lg">
               <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#004606] mb-2">100%</div>
-                  <p className="text-sm text-gray-600">Woman-Led</p>
+                <div className="text-center group cursor-default">
+                  <div className="text-4xl font-bold text-shimmer mb-2 group-hover:scale-110 transition-transform">100%</div>
+                  <p className="text-sm text-gray-600 font-medium">Woman-Led</p>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#004606] mb-2">Local</div>
-                  <p className="text-sm text-gray-600">Community Focus</p>
+                <div className="text-center group cursor-default">
+                  <div className="text-4xl font-bold text-shimmer mb-2 group-hover:scale-110 transition-transform" style={{ animationDelay: '0.5s' }}>Local</div>
+                  <p className="text-sm text-gray-600 font-medium">Community Focus</p>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#004606] mb-2">Pure</div>
-                  <p className="text-sm text-gray-600">Traditional Methods</p>
+                <div className="text-center group cursor-default">
+                  <div className="text-4xl font-bold text-shimmer mb-2 group-hover:scale-110 transition-transform" style={{ animationDelay: '1s' }}>Pure</div>
+                  <p className="text-sm text-gray-600 font-medium">Traditional Methods</p>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#004606] mb-2">Natural</div>
-                  <p className="text-sm text-gray-600">Sustainable</p>
+                <div className="text-center group cursor-default">
+                  <div className="text-4xl font-bold text-shimmer mb-2 group-hover:scale-110 transition-transform" style={{ animationDelay: '1.5s' }}>Natural</div>
+                  <p className="text-sm text-gray-600 font-medium">Sustainable</p>
                 </div>
               </div>
             </div>
