@@ -7,44 +7,45 @@ const featuredProducts = [
     name: 'Raw Banana Powder',
     image: '/raw_banana_powder.jpg',
     tagline: 'Rich in Resistant Starch',
-    description: 'A natural superfood perfect for gut health and digestion'
+    description: 'A natural superfood that supports gut health and digestion'
   },
   {
     id: 14,
     name: 'Arrow Root Powder',
     image: '/arrowroot_powder.jpg',
-    tagline: 'Gluten-Free Goodness',
-    description: 'Easily digestible and ideal for all ages'
+    tagline: 'Gentle & Gluten-Free',
+    description: 'Easily digestible and traditionally used for baby food'
   },
   {
     id: 7,
     name: 'Virgin Coconut Oil',
     image: '/virgin_coconut_oil.jpg',
-    tagline: 'Cold Pressed Purity',
-    description: 'Premium quality oil extracted naturally'
+    tagline: 'Pure & Hot Processed',
+    description: 'Stable, high-quality oil suitable for regular cooking'
   },
   {
     id: 6,
     name: 'Coconut Oil',
     image: '/coconut_oil.jpg',
     tagline: 'Versatile & Pure',
-    description: 'Perfect for cooking and wellness'
+    description: 'Perfect for cooking, wellness, and everyday use'
   },
   {
     id: 5,
     name: 'Honey',
     image: '/honey.jpg',
     tagline: 'Raw & Unprocessed',
-    description: 'Pure natural sweetness from nature'
+    description: 'Pure natural sweetness sourced directly from nature'
   },
   {
     id: 3,
     name: 'Almond Gum',
     image: '/almond_gum.jpg',
-    tagline: 'Natural Energy Booster',
-    description: 'Traditional remedy for strength and vitality'
+    tagline: 'Traditional Nourishment',
+    description: 'Time-tested natural food for strength and vitality'
   }
 ];
+
 
 export function FeaturedProducts() {
   const navigate = useNavigate();
