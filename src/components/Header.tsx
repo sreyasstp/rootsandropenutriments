@@ -24,11 +24,38 @@ export function Header() {
     }
   };
 
-  const navLinks = [
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (href.startsWith('#')) {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const element = document.querySelector(href);
+          element?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else {
+        const element = document.querySelector(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(href);
+    }
+  };
+
+  const allNavLinks = [
     { href: '#products', label: 'Products' },
     { href: '#about', label: 'About' },
     { href: '/contact', label: 'Contact' }
   ];
+
+  const navLinks = allNavLinks.filter((link) => {
+    if (link.href === '/contact' && location.pathname === '/contact') {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <header
@@ -47,7 +74,8 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[#004606] font-medium hover:text-[#005708] transition-colors relative group"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-[#004606] font-medium hover:text-[#005708] transition-colors relative group cursor-pointer"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#004606] group-hover:w-full transition-all duration-300"></span>
@@ -69,8 +97,8 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-[#004606] font-medium hover:text-[#005708] transition-colors"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="block py-3 text-[#004606] font-medium hover:text-[#005708] transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
