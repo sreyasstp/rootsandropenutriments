@@ -63,7 +63,7 @@ export function Contact() {
           </div>
           <div className="mt-4 text-center">
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=10.579055417657077,76.51964316955814"
+              href="https://www.google.com/maps/search/?api=1&query=ROOTS+AND+ROPE+NUTRIMENT&query_place_id=ChIJmTOo-f-JuzsRa-Dgy0pLjFo"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#004606] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
