@@ -22,6 +22,9 @@ export function Contact() {
             <a href="tel:+918606441950" className="text-gray-600 hover:text-[#004606] transition-colors">
               +91 8606441950
             </a>
+            <a href="tel:+917012426181" className="text-gray-600 hover:text-[#004606] transition-colors">
+              +91 7012426181
+            </a>
           </div>
 
           <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">

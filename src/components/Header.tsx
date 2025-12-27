@@ -27,7 +27,7 @@ export function Header() {
   const navLinks = [
     { href: '#products', label: 'Products' },
     { href: '#about', label: 'About' },
-    { href: 'tel:+918606441950', label: 'Contact' }
+    { href: '/contact', label: 'Contact' }
   ];
 
   return (
