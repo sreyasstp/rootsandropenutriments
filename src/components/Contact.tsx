@@ -13,7 +13,7 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
           <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone className="w-8 h-8 text-white" />
@@ -45,6 +45,21 @@ export function Contact() {
             <p className="text-gray-600">
               Vandazhy, Palakkad<br />Kerala, 678706
             </p>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d245.12506308687892!2d76.52015477151062!3d10.5790931782253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDM0JzQ0LjEiTiA3NsKwMzEnMTMuMyJF!5e0!3m2!1sen!2sin!4v1766857598815!5m2!1sen!2sin"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
+            />
           </div>
         </div>
       </div>
