@@ -63,15 +63,26 @@ export function ContactPage() {
         <div className="max-w-5xl mx-auto mb-16">
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d245.12506308687892!2d76.52015477151062!3d10.5790931782253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDM0JzQ0LjEiTiA3NsKwMzEnMTMuMyJF!5e0!3m2!1sen!2sin!4v1766857598815!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.500373035378!2d76.51964316955814!3d10.579055417657077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba809ff1a573399%3A0x5a8c4b26cfe0e06b!2sROOTS%20AND%20ROPE%20NUTRIMENT!5e0!3m2!1sen!2sin!4v1766857982738!5m2!1sen!2sin"
               width="100%"
               height="450"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="w-full"
+              className="w-full h-[300px] sm:h-[400px] md:h-[450px]"
             />
+          </div>
+          <div className="mt-6 text-center">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=10.579055417657077,76.51964316955814"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#004606] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+            >
+              <MapPin className="w-5 h-5" />
+              Get Directions
+            </a>
           </div>
         </div>
 
