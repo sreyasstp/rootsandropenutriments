@@ -7,7 +7,6 @@ import { WhatsAppFloat } from './components/WhatsAppFloat';
 
 const Products = lazy(() => import('./components/Products').then(module => ({ default: module.Products })));
 const About = lazy(() => import('./components/About').then(module => ({ default: module.About })));
-const Contact = lazy(() => import('./components/Contact').then(module => ({ default: module.Contact })));
 
 function App() {
   return (
@@ -21,9 +20,6 @@ function App() {
       </Suspense>
       <Suspense fallback={<div className="min-h-screen" />}>
         <About />
-      </Suspense>
-      <Suspense fallback={<div className="min-h-screen" />}>
-        <Contact />
       </Suspense>
       <WhatsAppFloat />
     </>

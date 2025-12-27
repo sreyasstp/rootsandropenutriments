@@ -1,4 +1,3 @@
-import { Heart } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export function Footer() {
@@ -54,7 +53,14 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+918606441950" className="text-gray-600 hover:text-[#004606] transition-colors">
+                <a
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/contact');
+                  }}
+                  className="text-gray-600 hover:text-[#004606] transition-colors cursor-pointer"
+                >
                   Contact
                 </a>
               </li>
