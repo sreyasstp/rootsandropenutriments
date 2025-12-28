@@ -18,7 +18,7 @@ export function WomenInitiative() {
             title="Proudly a Woman Initiative"
           />
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
-            Empowered by Women
+            Empowered by Woman
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Roots & Rope Nutriment is proudly a woman-led initiative, bringing together passion,
@@ -36,7 +36,7 @@ export function WomenInitiative() {
             </h3>
             <p className="text-gray-600 text-center leading-relaxed">
               Every product is crafted with care and attention to detail, reflecting the nurturing spirit
-              and dedication of women entrepreneurs committed to quality and excellence.
+              and dedication of woman entrepreneurs committed to quality and excellence.
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export function WomenInitiative() {
               Community Impact
             </h3>
             <p className="text-gray-600 text-center leading-relaxed">
-              Supporting local women farmers and artisans, we create a sustainable ecosystem that
+              Supporting local woman farmers and artisans, we create a sustainable ecosystem that
               empowers communities and preserves traditional knowledge for future generations.
             </p>
           </div>
@@ -61,7 +61,7 @@ export function WomenInitiative() {
               Inspiring Change
             </h3>
             <p className="text-gray-600 text-center leading-relaxed">
-              Breaking barriers and setting new standards, we demonstrate that women-led businesses
+              Breaking barriers and setting new standards, we demonstrate that woman-led businesses
               can thrive while staying true to values of authenticity, health, and sustainability.
             </p>
           </div>
@@ -75,12 +75,12 @@ export function WomenInitiative() {
               </h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
                 As a woman initiative, we're committed to fostering economic independence,
-                preserving traditional wisdom, and creating opportunities for women in every
+                preserving traditional wisdom, and creating opportunities for woman in every
                 step of our supply chain.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 From the farmers who grow our ingredients to the team that brings these products
-                to your doorstep, women are at the heart of everything we do. Together, we're
+                to your doorstep,  are at the heart of everything we do. Together, we're
                 building a future where quality, care, and empowerment go hand in hand.
               </p>
             </div>
