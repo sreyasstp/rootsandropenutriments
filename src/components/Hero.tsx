@@ -2,8 +2,17 @@ import { Leaf } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="relative bg-[#f2ecdc] overflow-hidden pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <section className="relative overflow-hidden pt-20">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Natural farm background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f2ecdc]/95 via-[#f2ecdc]/90 to-[#e8dfc7]/95"></div>
+        <div className="absolute inset-0 bg-[#004606]/5"></div>
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full mb-6">
