@@ -8,7 +8,7 @@ export function WhatsAppFloat() {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 bg-[#25D366] hover:bg-[#20BA5A] text-white p-3 sm:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group animate-float hover:animate-none"
+      className="fixed bottom-10 right-4 sm:bottom-6 sm:right-6 z-50 bg-[#25D366] hover:bg-[#20BA5A] text-white p-3 sm:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group animate-float hover:animate-none"
       aria-label="Chat on WhatsApp"
     >
       <svg
