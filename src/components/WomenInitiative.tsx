@@ -10,9 +10,9 @@ export function WomenInitiative() {
         <img
           src="https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Women empowerment background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f2ecdc]/85 via-white/80 to-[#f2ecdc]/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f2ecdc]/95 via-[#faf8f2]/90 to-white/95"></div>
       </div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
