@@ -10,7 +10,7 @@ export function WomenInitiative() {
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Women empowerment background"
+          alt="Woman empowerment background"
           className="w-full h-full object-cover"
         />
 
@@ -35,7 +35,7 @@ export function WomenInitiative() {
             title="Proudly a Woman Initiative"
           />
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
-            Empowered by Women
+            Empowered by Woman
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Roots & Rope Nutriment is proudly a woman-led initiative, bringing together passion,
@@ -50,21 +50,21 @@ export function WomenInitiative() {
               icon: Heart,
               title: 'Made with Love',
               text:
-                'Every product is crafted with care and attention to detail, reflecting the nurturing spirit of women entrepreneurs committed to quality and excellence.',
+                'Every product is crafted with care and attention to detail, reflecting the nurturing spirit of woman entrepreneurs committed to quality and excellence.',
               delay: '0.1s'
             },
             {
               icon: Users,
               title: 'Community Impact',
               text:
-                'Supporting local women farmers and artisans, we create a sustainable ecosystem that empowers communities and preserves traditional knowledge.',
+                'Supporting local woman farmers and artisans, we create a sustainable ecosystem that empowers communities and preserves traditional knowledge.',
               delay: '0.2s'
             },
             {
               icon: Sparkles,
               title: 'Inspiring Change',
               text:
-                'Breaking barriers and setting new standards, we show that women-led businesses can thrive while staying true to authenticity and sustainability.',
+                'Breaking barriers and setting new standards, we show that woman-led businesses can thrive while staying true to authenticity and sustainability.',
               delay: '0.3s'
             }
           ].map(({ icon: Icon, title, text, delay }) => (
@@ -100,12 +100,12 @@ export function WomenInitiative() {
               </h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
                 As a woman-led initiative, we&apos;re committed to fostering economic independence,
-                preserving traditional wisdom, and creating opportunities for women at every step
+                preserving traditional wisdom, and creating opportunities for woman at every step
                 of our supply chain.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 From farmers who grow our ingredients to the team that delivers them to your
-                doorstep, women are at the heart of everything we do—building a future rooted in
+                doorstep, woman are at the heart of everything we do—building a future rooted in
                 care, quality, and empowerment.
               </p>
             </div>
