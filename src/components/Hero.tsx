@@ -36,11 +36,11 @@ export function Hero() {
           </div>
 
           <div className="relative">
-            <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-8 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+            <div className="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
               <img
-                src="/roots_logo.jpg"
-                alt="Roots & Rope Nutriment"
-                className="w-full h-auto"
+                src="/family.png"
+                alt="Happy family with Roots & Rope products"
+                className="w-full h-auto object-cover"
               />
             </div>
             <div className="absolute -bottom-4 -right-4 w-64 h-64 bg-[#004606]/10 rounded-full blur-3xl"></div>

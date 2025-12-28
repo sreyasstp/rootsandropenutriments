@@ -50,20 +50,32 @@ export function About() {
           </div>
 
           <div className="relative">
-            <div className="bg-[#f2ecdc] rounded-2xl p-8 relative z-10">
-              <div className="bg-white rounded-xl p-8 shadow-xl">
-                <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-[#004606] mb-2">21+</div>
-                  <p className="text-gray-600 font-medium">Premium Products</p>
+            <div className="relative z-10">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden mb-6">
+                <img
+                  src="/farm_house.jpeg"
+                  alt="Our farm in Kerala"
+                  className="w-full h-64 lg:h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#004606]/60 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-1">Our Farm in Kerala</h3>
+                  <p className="text-white/90">Where nature meets tradition</p>
                 </div>
-                <div className="grid grid-cols-2 gap-6 pt-6 border-t border-gray-200">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-[#004606] mb-1">100%</div>
-                    <p className="text-sm text-gray-600">Natural</p>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-xl">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-3xl font-bold text-[#004606] mb-1">21+</div>
+                    <p className="text-xs text-gray-600">Products</p>
                   </div>
-                  <div className="text-center">
+                  <div>
+                    <div className="text-3xl font-bold text-[#004606] mb-1">100%</div>
+                    <p className="text-xs text-gray-600">Natural</p>
+                  </div>
+                  <div>
                     <div className="text-3xl font-bold text-[#004606] mb-1">0</div>
-                    <p className="text-sm text-gray-600">Preservatives</p>
+                    <p className="text-xs text-gray-600">Additives</p>
                   </div>
                 </div>
               </div>
