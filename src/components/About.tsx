@@ -51,16 +51,16 @@ export function About() {
 
           <div className="relative">
             <div className="relative z-10">
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden mb-6">
+              <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden mb-6 group">
                 <img
                   src="/farm_house.jpeg"
                   alt="Our farm in Kerala"
-                  className="w-full h-64 lg:h-80 object-cover"
+                  className="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#004606]/60 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-1">Our Farm in Kerala</h3>
-                  <p className="text-white/90">Where nature meets tradition</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-2xl font-bold mb-2 text-white drop-shadow-lg">Our Farm in Kerala</h3>
+                  <p className="text-white/95 drop-shadow">Where nature meets tradition</p>
                 </div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-xl">
