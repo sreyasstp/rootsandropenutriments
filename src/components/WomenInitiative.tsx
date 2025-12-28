@@ -118,8 +118,8 @@ export function WomenInitiative() {
               </p>
             </div>
 
-            <div className="glass-dark rounded-2xl p-8 backdrop-blur-lg">
-              <div className="grid grid-cols-2 gap-6">
+            <div className="glass-dark rounded-2xl p-4 sm:p-6 md:p-8 backdrop-blur-lg">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                 {[
                   ['100%', 'Woman-Led'],
                   ['Local', 'Community Focus'],
@@ -128,12 +128,12 @@ export function WomenInitiative() {
                 ].map(([value, label], i) => (
                   <div key={label} className="text-center group cursor-default">
                     <div
-                      className="text-4xl font-bold text-shimmer mb-2 group-hover:scale-110 transition-transform"
+                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-shimmer mb-1 sm:mb-2 group-hover:scale-110 transition-transform"
                       style={{ animationDelay: `${i * 0.4}s` }}
                     >
                       {value}
                     </div>
-                    <p className="text-sm text-gray-600 font-medium">{label}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium">{label}</p>
                   </div>
                 ))}
               </div>
