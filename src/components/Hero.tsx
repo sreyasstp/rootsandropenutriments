@@ -3,7 +3,7 @@ import { Leaf } from 'lucide-react';
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-20">
-      <div className="absolute inset-x-0 top-0 h-[600px] sm:h-[500px] lg:bottom-0 lg:h-auto">
+      <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Natural farm background"
