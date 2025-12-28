@@ -37,7 +37,7 @@ const features = [
 
 export function Features() {
   const sectionRef = useRef<HTMLElement>(null);
-  const offset = useParallax(sectionRef, 0.4);
+  const offset = useParallax(sectionRef, 0.6);
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden py-20">

@@ -4,7 +4,7 @@ import { useParallax } from '../hooks/useParallax';
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
-  const offset = useParallax(sectionRef, 0.3);
+  const offset = useParallax(sectionRef, 0.5);
 
   return (
     <section ref={sectionRef} id="about" className="relative overflow-hidden py-20">

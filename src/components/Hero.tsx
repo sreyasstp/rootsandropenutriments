@@ -1,13 +1,19 @@
 import { Leaf } from 'lucide-react';
+import { useRef } from 'react';
+import { useParallax } from '../hooks/useParallax';
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const offset = useParallax(sectionRef, 0.5);
+
   return (
-    <section className="relative overflow-hidden pt-20">
+    <section ref={sectionRef} className="relative overflow-hidden pt-20">
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Natural farm background"
           className="w-full h-full object-cover"
+          style={{ transform: `translateY(${offset}px)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#f2ecdc]/75 via-[#f2ecdc]/65 to-[#e8dfc7]/70"></div>
         <div className="absolute inset-0 bg-[#004606]/3"></div>

@@ -1,17 +1,25 @@
 import { Heart, Users, Sparkles } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useRef } from 'react';
+import { useParallax } from '../hooks/useParallax';
 
 export function WomenInitiative() {
   const { ref, isVisible } = useScrollAnimation();
+  const parallaxRef = useRef<HTMLElement>(null);
+  const offset = useParallax(parallaxRef, 0.5);
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-20">
+    <section ref={(node) => {
+      ref.current = node;
+      parallaxRef.current = node;
+    }} className="relative overflow-hidden py-20">
       {/* Background */}
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Woman empowerment background"
           className="w-full h-full object-cover"
+          style={{ transform: `translateY(${offset}px)` }}
         />
 
         {/* Warm overlay */}
