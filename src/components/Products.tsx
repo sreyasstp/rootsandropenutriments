@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ShoppingCart } from 'lucide-react';
 import { products, categories } from '../data/products';
 
 export function Products() {
@@ -18,6 +18,13 @@ export function Products() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setShowAll(false);
+  };
+
+  const handleBuyNow = (e: React.MouseEvent, productName: string) => {
+    e.stopPropagation();
+    const message = `Hi, I want to buy:\n\nProduct: ${productName}`;
+    const whatsappUrl = `https://wa.me/917012426181?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -83,8 +90,15 @@ export function Products() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100">
-                  <span className="text-xs text-gray-500 uppercase tracking-wide">
+                <div className="pt-4 border-t border-gray-100 space-y-3">
+                  <button
+                    onClick={(e) => handleBuyNow(e, product.name)}
+                    className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Buy Now
+                  </button>
+                  <span className="block text-xs text-gray-500 uppercase tracking-wide text-center">
                     {product.category}
                   </span>
                 </div>

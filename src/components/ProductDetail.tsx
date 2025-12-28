@@ -1,16 +1,30 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { products } from '../data/products';
-import { ArrowLeft, Check, Leaf, Shield, Heart } from 'lucide-react';
+import { ArrowLeft, Check, Leaf, Shield, Heart, ShoppingCart, Plus, Minus } from 'lucide-react';
 
 export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [id]);
+    if (product && product.packSizes.length > 0) {
+      setSelectedSize(`${product.packSizes[0]}${product.unit}`);
+    }
+  }, [id, product]);
+
+  const handleBuyNow = () => {
+    const message = `Hi, I want to buy:\n\nProduct: ${product?.name}\nSize: ${selectedSize}\nQuantity: ${quantity}`;
+    const whatsappUrl = `https://wa.me/917012426181?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const incrementQuantity = () => setQuantity(prev => prev + 1);
+  const decrementQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
   if (!product) {
     return (
@@ -82,17 +96,49 @@ export function ProductDetail() {
             </div>
 
             <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
-              <h3 className="text-xl sm:text-2xl font-bold text-[#004606] mb-4">Available Sizes</h3>
-              <div className="flex flex-wrap gap-3">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#004606] mb-4">Select Size</h3>
+              <div className="flex flex-wrap gap-3 mb-6">
                 {product.packSizes.map((size, index) => (
-                  <div
+                  <button
                     key={index}
-                    className="bg-gradient-to-br from-[#004606] to-[#006609] text-white px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-shadow"
+                    onClick={() => setSelectedSize(`${size}${product.unit}`)}
+                    className={`px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${
+                      selectedSize === `${size}${product.unit}`
+                        ? 'bg-gradient-to-br from-[#004606] to-[#006609] text-white'
+                        : 'bg-gray-100 text-[#004606] hover:bg-gray-200'
+                    }`}
                   >
                     {size}{product.unit}
-                  </div>
+                  </button>
                 ))}
               </div>
+
+              <h3 className="text-xl sm:text-2xl font-bold text-[#004606] mb-4">Quantity</h3>
+              <div className="flex items-center gap-4 mb-6">
+                <button
+                  onClick={decrementQuantity}
+                  className="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                >
+                  <Minus className="w-5 h-5 text-[#004606]" />
+                </button>
+                <span className="text-2xl font-bold text-[#004606] min-w-[3rem] text-center">
+                  {quantity}
+                </span>
+                <button
+                  onClick={incrementQuantity}
+                  className="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                >
+                  <Plus className="w-5 h-5 text-[#004606]" />
+                </button>
+              </div>
+
+              <button
+                onClick={handleBuyNow}
+                className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                Buy Now on WhatsApp
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ShoppingCart } from 'lucide-react';
 
 const featuredProducts = [
   {
@@ -50,6 +50,13 @@ const featuredProducts = [
 export function FeaturedProducts() {
   const navigate = useNavigate();
 
+  const handleBuyNow = (e: React.MouseEvent, productName: string) => {
+    e.stopPropagation();
+    const message = `Hi, I want to buy:\n\nProduct: ${productName}`;
+    const whatsappUrl = `https://wa.me/917012426181?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -95,9 +102,16 @@ export function FeaturedProducts() {
                 <h3 className="text-2xl font-bold text-[#004606] mb-2">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed mb-4">
                   {product.description}
                 </p>
+                <button
+                  onClick={(e) => handleBuyNow(e, product.name)}
+                  className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Buy Now
+                </button>
               </div>
             </div>
           ))}
