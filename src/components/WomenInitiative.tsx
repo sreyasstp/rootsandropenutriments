@@ -5,7 +5,15 @@ export function WomenInitiative() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-20 bg-gradient-to-br from-[#f2ecdc] to-white relative overflow-hidden">
+    <section ref={ref} className="py-20 relative overflow-hidden">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Women empowerment background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f2ecdc]/85 via-white/80 to-[#f2ecdc]/85"></div>
+      </div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#004606]/5 rounded-full blur-3xl"></div>
 
