@@ -24,7 +24,7 @@ export function Hero() {
               Farm to Family
             </h1>
 
-            <p className="text-lg lg:text-xl text-[#004606]/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg lg:text-xl text-[black]/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Discover nature's finest treasures with Roots & Rope Nutriment. Pure, organic products delivered with care from our farms to your family.
             </p>
 
