@@ -56,14 +56,17 @@ export function FeaturedProducts() {
         <div className="text-center mb-16">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
             <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
-              Featured Collection
+              Buy Directly from Manufacturer
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
-            Our Premium Products
+            Shop Our Premium Kerala Products
           </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            100% Natural • Preservative Free • Traditionally Sourced
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-4">
+            Manufactured & Sold by Roots & Rope Nutriment, Kerala
+          </p>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            100% Natural • Preservative Free • Factory Direct Prices • WhatsApp Ordering
           </p>
         </div>
 
@@ -100,14 +103,28 @@ export function FeaturedProducts() {
           ))}
         </div>
 
-        <div className="text-center">
-          <a
-            href="#products"
-            className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
-          >
-            Explore All Products
-            <ArrowRight className="w-5 h-5" />
-          </a>
+        <div className="text-center space-y-6">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://wa.me/918606441950?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#20BA5A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            >
+              Order on WhatsApp
+              <ArrowRight className="w-5 h-5" />
+            </a>
+            <a
+              href="#products"
+              className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            >
+              View All 21+ Products
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
+          <p className="text-sm text-gray-600">
+            Fast delivery across Kerala • Cash on Delivery available • Direct from our factory
+          </p>
         </div>
       </div>
     </section>

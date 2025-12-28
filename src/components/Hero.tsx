@@ -27,26 +27,43 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-[#004606] mb-6 leading-tight">
-              Farm to Family
+              Direct from Manufacturer to Your Home
             </h1>
 
             <p className="text-lg lg:text-xl text-[black]/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Discover nature's finest treasures with Roots & Rope Nutriment. Pure, organic products delivered with care from our farms to your family.
+              We manufacture and sell 100% natural, preservative-free products from Kerala. Buy directly from the source and enjoy authentic quality at the best prices.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
-                href="#products"
+                href="https://wa.me/918606441950?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
-                Explore Products
+                Buy Now on WhatsApp
               </a>
               <a
-                href="#about"
+                href="#products"
                 className="bg-white text-[#004606] px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 border-2 border-[#004606]"
               >
-                Our Story
+                View All Products
               </a>
+            </div>
+
+            <div className="mt-6 flex items-center gap-6 justify-center lg:justify-start text-sm text-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
+                <span>Direct from Manufacturer</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
+                <span>Made in Kerala</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
+                <span>FSSAI Certified</span>
+              </div>
             </div>
           </div>
 

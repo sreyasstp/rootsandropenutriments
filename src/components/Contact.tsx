@@ -6,11 +6,14 @@ export function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
-            Get In Touch
+            Buy Directly from Us
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have questions about our products? We'd love to hear from you
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
+            Contact us to purchase authentic Kerala products directly from the manufacturer
           </p>
+          <div className="inline-flex items-center gap-2 bg-[#004606]/10 px-6 py-3 rounded-full">
+            <span className="text-[#004606] font-bold text-sm">WhatsApp Orders • Phone Orders • Bulk Inquiries Welcome</span>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
@@ -18,33 +21,44 @@ export function Contact() {
             <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-[#004606] mb-3">Phone</h3>
-            <a href="tel:+918606441950" className="text-gray-600 hover:text-[#004606] transition-colors">
-              +91 8606441950
-            </a>
-            <a href="tel:+917012426181" className="text-gray-600 hover:text-[#004606] transition-colors">
-              +91 7012426181
-            </a>
+            <h3 className="text-xl font-bold text-[#004606] mb-3">Call to Order</h3>
+            <div className="space-y-2">
+              <a href="tel:+918606441950" className="block text-gray-600 hover:text-[#004606] transition-colors font-medium">
+                +91 8606441950
+              </a>
+              <a href="tel:+917012426181" className="block text-gray-600 hover:text-[#004606] transition-colors font-medium">
+                +91 7012426181
+              </a>
+            </div>
+            <p className="text-xs text-gray-500 mt-3">Mon-Sat, 9 AM - 6 PM</p>
           </div>
 
           <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-[#25D366] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-[#004606] mb-3">Email</h3>
-            <a href="mailto:info@rootsandrope.com" className="text-gray-600 hover:text-[#004606] transition-colors break-all">
-              info@rootsandrope.com
+            <h3 className="text-xl font-bold text-[#004606] mb-3">WhatsApp to Buy</h3>
+            <a
+              href="https://wa.me/918606441950?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#25D366] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#20BA5A] transition-colors"
+            >
+              Chat Now
             </a>
+            <p className="text-xs text-gray-500 mt-3">Quick response guaranteed</p>
           </div>
 
           <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="bg-[#004606] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <MapPin className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-[#004606] mb-3">Location</h3>
-            <p className="text-gray-600">
-              Vandazhy, Palakkad<br />Kerala, 678706
+            <h3 className="text-xl font-bold text-[#004606] mb-3">Manufacturing Unit</h3>
+            <p className="text-gray-600 mb-2">
+              <strong>Roots & Rope Nutriment</strong><br />
+              Vandazhy, Palakkad<br />Kerala, 678706, India
             </p>
+            <p className="text-xs text-gray-500">FSSAI Licensed Facility</p>
           </div>
         </div>
 

@@ -22,13 +22,13 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
-              Our Story
+              Manufacturers of Premium Natural Products
             </h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              At Roots & Rope Nutriment, we believe in the power of nature's simplicity. Our journey began with a simple mission: to bring pure, unadulterated natural products from the farm directly to your family's table.
+              <strong>Roots & Rope Nutriment</strong> is a trusted manufacturer and direct seller of 100% natural, preservative-free food products from Kerala, India. We grow, process, and package every product at our own facilities, ensuring complete quality control from farm to your family.
             </p>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Every product we offer is carefully sourced from trusted farms, processed with traditional methods, and packaged with care. We're not just selling products; we're sharing a commitment to health, sustainability, and the timeless wisdom of natural nutrition.
+              As manufacturers, we eliminate middlemen and offer you authentic Kerala products at factory-direct prices. Our traditional processing methods preserve the natural goodness while our modern facilities ensure hygiene and safety standards. When you buy from us, you buy directly from the source.
             </p>
 
             <div className="space-y-4">
@@ -37,8 +37,8 @@ export function About() {
                   <TreePine className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Sustainably Sourced</h3>
-                  <p className="text-gray-600">From responsible farms that care for the earth</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-2">Own Manufacturing Unit</h3>
+                  <p className="text-gray-600">Complete control over quality from cultivation to packaging</p>
                 </div>
               </div>
 
@@ -47,8 +47,8 @@ export function About() {
                   <Sprout className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Naturally Processed</h3>
-                  <p className="text-gray-600">Traditional methods preserving nutritional value</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-2">Traditional Manufacturing</h3>
+                  <p className="text-gray-600">Time-tested Kerala methods for authentic quality</p>
                 </div>
               </div>
 
@@ -57,8 +57,8 @@ export function About() {
                   <Home className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Family First</h3>
-                  <p className="text-gray-600">Products we'd serve to our own families</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-2">Direct from Factory</h3>
+                  <p className="text-gray-600">No middlemen - buy fresh products at best prices</p>
                 </div>
               </div>
             </div>
