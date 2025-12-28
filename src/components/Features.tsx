@@ -1,4 +1,6 @@
 import { Sprout, Package, Leaf, Award, Users, Shield } from 'lucide-react';
+import { useRef } from 'react';
+import { useParallax } from '../hooks/useParallax';
 
 const features = [
   {
@@ -34,9 +36,22 @@ const features = [
 ];
 
 export function Features() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const offset = useParallax(sectionRef, 0.4);
+
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} className="relative overflow-hidden py-20">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.pexels.com/photos/1459505/pexels-photo-1459505.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Natural spices background"
+          className="w-full h-full object-cover"
+          style={{ transform: `translateY(${offset}px)` }}
+        />
+        <div className="absolute inset-0 bg-white/90"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
             Why Choose Us

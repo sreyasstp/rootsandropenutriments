@@ -1,9 +1,24 @@
 import { TreePine, Sprout, Home } from 'lucide-react';
+import { useRef } from 'react';
+import { useParallax } from '../hooks/useParallax';
 
 export function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const offset = useParallax(sectionRef, 0.3);
+
   return (
-    <section id="about" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} id="about" className="relative overflow-hidden py-20">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.pexels.com/photos/2132171/pexels-photo-2132171.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Organic farming background"
+          className="w-full h-full object-cover"
+          style={{ transform: `translateY(${offset}px)` }}
+        />
+        <div className="absolute inset-0 bg-white/85"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
