@@ -60,7 +60,7 @@ export function Features() {
             When you purchase from us, you get authentic Kerala products directly from the manufacturer
           </p>
           <div className="inline-flex items-center gap-2 bg-[#004606]/10 px-6 py-3 rounded-full">
-            <span className="text-[#004606] font-bold text-sm">Manufacturer & Direct Seller Since 2020</span>
+            <span className="text-[#004606] font-bold text-sm">Manufacturer & Direct Seller</span>
           </div>
         </div>
 

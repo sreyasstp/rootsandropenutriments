@@ -41,7 +41,7 @@ export function Hero() {
                 rel="noopener noreferrer"
                 className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
-                Buy Now on WhatsApp
+                Buy on WhatsApp
               </a>
               <a
                 href="#products"
