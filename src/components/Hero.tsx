@@ -36,7 +36,7 @@ export function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
-                href="https://wa.me/918606441950?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
+                href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
