@@ -27,7 +27,7 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-[#004606] mb-6 leading-tight">
-              Direct from Manufacturer to Your Home
+              Farm to Family
             </h1>
 
             <p className="text-lg lg:text-xl text-[black]/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
