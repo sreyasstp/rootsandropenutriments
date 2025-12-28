@@ -56,11 +56,11 @@ export function FeaturedProducts() {
         <div className="text-center mb-16">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
             <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
-              Buy Directly from Manufacturer
+              Featured Products
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
-            Shop Our Premium Kerala Products
+            Our Premium Health Products
           </h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-4">
             Manufactured & Sold by Roots & Rope Nutriment, Kerala
@@ -118,7 +118,7 @@ export function FeaturedProducts() {
               href="#products"
               className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
-              View All 21+ Products
+              View all Products
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>
