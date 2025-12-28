@@ -12,11 +12,14 @@ export function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLogoClick = () => {
+    setIsMobileMenuOpen(false);
+
     if (location.pathname !== '/') {
       navigate('/');
     } else {
@@ -24,7 +27,10 @@ export function Header() {
     }
   };
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
@@ -59,16 +65,25 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-white/90 backdrop-blur-sm'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 bg-white
+      transition-shadow duration-300
+      ${isScrolled ? 'shadow-md' : ''}`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={handleLogoClick}>
-            <img src="/roots_logo.jpg" alt="Roots & Rope" className="h-16 w-auto" />
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20">
+        <div className="flex items-center justify-between h-full">
+          {/* Logo */}
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={handleLogoClick}
+          >
+            <img
+              src="/roots_logo.jpg"
+              alt="Roots & Rope"
+              className="h-16 w-auto object-contain"
+            />
           </div>
 
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
@@ -78,27 +93,34 @@ export function Header() {
                 className="text-[#004606] font-medium hover:text-[#005708] transition-colors relative group cursor-pointer"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#004606] group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#004606] group-hover:w-full transition-all duration-300" />
               </a>
             ))}
           </div>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-[#004606]"
+            aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden border-t border-gray-200 bg-white">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block py-3 text-[#004606] font-medium hover:text-[#005708] transition-colors cursor-pointer"
+                className="block py-3 px-2 text-[#004606] font-medium hover:text-[#005708] transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
