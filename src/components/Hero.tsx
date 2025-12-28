@@ -2,7 +2,7 @@ import { Leaf } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="relative bg-[#f2ecdc] overflow-hidden">
+    <section className="relative bg-[#f2ecdc] overflow-hidden pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
