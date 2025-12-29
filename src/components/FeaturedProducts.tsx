@@ -119,7 +119,7 @@ export function FeaturedProducts() {
 
         <div className="text-center space-y-6">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
+          {/* <a
               href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
               target="_blank"
               rel="noopener noreferrer"
@@ -138,7 +138,7 @@ export function FeaturedProducts() {
             >
               Order Now
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
+            </a> */}
 
             <a
               href="#products"

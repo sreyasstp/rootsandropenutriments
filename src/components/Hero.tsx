@@ -60,10 +60,10 @@ export function Hero() {
                 <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
                 <span>Made in Kerala</span>
               </div> */}
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
                 <span>FSSAI Certified</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
