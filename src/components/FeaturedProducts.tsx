@@ -63,17 +63,17 @@ export function FeaturedProducts() {
         <div className="text-center mb-16">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
             <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
-              Featured Products
+            Featured Collection
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
             Our Premium Products
           </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-4">
+          {/* <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-4">
             Manufactured & Sold by Roots & Rope Nutriment, Kerala
-          </p>
+          </p> */}
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
-            100% Natural • Preservative Free • WhatsApp Ordering
+            100% Natural • Preservative Free • Traditionally Sourced
           </p>
         </div>
 
@@ -123,7 +123,7 @@ export function FeaturedProducts() {
               href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#20BA5A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+              className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#20BA5A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
               Order on WhatsApp
               <ArrowRight className="w-5 h-5" />

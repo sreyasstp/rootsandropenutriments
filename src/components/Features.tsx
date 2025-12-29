@@ -1,39 +1,39 @@
 import { Sprout, Package, Leaf, Award, Users, Shield } from 'lucide-react';
 import { useRef } from 'react';
 import { useParallax } from '../hooks/useParallax';
-
 const features = [
   {
     icon: Sprout,
-    title: 'Own Farm & Factory',
-    description: 'We manufacture everything at our Kerala facility - complete control over quality'
+    title: 'Farm Fresh',
+    description: 'Sourced directly from local farms ensuring freshness and quality'
   },
   {
     icon: Package,
-    title: 'Traditional Manufacturing',
-    description: 'Authentic Kerala processing methods passed down through generations'
+    title: 'Traditional Processing',
+    description: 'Authentic methods preserving natural flavor and nutritional value'
   },
   {
     icon: Leaf,
-    title: 'Zero Chemicals',
-    description: 'We manufacture without pesticides, preservatives, or artificial additives'
+    title: 'Chemical Free',
+    description: 'Grown without pesticides or synthetic fertilizers for pure natural products'
   },
   {
     icon: Award,
-    title: 'FSSAI Certified Manufacturer',
-    description: 'Licensed and certified manufacturing unit meeting all safety standards'
+    title: 'Premium Quality',
+    description: 'FSSAI certified products meeting the highest quality standards'
   },
   {
     icon: Users,
-    title: 'Direct Sales - Best Prices',
-    description: 'Buy directly from manufacturer without middlemen markup'
+    title: 'Family Safe',
+    description: 'Suitable for all ages from babies to elderly family members'
   },
   {
     icon: Shield,
-    title: 'Quality Guaranteed',
-    description: 'Every batch tested and packaged at our facility - money-back guarantee'
+    title: 'No Preservatives',
+    description: 'Pure and natural without any artificial additives or chemicals'
   }
 ];
+
 
 export function Features() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,15 +53,15 @@ export function Features() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
-            Why Buy from Roots & Rope
+        <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
+            Why Choose Us
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
-            When you purchase from us, you get authentic Kerala products directly from the manufacturer
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            We're committed to bringing you the finest natural products with uncompromising quality and care
           </p>
-          <div className="inline-flex items-center gap-2 bg-[#004606]/10 px-6 py-3 rounded-full">
+          {/* <div className="inline-flex items-center gap-2 bg-[#004606]/10 px-6 py-3 rounded-full">
             <span className="text-[#004606] font-bold text-sm">Manufacturer & Direct Seller</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
