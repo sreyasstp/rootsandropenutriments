@@ -119,22 +119,47 @@ export function FeaturedProducts() {
 
         <div className="text-center space-y-6">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+          <a
               href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#20BA5A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+              className="
+                inline-flex items-center justify-center gap-2
+                bg-[#004606] text-white font-semibold
+                px-6 py-3 text-sm
+                sm:px-8 sm:py-4 sm:text-base sm:font-bold
+                rounded-lg sm:rounded-xl
+                hover:bg-[#006609]
+                transition-all duration-300
+                shadow-md sm:shadow-xl
+                hover:shadow-lg sm:hover:shadow-2xl
+                active:scale-95 sm:hover:scale-105
+              "
             >
-              Order on WhatsApp
-              <ArrowRight className="w-5 h-5" />
+              Order Now
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
+
             <a
               href="#products"
-              className="inline-flex items-center gap-2 bg-[#004606] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+              className="
+                inline-flex items-center justify-center gap-2
+                bg-white text-[#004606] font-semibold
+                px-6 py-3 text-sm
+                sm:px-8 sm:py-4 sm:text-base sm:font-bold
+                rounded-lg sm:rounded-xl
+                border-2 border-[#004606]
+                hover:bg-[#f2ecdc]
+                transition-all duration-300
+                shadow-md sm:shadow-xl
+                hover:shadow-lg sm:hover:shadow-2xl
+                active:scale-95 sm:hover:scale-105
+              "
             >
-              View all Products
-              <ArrowRight className="w-5 h-5" />
+              View Products
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
+
           </div>
         </div>
       </div>
