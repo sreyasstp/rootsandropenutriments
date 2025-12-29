@@ -73,7 +73,7 @@ export function FeaturedProducts() {
             Manufactured & Sold by Roots & Rope Nutriment, Kerala
           </p>
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
-            100% Natural • Preservative Free • Factory Direct Prices • WhatsApp Ordering
+            100% Natural • Preservative Free • WhatsApp Ordering
           </p>
         </div>
 
@@ -107,7 +107,7 @@ export function FeaturedProducts() {
                 </p>
                 <button
                   onClick={(e) => handleBuyNow(e, product.name)}
-                  className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   Buy Now
@@ -136,9 +136,6 @@ export function FeaturedProducts() {
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>
-          <p className="text-sm text-gray-600">
-            Fast delivery across Kerala • Cash on Delivery available • Direct from our factory
-          </p>
         </div>
       </div>
     </section>

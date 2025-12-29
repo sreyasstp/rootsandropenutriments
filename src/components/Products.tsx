@@ -93,7 +93,7 @@ export function Products() {
                 <div className="pt-4 border-t border-gray-100 space-y-3">
                   <button
                     onClick={(e) => handleBuyNow(e, product.name)}
-                    className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                    className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Buy Now

@@ -134,7 +134,7 @@ export function ProductDetail() {
 
               <button
                 onClick={handleBuyNow}
-                className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
+                className="w-full bg-[#004606] hover:bg-[#006609] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
               >
                 <ShoppingCart className="w-6 h-6" />
                 Buy Now on WhatsApp
