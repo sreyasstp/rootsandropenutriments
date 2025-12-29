@@ -31,7 +31,7 @@ export function Hero() {
             </h1>
 
             <p className="text-lg lg:text-xl text-[black]/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              We manufacture and sell 100% natural, preservative-free products from Kerala. Buy directly from the source and enjoy authentic quality at the best prices.
+            Discover nature's finest treasures with Roots & Rope Nutriment. Pure, organic products delivered with care from our farms to your family.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -41,13 +41,13 @@ export function Hero() {
                 rel="noopener noreferrer"
                 className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
-                Buy on WhatsApp
+                Buy Now
               </a>
               <a
                 href="#products"
                 className="bg-white text-[#004606] px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 border-2 border-[#004606]"
               >
-                View All Products
+                Explore Products
               </a>
             </div>
 
@@ -56,10 +56,10 @@ export function Hero() {
                 <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
                 <span>Direct from Manufacturer</span>
               </div> */}
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
                 <span>Made in Kerala</span>
-              </div>
+              </div> */}
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#004606] rounded-full"></div>
                 <span>FSSAI Certified</span>

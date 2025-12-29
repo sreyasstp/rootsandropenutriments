@@ -58,7 +58,7 @@ export function Contact() {
               <strong>Roots & Rope Nutriment</strong><br />
               Vandazhy, Palakkad<br />Kerala, 678706, India
             </p>
-            <p className="text-xs text-gray-500">FSSAI Licensed</p>
+            <p className="text-xs text-gray-500">FSSAI Certified</p>
           </div>
         </div>
 
