@@ -156,7 +156,7 @@ export function FeaturedProducts() {
                 active:scale-95 sm:hover:scale-105
               "
             >
-              View Products
+              View all Products
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
 
