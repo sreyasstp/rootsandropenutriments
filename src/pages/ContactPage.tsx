@@ -74,11 +74,11 @@ export function ContactPage() {
             />
           </div>
           <div className="mt-6 text-center">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=ROOTS+AND+ROPE+NUTRIMENT&query_place_id=ChIJmTOo-f-JuzsRa-Dgy0pLjFo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#004606] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+          <a
+            href="https://www.google.com/maps/dir//ROOTS+AND+ROPE+NUTRIMENT+8%2F80+Vandazhi,+Kerala+678706/@10.5790541,76.5202869,18z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3ba809ff1a573399:0x5a8c4b26cfe0e06b!2m2!1d76.5202869!2d10.5790541!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#004606] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <MapPin className="w-5 h-5" />
               Get Directions
