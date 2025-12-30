@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ShoppingCart } from 'lucide-react';
 import { products, categories } from '../data/products';
@@ -6,7 +6,9 @@ import { products, categories } from '../data/products';
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [showAll, setShowAll] = useState(false);
+  const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
   const navigate = useNavigate();
+  const productRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const filteredProducts = selectedCategory === 'All Products'
     ? products
@@ -15,9 +17,38 @@ export function Products() {
   const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 12);
   const hasMoreProducts = filteredProducts.length > 12;
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            setVisibleProducts((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    productRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      productRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, [displayedProducts]);
+
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setShowAll(false);
+    setVisibleProducts(new Set());
+    productRefs.current = [];
   };
 
   const handleBuyNow = (e: React.MouseEvent, productName: string) => {
@@ -64,10 +95,19 @@ export function Products() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
-          {displayedProducts.map((product) => (
+          {displayedProducts.map((product, index) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 cursor-pointer w-full max-w-sm"
+              ref={(el) => (productRefs.current[index] = el)}
+              data-index={index}
+              className={`bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden group hover:-translate-y-1 cursor-pointer w-full max-w-sm transition-all duration-700 ${
+                visibleProducts.has(index)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{
+                transitionDelay: visibleProducts.has(index) ? `${(index % 4) * 100}ms` : '0ms'
+              }}
               onClick={() => navigate(`/product/${product.id}`)}
             >
               <div className="relative overflow-hidden bg-[#f2ecdc] h-64 flex items-center justify-center">

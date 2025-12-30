@@ -1,5 +1,5 @@
 import { Sprout, Package, Leaf, Award, Users, Shield } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useParallax } from '../hooks/useParallax';
 const features = [
   {
@@ -38,6 +38,35 @@ const features = [
 export function Features() {
   const sectionRef = useRef<HTMLElement>(null);
   const offset = useParallax(sectionRef, 0.6);
+  const [visibleFeatures, setVisibleFeatures] = useState<Set<number>>(new Set());
+  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            setVisibleFeatures((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '50px'
+      }
+    );
+
+    featureRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      featureRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden py-20">
@@ -68,7 +97,16 @@ export function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-[#f2ecdc]/30 rounded-xl p-8 hover:bg-[#f2ecdc] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              ref={(el) => (featureRefs.current[index] = el)}
+              data-index={index}
+              className={`group bg-[#f2ecdc]/30 rounded-xl p-8 hover:bg-[#f2ecdc] hover:shadow-lg hover:-translate-y-1 transition-all duration-700 ${
+                visibleFeatures.has(index)
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-8 scale-95'
+              }`}
+              style={{
+                transitionDelay: visibleFeatures.has(index) ? `${(index % 3) * 120}ms` : '0ms'
+              }}
             >
               <div className="bg-[#004606] w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <feature.icon className="w-8 h-8 text-white" />

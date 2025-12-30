@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const featuredProducts = [
   {
@@ -49,6 +50,35 @@ const featuredProducts = [
 
 export function FeaturedProducts() {
   const navigate = useNavigate();
+  const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
+  const productRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            setVisibleProducts((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '50px'
+      }
+    );
+
+    productRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      productRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
 
   const handleBuyNow = (e: React.MouseEvent, productName: string) => {
     e.stopPropagation();
@@ -78,10 +108,19 @@ export function FeaturedProducts() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {featuredProducts.map((product) => (
+          {featuredProducts.map((product, index) => (
             <div
               key={product.id}
-              className="group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+              ref={(el) => (productRefs.current[index] = el)}
+              data-index={index}
+              className={`group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl cursor-pointer transition-all duration-700 ${
+                visibleProducts.has(index)
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-95'
+              } hover:-translate-y-2 hover:scale-105`}
+              style={{
+                transitionDelay: visibleProducts.has(index) ? `${index * 150}ms` : '0ms'
+              }}
               onClick={() => navigate(`/product/${product.id}`)}
             >
               <div className="relative h-72 overflow-hidden bg-[#f2ecdc] flex items-center justify-center">
