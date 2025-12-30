@@ -47,9 +47,9 @@ export function CataloguePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center py-8 px-4 sm:px-6 lg:px-8">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
             <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide flex items-center gap-2 justify-center">
               <FileText className="w-4 h-4" />
@@ -59,93 +59,92 @@ export function CataloguePage() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
             Roots & Rope Catalogue
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Browse our complete range of natural, preservative-free products
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden mb-8">
-          <div className="bg-white border-b border-gray-200 sticky top-20 z-10">
-            <div className="flex items-center justify-between px-3 sm:px-6 py-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm text-gray-700">
-                  {numPages} {numPages === 1 ? 'page' : 'pages'}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={zoomOut}
-                  className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors hidden sm:block"
-                  title="Zoom out"
-                >
-                  <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <span className="text-xs sm:text-sm text-gray-700 min-w-[40px] sm:min-w-[50px] text-center hidden sm:block">
-                  {Math.round(scale * 100)}%
-                </span>
-                <button
-                  onClick={zoomIn}
-                  className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors hidden sm:block"
-                  title="Zoom in"
-                >
-                  <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="bg-[#004606] text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-[#006609] transition-colors flex items-center gap-2 text-xs sm:text-sm font-semibold"
-                >
-                  <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline">Download</span>
-                </button>
-              </div>
+        <div className="bg-white/50 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm text-gray-700">
+                {numPages} {numPages === 1 ? 'page' : 'pages'}
+              </span>
             </div>
-          </div>
 
-          <div
-            id="pdf-container"
-            className="bg-[#f5f5f5] flex flex-col items-center py-6 sm:py-8 px-4 max-h-[800px] overflow-y-auto"
-            style={{
-              scrollbarWidth: 'thin',
-              scrollbarColor: '#004606 #e5e5e5'
-            }}
-          >
-            <Document
-              file="/roots_and_rope_catalogue.pdf"
-              onLoadSuccess={onDocumentLoadSuccess}
-              loading={
-                <div className="flex items-center justify-center h-[500px]">
-                  <div className="text-gray-500 text-sm">Loading catalogue...</div>
-                </div>
-              }
-              error={
-                <div className="flex items-center justify-center h-[500px]">
-                  <div className="text-red-500 text-sm">Failed to load PDF</div>
-                </div>
-              }
-            >
-              {Array.from(new Array(numPages), (_, index) => (
-                <div key={`page_${index + 1}`} className="mb-4 last:mb-0">
-                  <Page
-                    pageNumber={index + 1}
-                    width={pageWidth > 0 ? pageWidth : undefined}
-                    scale={window.innerWidth >= 640 ? scale : undefined}
-                    renderTextLayer={false}
-                    renderAnnotationLayer={false}
-                    loading={
-                      <div className="flex items-center justify-center h-[500px] bg-white">
-                        <div className="text-gray-500 text-sm">Loading page {index + 1}...</div>
-                      </div>
-                    }
-                    className="shadow-lg"
-                  />
-                </div>
-              ))}
-            </Document>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={zoomOut}
+                className="p-1.5 sm:p-2 rounded-lg hover:bg-white/80 transition-colors hidden sm:block"
+                title="Zoom out"
+              >
+                <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+              <span className="text-xs sm:text-sm text-gray-700 min-w-[40px] sm:min-w-[50px] text-center hidden sm:block">
+                {Math.round(scale * 100)}%
+              </span>
+              <button
+                onClick={zoomIn}
+                className="p-1.5 sm:p-2 rounded-lg hover:bg-white/80 transition-colors hidden sm:block"
+                title="Zoom in"
+              >
+                <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+              <button
+                onClick={handleDownload}
+                className="bg-[#004606] text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-[#006609] transition-colors flex items-center gap-2 text-xs sm:text-sm font-semibold"
+              >
+                <Download className="w-4 h-4" />
+                <span className="hidden sm:inline">Download</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="text-center pb-8">
+        <div
+          id="pdf-container"
+          className="flex flex-col items-center px-4 py-4 overflow-y-auto"
+          style={{
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#004606 #e5e5e5',
+            minHeight: 'calc(100vh - 250px)'
+          }}
+        >
+          <Document
+            file="/roots_and_rope_catalogue.pdf"
+            onLoadSuccess={onDocumentLoadSuccess}
+            loading={
+              <div className="flex items-center justify-center h-[500px]">
+                <div className="text-gray-500 text-sm">Loading catalogue...</div>
+              </div>
+            }
+            error={
+              <div className="flex items-center justify-center h-[500px]">
+                <div className="text-red-500 text-sm">Failed to load PDF</div>
+              </div>
+            }
+          >
+            {Array.from(new Array(numPages), (_, index) => (
+              <div key={`page_${index + 1}`} className="mb-4 last:mb-0">
+                <Page
+                  pageNumber={index + 1}
+                  width={pageWidth > 0 ? pageWidth : undefined}
+                  scale={window.innerWidth >= 640 ? scale : undefined}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  loading={
+                    <div className="flex items-center justify-center h-[500px] bg-white">
+                      <div className="text-gray-500 text-sm">Loading page {index + 1}...</div>
+                    </div>
+                  }
+                  className="shadow-lg"
+                />
+              </div>
+            ))}
+          </Document>
+        </div>
+
+        <div className="text-center py-8 px-4">
           <p className="text-gray-600 mb-4">
             Want to order from our catalogue?
           </p>
