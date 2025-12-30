@@ -34,6 +34,11 @@ export function Header() {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
+    if (href === '/catalogue') {
+      window.open('/roots_catalogue_final.pdf', '_blank');
+      return;
+    }
+
     if (href.startsWith('#')) {
       if (location.pathname !== '/') {
         navigate('/');
@@ -53,6 +58,7 @@ export function Header() {
   const allNavLinks = [
     { href: '#products', label: 'Products' },
     { href: '#about', label: 'About' },
+    { href: '/catalogue', label: 'Catalogue' },
     { href: '/contact', label: 'Contact' }
   ];
 

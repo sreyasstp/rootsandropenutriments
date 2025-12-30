@@ -54,6 +54,16 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="/roots_catalogue_final.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-[#004606] transition-colors cursor-pointer"
+                >
+                  View Catalogue
+                </a>
+              </li>
+              <li>
+                <a
                   href="/contact"
                   onClick={(e) => {
                     e.preventDefault();

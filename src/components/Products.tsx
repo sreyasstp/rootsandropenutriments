@@ -34,9 +34,17 @@ export function Products() {
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
             Our Products
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
             Explore our range of premium natural products, carefully sourced and processed for your family
           </p>
+          <a
+            href="/roots_catalogue_final.pdf"
+            download="Roots_and_Rope_Catalogue.pdf"
+            className="inline-flex items-center gap-2 bg-[#d4a574] hover:bg-[#c49563] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            <ChevronDown className="w-5 h-5" />
+            Download Full Catalogue
+          </a>
         </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-12">
