@@ -91,7 +91,7 @@ export function Products() {
                       <span className="text-sm text-gray-500">- ₹{product.prices[product.prices.length - 1]}</span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500 mb-2">Available Sizes:</p>
+                  {/* <p className="text-sm text-gray-500 mb-2">Available Sizes:</p> */}
                   <div className="flex flex-wrap gap-2">
                     {product.packSizes.map((size, index) => (
                       <span
