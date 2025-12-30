@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Download, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -140,6 +142,8 @@ export function CataloguePage() {
                 pageNumber={pageNumber}
                 width={pageWidth > 0 ? pageWidth : undefined}
                 scale={window.innerWidth >= 640 ? scale : undefined}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
                 loading={
                   <div className="flex items-center justify-center h-[500px] bg-white">
                     <div className="text-gray-500 text-sm">Loading page...</div>
