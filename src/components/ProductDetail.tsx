@@ -8,12 +8,14 @@ export function ProductDetail() {
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
   const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (product && product.packSizes.length > 0) {
       setSelectedSize(`${product.packSizes[0]}${product.unit}`);
+      setSelectedPrice(product.prices[0]);
     }
   }, [id, product]);
 
@@ -96,19 +98,35 @@ export function ProductDetail() {
             </div>
 
             <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
-              <h3 className="text-xl sm:text-2xl font-bold text-[#004606] mb-4">Select Size</h3>
+              <div className="flex items-baseline justify-between mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#004606]">Select Size</h3>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-[#004606]">₹{selectedPrice}</div>
+                  <div className="text-sm text-gray-500">per pack</div>
+                </div>
+              </div>
               <div className="flex flex-wrap gap-3 mb-6">
                 {product.packSizes.map((size, index) => (
                   <button
                     key={index}
-                    onClick={() => setSelectedSize(`${size}${product.unit}`)}
-                    className={`px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${
+                    onClick={() => {
+                      setSelectedSize(`${size}${product.unit}`);
+                      setSelectedPrice(product.prices[index]);
+                    }}
+                    className={`flex flex-col items-center px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${
                       selectedSize === `${size}${product.unit}`
                         ? 'bg-gradient-to-br from-[#004606] to-[#006609] text-white'
                         : 'bg-gray-100 text-[#004606] hover:bg-gray-200'
                     }`}
                   >
-                    {size}{product.unit}
+                    <span>{size}{product.unit}</span>
+                    <span className={`text-sm font-semibold mt-1 ${
+                      selectedSize === `${size}${product.unit}`
+                        ? 'text-white/90'
+                        : 'text-gray-600'
+                    }`}>
+                      ₹{product.prices[index]}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -130,6 +148,16 @@ export function ProductDetail() {
                 >
                   <Plus className="w-5 h-5 text-[#004606]" />
                 </button>
+              </div>
+
+              <div className="bg-[#f2ecdc] rounded-xl p-4 mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-gray-700 font-medium">Subtotal</span>
+                  <span className="text-2xl font-bold text-[#004606]">₹{selectedPrice * quantity}</span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  {quantity} × ₹{selectedPrice}
+                </div>
               </div>
 
               <button

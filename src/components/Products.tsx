@@ -85,6 +85,12 @@ export function Products() {
                 </h3>
 
                 <div className="mb-4">
+                  <div className="flex items-baseline gap-2 mb-3">
+                    <span className="text-2xl font-bold text-[#004606]">₹{product.prices[0]}</span>
+                    {product.prices.length > 1 && (
+                      <span className="text-sm text-gray-500">- ₹{product.prices[product.prices.length - 1]}</span>
+                    )}
+                  </div>
                   <p className="text-sm text-gray-500 mb-2">Available Sizes:</p>
                   <div className="flex flex-wrap gap-2">
                     {product.packSizes.map((size, index) => (
