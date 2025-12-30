@@ -35,7 +35,7 @@ export function Header() {
     setIsMobileMenuOpen(false);
 
     if (href === '/catalogue') {
-      window.open('/roots_catalogue_final.pdf', '_blank');
+      window.open('/roots_and_rope_catalogue.pdf', '_blank');
       return;
     }
 

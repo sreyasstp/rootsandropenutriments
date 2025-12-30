@@ -38,7 +38,7 @@ export function Products() {
             Explore our range of premium natural products, carefully sourced and processed for your family
           </p>
           <a
-            href="/roots_catalogue_final.pdf"
+            href="/roots_and_rope_catalogue.pdf"
             download="Roots_and_Rope_Catalogue.pdf"
             className="inline-flex items-center gap-2 bg-[#d4a574] hover:bg-[#c49563] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
           >

@@ -50,7 +50,7 @@ export function Hero() {
                 Explore Products
               </a>
               {/* <a
-                href="/roots_catalogue_final.pdf"
+                href="/roots_and_rope_catalogue.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#d4a574] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#c49563] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
@@ -78,7 +78,7 @@ export function Hero() {
           <div className="relative">
             <div className="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
               <img
-                src="/family.png"
+                src="/og-image.jpg"
                 alt="Happy family with Roots & Rope products"
                 className="w-full h-auto object-cover"
               />

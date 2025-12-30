@@ -54,7 +54,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/roots_catalogue_final.pdf"
+                  href="/roots_and_rope_catalogue.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-[#004606] transition-colors cursor-pointer"
