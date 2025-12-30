@@ -17,7 +17,7 @@ export function WomenInitiative() {
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Woman empowerment background"
+          alt="Women empowerment background"
           className="w-full h-full object-cover"
           style={{ transform: `translateY(${offset}px)` }}
         />
@@ -38,15 +38,15 @@ export function WomenInitiative() {
         <div className="text-center mb-12">
           <img
             src="/women_init.png"
-            alt="Woman Initiative"
+            alt="Women Initiative"
             className="h-48 w-auto mx-auto mb-6"
-            title="Proudly a Woman Initiative"
+            title="Proudly a Women Initiative"
           />
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-4">
-            Empowered by Woman
+            Empowered by Women
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A woman-led initiative bringing passion, tradition, and nature&apos;s finest to your family.
+            A women-led initiative bringing passion, tradition, and nature&apos;s finest to your family.
           </p>
         </div>
 
@@ -64,14 +64,14 @@ export function WomenInitiative() {
               icon: Users,
               title: 'Community Impact',
               text:
-                'Supporting local woman farmers and artisans while preserving traditional knowledge.',
+                'Supporting local women farmers and artisans while preserving traditional knowledge.',
               delay: '0.2s'
             },
             {
               icon: Sparkles,
               title: 'Inspiring Change',
               text:
-                'Woman-led business thriving with authenticity and sustainability.',
+                'Women-led business thriving with authenticity and sustainability.',
               delay: '0.3s'
             }
           ].map(({ icon: Icon, title, text, delay }) => (
@@ -106,17 +106,17 @@ export function WomenInitiative() {
                 Our Commitment
               </h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                We foster economic independence, preserve traditional wisdom, and create opportunities for woman at every step.
+                We foster economic independence, preserve traditional wisdom, and create opportunities for women at every step.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                From farm to doorstep, woman are at the heart of everything we do.
+                From farm to doorstep, women are at the heart of everything we do.
               </p>
             </div>
 
             <div className="glass-dark rounded-2xl p-4 sm:p-6 md:p-8 backdrop-blur-lg">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                 {[
-                  ['100%', 'Woman-Led'],
+                  ['100%', 'Women-Led'],
                   ['Local', 'Community Focus'],
                   ['Pure', 'Traditional Methods'],
                   ['Natural', 'Sustainable']
