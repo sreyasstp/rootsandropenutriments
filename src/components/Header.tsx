@@ -34,11 +34,6 @@ export function Header() {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
-    if (href === '/catalogue') {
-      window.open('/roots_and_rope_catalogue.pdf', '_blank');
-      return;
-    }
-
     if (href.startsWith('#')) {
       if (location.pathname !== '/') {
         navigate('/');
@@ -64,6 +59,9 @@ export function Header() {
 
   const navLinks = allNavLinks.filter((link) => {
     if (link.href === '/contact' && location.pathname === '/contact') {
+      return false;
+    }
+    if (link.href === '/catalogue' && location.pathname === '/catalogue') {
       return false;
     }
     return true;
