@@ -49,14 +49,14 @@ export function Hero() {
               >
                 Explore Products
               </a>
-              <a
+              {/* <a
                 href="/roots_catalogue_final.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#d4a574] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#c49563] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 View Catalogue
-              </a>
+              </a> */}
             </div>
 
             <div className="mt-6 flex items-center gap-6 justify-center lg:justify-start text-sm text-gray-700">

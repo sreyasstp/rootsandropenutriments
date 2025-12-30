@@ -127,7 +127,7 @@ export function Products() {
               onClick={() => setShowAll(true)}
               className="inline-flex items-center gap-2 bg-[#004606] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#006609] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
-              Load More Products
+              Load More
               <ChevronDown className="w-5 h-5" />
             </button>
           </div>
