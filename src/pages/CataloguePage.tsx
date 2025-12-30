@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { Download, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
+import { Download, ZoomIn, ZoomOut, FileText } from 'lucide-react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
@@ -8,7 +8,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 export function CataloguePage() {
   const [numPages, setNumPages] = useState<number>(0);
-  const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
   const [pageWidth, setPageWidth] = useState<number>(0);
 
@@ -39,14 +38,6 @@ export function CataloguePage() {
     setNumPages(numPages);
   };
 
-  const goToPrevPage = () => {
-    setPageNumber((prev) => Math.max(prev - 1, 1));
-  };
-
-  const goToNextPage = () => {
-    setPageNumber((prev) => Math.min(prev + 1, numPages));
-  };
-
   const zoomIn = () => {
     setScale((prev) => Math.min(prev + 0.2, 2.5));
   };
@@ -60,7 +51,7 @@ export function CataloguePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-            <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide flex items-center gap-2">
+            <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide flex items-center gap-2 justify-center">
               <FileText className="w-4 h-4" />
               Product Catalogue
             </span>
@@ -77,29 +68,16 @@ export function CataloguePage() {
           <div className="bg-white border-b border-gray-200 sticky top-20 z-10">
             <div className="flex items-center justify-between px-3 sm:px-6 py-3">
               <div className="flex items-center gap-2">
-                <button
-                  onClick={goToPrevPage}
-                  disabled={pageNumber <= 1}
-                  className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <span className="text-xs sm:text-sm text-gray-700 min-w-[60px] sm:min-w-[70px] text-center">
-                  {pageNumber} / {numPages}
+                <span className="text-xs sm:text-sm text-gray-700">
+                  {numPages} {numPages === 1 ? 'page' : 'pages'}
                 </span>
-                <button
-                  onClick={goToNextPage}
-                  disabled={pageNumber >= numPages}
-                  className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   onClick={zoomOut}
                   className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors hidden sm:block"
+                  title="Zoom out"
                 >
                   <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
@@ -109,6 +87,7 @@ export function CataloguePage() {
                 <button
                   onClick={zoomIn}
                   className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors hidden sm:block"
+                  title="Zoom in"
                 >
                   <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
@@ -123,7 +102,14 @@ export function CataloguePage() {
             </div>
           </div>
 
-          <div id="pdf-container" className="bg-[#f5f5f5] flex justify-center py-6 sm:py-8 px-4 min-h-[600px]">
+          <div
+            id="pdf-container"
+            className="bg-[#f5f5f5] flex flex-col items-center py-6 sm:py-8 px-4 max-h-[800px] overflow-y-auto"
+            style={{
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#004606 #e5e5e5'
+            }}
+          >
             <Document
               file="/roots_and_rope_catalogue.pdf"
               onLoadSuccess={onDocumentLoadSuccess}
@@ -138,24 +124,28 @@ export function CataloguePage() {
                 </div>
               }
             >
-              <Page
-                pageNumber={pageNumber}
-                width={pageWidth > 0 ? pageWidth : undefined}
-                scale={window.innerWidth >= 640 ? scale : undefined}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-                loading={
-                  <div className="flex items-center justify-center h-[500px] bg-white">
-                    <div className="text-gray-500 text-sm">Loading page...</div>
-                  </div>
-                }
-                className="shadow-xl"
-              />
+              {Array.from(new Array(numPages), (_, index) => (
+                <div key={`page_${index + 1}`} className="mb-4 last:mb-0">
+                  <Page
+                    pageNumber={index + 1}
+                    width={pageWidth > 0 ? pageWidth : undefined}
+                    scale={window.innerWidth >= 640 ? scale : undefined}
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                    loading={
+                      <div className="flex items-center justify-center h-[500px] bg-white">
+                        <div className="text-gray-500 text-sm">Loading page {index + 1}...</div>
+                      </div>
+                    }
+                    className="shadow-lg"
+                  />
+                </div>
+              ))}
             </Document>
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center pb-8">
           <p className="text-gray-600 mb-4">
             Want to order from our catalogue?
           </p>
