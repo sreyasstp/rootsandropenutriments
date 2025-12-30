@@ -113,13 +113,13 @@ export function FeaturedProducts() {
               key={product.id}
               ref={(el) => (productRefs.current[index] = el)}
               data-index={index}
-              className={`group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl cursor-pointer transition-all duration-700 ${
+              className={`group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl cursor-pointer transition-all duration-1000 ease-out ${
                 visibleProducts.has(index)
                   ? 'opacity-100 translate-y-0 scale-100'
                   : 'opacity-0 translate-y-12 scale-95'
               } hover:-translate-y-2 hover:scale-105`}
               style={{
-                transitionDelay: visibleProducts.has(index) ? `${index * 150}ms` : '0ms'
+                transitionDelay: visibleProducts.has(index) ? `${index * 200}ms` : '0ms'
               }}
               onClick={() => navigate(`/product/${product.id}`)}
             >
@@ -128,7 +128,7 @@ export function FeaturedProducts() {
                   src={product.image}
                   alt={product.name}
                   loading="lazy"
-                  className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-105 transition-transform duration-700"
+                  className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-105 transition-transform duration-1000 ease-out"
                 />
               </div>
 
@@ -146,7 +146,7 @@ export function FeaturedProducts() {
                 </p>
                 <button
                   onClick={(e) => handleBuyNow(e, product.name)}
-                  className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-500 ease-out flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   Buy Now
@@ -189,7 +189,7 @@ export function FeaturedProducts() {
                 rounded-lg sm:rounded-xl
                 border-2 border-[#004606]
                 hover:bg-[#f2ecdc]
-                transition-all duration-300
+                transition-all duration-500 ease-out
                 shadow-md sm:shadow-xl
                 hover:shadow-lg sm:hover:shadow-2xl
                 active:scale-95 sm:hover:scale-105

@@ -39,13 +39,13 @@ export function Hero() {
                 href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="bg-[#004606] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#005708] transition-all duration-500 ease-out shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 Buy Now
               </a>
               <a
                 href="#products"
-                className="bg-white text-[#004606] px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 border-2 border-[#004606]"
+                className="bg-white text-[#004606] px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-500 ease-out border-2 border-[#004606]"
               >
                 Explore Products
               </a>
@@ -76,7 +76,7 @@ export function Hero() {
           </div>
 
           <div className="relative">
-            <div className="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+            <div className="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-700 ease-out">
               <img
                 src="/og-image.jpg"
                 alt="Happy family with Roots & Rope products"

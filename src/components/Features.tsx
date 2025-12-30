@@ -99,16 +99,16 @@ export function Features() {
               key={index}
               ref={(el) => (featureRefs.current[index] = el)}
               data-index={index}
-              className={`group bg-[#f2ecdc]/30 rounded-xl p-8 hover:bg-[#f2ecdc] hover:shadow-lg hover:-translate-y-1 transition-all duration-700 ${
+              className={`group bg-[#f2ecdc]/30 rounded-xl p-8 hover:bg-[#f2ecdc] hover:shadow-lg hover:-translate-y-1 transition-all duration-1000 ease-out ${
                 visibleFeatures.has(index)
                   ? 'opacity-100 translate-y-0 scale-100'
                   : 'opacity-0 translate-y-8 scale-95'
               }`}
               style={{
-                transitionDelay: visibleFeatures.has(index) ? `${(index % 3) * 120}ms` : '0ms'
+                transitionDelay: visibleFeatures.has(index) ? `${(index % 3) * 200}ms` : '0ms'
               }}
             >
-              <div className="bg-[#004606] w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-[#004606] w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ease-out">
                 <feature.icon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#004606] mb-3">
