@@ -7,14 +7,14 @@ const featuredProducts = [
     name: 'Raw Banana Powder',
     image: '/raw_banana_powder.jpg',
     tagline: 'Rich in Resistant Starch',
-    description: 'A natural superfood that supports gut health and digestion'
+    description: 'Easily digestible and traditionally used for baby food'
   },
   {
     id: 14,
     name: 'Arrow Root Powder',
     image: '/arrowroot_powder.jpg',
     tagline: 'Gentle & Gluten-Free',
-    description: 'Easily digestible and traditionally used for baby food'
+    description: 'A natural superfood that supports gut health and digestion'
   },
   {
     id: 7,
