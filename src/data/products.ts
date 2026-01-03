@@ -103,7 +103,8 @@ export const products: Product[] = [
     benefits: ['Supports heart health', 'Boosts metabolism', 'Moisturizes skin and hair', 'Antibacterial properties', 'Natural source of MCT'],
     usage: 'Use for cooking, frying, or as a hair and skin moisturizer. Can be consumed directly or added to beverages.',
     features: ['100% Pure', 'Cold Pressed', 'No Preservatives', 'Multi-Purpose', 'Naturally Extracted']
-    {
+  },
+  {
     id: 7,
     name: 'Virgin Coconut Oil',
     packSizes: ['100', '200'],
