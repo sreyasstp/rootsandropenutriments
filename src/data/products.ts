@@ -47,10 +47,23 @@ export const products: Product[] = [
     category: 'Dry Fruits & Nuts',
     unit: 'g',
     image: '/almond_gum.jpg',
-    description: 'Traditional remedy for strength and vitality, sourced naturally.',
-    benefits: ['Natural energy booster', 'Strengthens bones and joints', 'Improves immunity', 'Rich in calcium', 'Postpartum nutrition'],
-    usage: 'Roast in ghee and mix with milk and jaggery. Consume warm for best results.',
-    features: ['100% Natural', 'No Preservatives', 'Traditional Quality', 'Carefully Processed']
+    description: 'Traditional natural remedy known for strength and vitality.',
+    benefits: [
+      'Natural energy booster',
+      'Glowing skin and stronger hair',
+      'Strengthens bones and joints',
+      'Improves immunity',
+      'Rich in calcium',
+      'Postpartum nutrition'
+    ],
+    usage:
+      'Soak small pieces in water overnight until they swell and become soft and jelly-like. Consume with water, juice, or milk.',
+    features: [
+      '100% Natural',
+      'No Preservatives',
+      'Traditional Quality',
+      'Carefully Processed'
+    ]
   },
   {
     id: 4,
@@ -90,8 +103,7 @@ export const products: Product[] = [
     benefits: ['Supports heart health', 'Boosts metabolism', 'Moisturizes skin and hair', 'Antibacterial properties', 'Natural source of MCT'],
     usage: 'Use for cooking, frying, or as a hair and skin moisturizer. Can be consumed directly or added to beverages.',
     features: ['100% Pure', 'Cold Pressed', 'No Preservatives', 'Multi-Purpose', 'Naturally Extracted']
-  },
-  {
+    {
     id: 7,
     name: 'Virgin Coconut Oil',
     packSizes: ['100', '200'],
@@ -99,15 +111,18 @@ export const products: Product[] = [
     category: 'Natural Products',
     unit: 'ml',
     image: '/virgin_coconut_oil.jpg',
-    description: 'High-quality virgin coconut oil produced using controlled hot processing to ensure purity, stability, and rich coconut aroma.',
+    description:
+      'High-quality virgin coconut oil produced using controlled hot processing to ensure purity, stability, and rich coconut aroma.',
     benefits: [
+      'Anti-aging properties',
       'Good source of healthy fats',
       'Supports energy levels',
       'Helps maintain skin and hair health',
       'Naturally antimicrobial',
       'Easily digestible'
     ],
-    usage: 'Ideal for regular cooking, sautéing, and frying. Can also be used for oil pulling, hair care, and skin massage.',
+    usage:
+      'Acts as a nutritional booster. Ideal for regular cooking, sautéing, and frying. Can also be used for oil pulling, hair care, and skin massage.',
     features: [
       'Hot Processed',
       '100% Pure',
@@ -115,7 +130,8 @@ export const products: Product[] = [
       'No Added Chemicals',
       'Stable for Cooking'
     ]
-  },
+  }
+  ,
   {
     id: 8,
     name: 'Wheat Flour',
@@ -176,11 +192,23 @@ export const products: Product[] = [
     category: 'Grains & Cereals',
     unit: 'g',
     image: '/puttu.jpg',
-    description: 'Traditional rice flour for making authentic Kerala puttu.',
-    benefits: ['Easy to digest', 'Low in fat', 'Good source of carbohydrates', 'Gluten-free'],
-    usage: 'Steam with grated coconut to make traditional puttu. Serve with banana, kadala curry, or sugar.',
-    features: ['100% Natural', 'No Preservatives', 'Authentic Recipe']
-  },
+    description:
+      'Traditional rice flour made with 75% rice bran for preparing authentic Kerala puttu.',
+    benefits: [
+      'Easy to digest',
+      'Low in fat',
+      'Good source of carbohydrates',
+      'Gluten-free'
+    ],
+    usage:
+      'Steam with grated coconut to make traditional puttu. Serve with banana, kadala curry, or sugar.',
+    features: [
+      '100% Natural',
+      'No Preservatives',
+      'Authentic Recipe'
+    ]
+  }
+  ,
   {
     id: 13,
     name: 'Raw Banana Powder',
