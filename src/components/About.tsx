@@ -1,4 +1,4 @@
-import { TreePine, Sprout, Home } from 'lucide-react';
+import { TreePine, Sprout, Home, Award } from 'lucide-react';
 import { useRef } from 'react';
 import { useParallax } from '../hooks/useParallax';
 
@@ -8,6 +8,7 @@ export function About() {
 
   return (
     <section ref={sectionRef} id="about" className="relative overflow-hidden py-20">
+      {/* BACKGROUND */}
       <div className="absolute inset-0">
         <img
           src="https://images.pexels.com/photos/2132171/pexels-photo-2132171.jpeg?auto=compress&cs=tinysrgb&w=1920"
@@ -15,88 +16,131 @@ export function About() {
           className="w-full h-full object-cover"
           style={{ transform: `translateY(${offset}px)` }}
         />
-        <div className="absolute inset-0 bg-white/85"></div>
+        <div className="absolute inset-0 bg-white/85" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* LEFT CONTENT */}
           <div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
               Our Story
             </h2>
+
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              At Roots & Rope Nutriment, we believe in the power of nature's simplicity. Our journey began with a simple mission: to bring pure, unadulterated natural products from the farm directly to your family's table.
-            </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Every product we offer is carefully sourced from trusted farms, processed with traditional methods, and packaged with care. We're not just selling products; we're sharing a commitment to health, sustainability, and the timeless wisdom of natural nutrition.
+              At Roots & Rope Nutriment, we believe in the power of nature’s simplicity.
+              Our story is rooted in over <strong>75 years of family heritage in agriculture</strong>,
+              shaped by generations who worked the land with care, patience, and deep respect for nature.
             </p>
 
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              Our father, <strong>C. R. Bhavadas</strong>, carried this legacy forward through his
+              lifelong dedication to agriculture and sustainable farming practices.
+              His exceptional contribution was recognized by the Kerala State Government
+              with the prestigious <strong>Kerakesari Award</strong>, honoring him as one of the
+              best coconut farmers in the state.
+            </p>
+
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              Inspired by this proud legacy, Roots & Rope Nutriment was born with a simple yet
+              powerful mission: to bring pure, unadulterated natural products from the farm
+              directly to your family’s table.
+            </p>
+
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              At Roots & Rope, we don’t just create natural products — we carry forward a
+              legacy of agricultural excellence built over generations.
+            </p>
+
+            {/* VALUES */}
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center">
                   <TreePine className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Sustainably Sourced</h3>
-                  <p className="text-gray-600">From responsible farms that care for the earth</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-1">
+                    Sustainably Sourced
+                  </h3>
+                  <p className="text-gray-600">
+                    From responsible farms that respect nature
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center">
                   <Sprout className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Naturally Processed</h3>
-                  <p className="text-gray-600">Traditional methods preserving nutritional value</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-1">
+                    Naturally Processed
+                  </h3>
+                  <p className="text-gray-600">
+                    Traditional methods that preserve nutrition
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="bg-[#004606] w-12 h-12 rounded-lg flex items-center justify-center">
                   <Home className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">Family First</h3>
-                  <p className="text-gray-600">Products we'd serve to our own families</p>
+                  <h3 className="text-xl font-bold text-[#004606] mb-1">
+                    Family First
+                  </h3>
+                  <p className="text-gray-600">
+                    Products we trust for our own families
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* RIGHT CARD */}
           <div className="relative">
             <div className="relative z-10">
-              <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden mb-6 group">
-                {/* <img
-                  src="/farmhouse.jpg"
-                  alt="Our farm house in Kerala"
-                  className="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                /> */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  {/* <h3 className="text-2xl font-bold mb-2 text-white drop-shadow-lg">Our Farm house in Kerala</h3> */}
-                  <p className="text-white/95 drop-shadow">Where nature meets tradition</p>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl p-6 shadow-xl">
-                <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-white rounded-2xl p-10 shadow-2xl">
+                <div className="grid grid-cols-3 gap-8 text-center mb-8">
                   <div>
-                    <div className="text-3xl font-bold text-[#004606] mb-1">21+</div>
-                    <p className="text-xs text-gray-600">Products</p>
+                    <div className="text-4xl font-bold text-[#004606] mb-1">75+</div>
+                    <p className="text-sm text-gray-600">Years of Legacy</p>
                   </div>
+
+                  <div>
+                    <div className="text-4xl font-bold text-[#004606] mb-1">21+</div>
+                    <p className="text-sm text-gray-600">Natural Products</p>
+                  </div>
+
+                  <div>
+                    <Award className="w-9 h-9 mx-auto text-[#004606] mb-1" />
+                    <p className="text-sm text-gray-600">Kerakesari Award</p>
+                  </div>
+                </div>
+
+                {/* DIVIDER */}
+                <div className="h-px bg-gray-200 mb-8" />
+
+                {/* SECOND ROW */}
+                <div className="grid grid-cols-2 gap-8 text-center">
                   <div>
                     <div className="text-3xl font-bold text-[#004606] mb-1">100%</div>
-                    <p className="text-xs text-gray-600">Natural</p>
+                    <p className="text-sm text-gray-600">Natural</p>
                   </div>
+
                   <div>
                     <div className="text-3xl font-bold text-[#004606] mb-1">0</div>
-                    <p className="text-xs text-gray-600">Additives</p>
+                    <p className="text-sm text-gray-600">Additives</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-6 -right-6 w-full h-full bg-[#004606]/10 rounded-2xl -z-0"></div>
+
+            {/* BACK SHAPE */}
+            <div className="absolute -bottom-6 -right-6 w-full h-full bg-[#004606]/10 rounded-2xl -z-0" />
           </div>
+
         </div>
       </div>
     </section>
