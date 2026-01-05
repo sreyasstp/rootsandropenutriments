@@ -46,7 +46,7 @@ export function WomenInitiative() {
             Empowered by Women
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A women-led initiative bringing passion, tradition, and nature&apos;s finest to your family.
+            A woman-led initiative bringing passion, tradition, and nature&apos;s finest to your family.
           </p>
         </div>
 
