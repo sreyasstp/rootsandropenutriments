@@ -29,27 +29,29 @@ export function About() {
 
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
               At Roots & Rope Nutriment, we believe in the power of nature’s simplicity.
-              Our story is rooted in over <strong>100 years of family heritage in agriculture</strong>,
-              shaped by generations who worked the land with care, patience, and deep respect for nature.
+              Our journey is rooted in over <strong>75 years of family heritage in agriculture</strong>,
+              passed down through generations who worked the land with care, patience,
+              and respect for nature.
             </p>
 
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Our father, carried this legacy forward through his
-              lifelong dedication to agriculture and sustainable farming practices.
-              His exceptional contribution was recognized by the Kerala State Government
-              with the prestigious <strong>Kerakesari Award</strong>, honoring him as one of the
-              best coconut farmers in the state.
+              Our commitment to excellence in coconut farming was recognized by the
+              Kerala State Government with the prestigious <strong>Kerakesari Award</strong>,
+              an honor bestowed upon one of the best coconut farmers in the state.
             </p>
 
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Inspired by this proud legacy, Roots & Rope Nutriment was born with a simple yet
-              powerful mission: to bring pure, unadulterated natural products from the farm
-              directly to your family’s table.
+              Building on this legacy, Roots & Rope Nutriment was founded with a simple
+              yet powerful mission: to bring pure, unadulterated natural products from
+              the farm directly to your family’s table. Every product reflects decades
+              of agricultural wisdom, ethical practices, and a dedication to quality
+              nurtured over generations.
             </p>
 
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              At Roots & Rope, we don’t just create natural products — we carry forward a
-              legacy of agricultural excellence built over generations.
+              At Roots & Rope, we don’t just offer products — we continue a
+              <strong> 75-year legacy of agricultural excellence</strong>,
+              rooted in tradition and grown with integrity.
             </p>
 
             {/* VALUES */}
@@ -63,7 +65,7 @@ export function About() {
                     Sustainably Sourced
                   </h3>
                   <p className="text-gray-600">
-                    From responsible farms that respect nature
+                    Grown with care and respect for nature
                   </p>
                 </div>
               </div>
@@ -77,7 +79,7 @@ export function About() {
                     Naturally Processed
                   </h3>
                   <p className="text-gray-600">
-                    Traditional methods that preserve nutrition
+                    Traditional methods that preserve purity and nutrition
                   </p>
                 </div>
               </div>
@@ -91,7 +93,7 @@ export function About() {
                     Family First
                   </h3>
                   <p className="text-gray-600">
-                    Products we trust for our own families
+                    Products we proudly serve our own families
                   </p>
                 </div>
               </div>
@@ -104,7 +106,7 @@ export function About() {
               <div className="bg-white rounded-2xl p-10 shadow-2xl">
                 <div className="grid grid-cols-3 gap-8 text-center mb-8">
                   <div>
-                    <div className="text-4xl font-bold text-[#004606] mb-1">100+</div>
+                    <div className="text-4xl font-bold text-[#004606] mb-1">75+</div>
                     <p className="text-sm text-gray-600">Years of Legacy</p>
                   </div>
 
@@ -119,10 +121,8 @@ export function About() {
                   </div>
                 </div>
 
-                {/* DIVIDER */}
                 <div className="h-px bg-gray-200 mb-8" />
 
-                {/* SECOND ROW */}
                 <div className="grid grid-cols-2 gap-8 text-center">
                   <div>
                     <div className="text-3xl font-bold text-[#004606] mb-1">100%</div>
@@ -137,10 +137,8 @@ export function About() {
               </div>
             </div>
 
-            {/* BACK SHAPE */}
             <div className="absolute -bottom-6 -right-6 w-full h-full bg-[#004606]/10 rounded-2xl -z-0" />
           </div>
-
         </div>
       </div>
     </section>
