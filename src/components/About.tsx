@@ -29,12 +29,12 @@ export function About() {
 
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
               At Roots & Rope Nutriment, we believe in the power of nature’s simplicity.
-              Our story is rooted in over <strong>75 years of family heritage in agriculture</strong>,
+              Our story is rooted in over <strong>100 years of family heritage in agriculture</strong>,
               shaped by generations who worked the land with care, patience, and deep respect for nature.
             </p>
 
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Our father, <strong>C. R. Bhavadas</strong>, carried this legacy forward through his
+              Our father, carried this legacy forward through his
               lifelong dedication to agriculture and sustainable farming practices.
               His exceptional contribution was recognized by the Kerala State Government
               with the prestigious <strong>Kerakesari Award</strong>, honoring him as one of the
@@ -104,7 +104,7 @@ export function About() {
               <div className="bg-white rounded-2xl p-10 shadow-2xl">
                 <div className="grid grid-cols-3 gap-8 text-center mb-8">
                   <div>
-                    <div className="text-4xl font-bold text-[#004606] mb-1">75+</div>
+                    <div className="text-4xl font-bold text-[#004606] mb-1">100+</div>
                     <p className="text-sm text-gray-600">Years of Legacy</p>
                   </div>
 
