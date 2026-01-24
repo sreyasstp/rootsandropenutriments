@@ -31,15 +31,18 @@ export function ProductDetail() {
 
   const handleAddToCart = () => {
     if (!product) return;
-
-    // selectedSize is like "250g" or "500ml"
-    // we need only packSize number: "250" from "250g"
-    const packSizeOnly = selectedSize.replace(product.unit, '');
-
+  
+    // ✅ If selectedSize is empty, fallback to first pack size
+    const sizeToUse = selectedSize || `${product.packSizes[0]}${product.unit}`;
+  
+    // ✅ Convert "250g" -> "250"
+    const packSizeOnly = sizeToUse.replace(product.unit, '').trim();
+  
     addToCart(product, packSizeOnly, quantity);
-
+  
     toast.success(`${product.name} added to cart ✅`);
   };
+  
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
   const decrementQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
@@ -128,6 +131,7 @@ export function ProductDetail() {
                     onClick={() => {
                       setSelectedSize(`${size}${product.unit}`);
                       setSelectedPrice(product.prices[index]);
+                      setQuantity(1); // ✅ add this
                     }}
                     className={`flex flex-col items-center px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${selectedSize === `${size}${product.unit}`
                         ? 'bg-gradient-to-br from-[#004606] to-[#006609] text-white'

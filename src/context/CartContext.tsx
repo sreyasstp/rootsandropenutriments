@@ -7,8 +7,8 @@ export interface CartItem {
   image: string;
   category: string;
 
-  packSize: string;
-  unit: string;
+  packSize: string; // "250" etc
+  unit: string; // g/ml
   price: number;
 
   quantity: number;
@@ -38,7 +38,7 @@ const getPriceByPackSize = (product: Product, packSize: string): number => {
   return product.prices[index];
 };
 
-// ✅ Lazy load cart from localStorage (NO RESET issue)
+// ✅ Lazy load cart from localStorage
 const loadCartFromStorage = (): CartItem[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -51,27 +51,32 @@ const loadCartFromStorage = (): CartItem[] => {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>(loadCartFromStorage);
 
-  // ✅ Save to localStorage when cart changes
+  // ✅ Save to localStorage whenever cart updates
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
   const cartCount = useMemo(() => {
-    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    return cartItems.length; // ✅ unique items count
   }, [cartItems]);
-
+  
   const cartTotal = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cartItems]);
 
+  // ✅ FINAL addToCart (normalized packsize)
   const addToCart = (product: Product, selectedPackSize: string, quantity: number = 1) => {
-    const price = getPriceByPackSize(product, selectedPackSize);
+    // ✅ normalize: "250g" -> "250"
+    const normalizedPackSize = selectedPackSize.replace(product.unit, "").trim();
+
+    const price = getPriceByPackSize(product, normalizedPackSize);
 
     setCartItems((prev) => {
       const existingIndex = prev.findIndex(
-        (x) => x.productId === product.id && x.packSize === selectedPackSize
+        (x) => x.productId === product.id && x.packSize === normalizedPackSize
       );
 
+      // ✅ If exists, increase qty
       if (existingIndex !== -1) {
         const updated = [...prev];
         updated[existingIndex] = {
@@ -81,6 +86,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return updated;
       }
 
+      // ✅ If new, add fresh item
       return [
         ...prev,
         {
@@ -88,7 +94,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           name: product.name,
           image: product.image,
           category: product.category,
-          packSize: selectedPackSize,
+          packSize: normalizedPackSize,
           unit: product.unit,
           price,
           quantity,
@@ -98,7 +104,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const removeFromCart = (productId: number, packSize: string) => {
-    setCartItems((prev) => prev.filter((x) => !(x.productId === productId && x.packSize === packSize)));
+    setCartItems((prev) =>
+      prev.filter((x) => !(x.productId === productId && x.packSize === packSize))
+    );
   };
 
   const increaseQty = (productId: number, packSize: string) => {
