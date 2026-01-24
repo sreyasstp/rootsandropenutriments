@@ -2,8 +2,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { products } from '../data/products';
 import { ArrowLeft, Check, Leaf, Shield, Heart, ShoppingCart, Plus, Minus } from 'lucide-react';
+import { useCart } from '../context/CartContext';
+import { toast } from 'react-toastify';
 
 export function ProductDetail() {
+  const { addToCart } = useCart();
+
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
@@ -23,6 +27,18 @@ export function ProductDetail() {
     const message = `Hi, I want to buy:\n\nProduct: ${product?.name}\nSize: ${selectedSize}\nQuantity: ${quantity}`;
     const whatsappUrl = `https://wa.me/917012426181?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
+  };
+
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    // selectedSize is like "250g" or "500ml"
+    // we need only packSize number: "250" from "250g"
+    const packSizeOnly = selectedSize.replace(product.unit, '');
+
+    addToCart(product, packSizeOnly, quantity);
+
+    toast.success(`${product.name} added to cart ✅`);
   };
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
@@ -113,18 +129,16 @@ export function ProductDetail() {
                       setSelectedSize(`${size}${product.unit}`);
                       setSelectedPrice(product.prices[index]);
                     }}
-                    className={`flex flex-col items-center px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${
-                      selectedSize === `${size}${product.unit}`
+                    className={`flex flex-col items-center px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-md hover:shadow-xl transition-all ${selectedSize === `${size}${product.unit}`
                         ? 'bg-gradient-to-br from-[#004606] to-[#006609] text-white'
                         : 'bg-gray-100 text-[#004606] hover:bg-gray-200'
-                    }`}
+                      }`}
                   >
                     <span>{size}{product.unit}</span>
-                    <span className={`text-sm font-semibold mt-1 ${
-                      selectedSize === `${size}${product.unit}`
+                    <span className={`text-sm font-semibold mt-1 ${selectedSize === `${size}${product.unit}`
                         ? 'text-white/90'
                         : 'text-gray-600'
-                    }`}>
+                      }`}>
                       ₹{product.prices[index]}
                     </span>
                   </button>
@@ -159,14 +173,25 @@ export function ProductDetail() {
                   {quantity} × ₹{selectedPrice}
                 </div>
               </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* ✅ Add to Cart */}
+                <button
+                  onClick={handleAddToCart}
+                  className="w-full bg-[#004606] hover:bg-[#006609] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
+                >
+                  <ShoppingCart className="w-6 h-6" />
+                  Add to Cart
+                </button>
 
-              <button
-                onClick={handleBuyNow}
-                className="w-full bg-[#004606] hover:bg-[#006609] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
-              >
-                <ShoppingCart className="w-6 h-6" />
-                Buy Now on WhatsApp
-              </button>
+                {/* ✅ WhatsApp Buy Now */}
+                <button
+                  onClick={handleBuyNow}
+                  className="w-full bg-white border-2 border-[#004606] text-[#004606] font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg hover:bg-[#f2ecdc]"
+                >
+                  Buy Now
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
