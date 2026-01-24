@@ -1,6 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { toast } from "react-toastify";
+
+import { products } from '../data/products'; // ✅ adjust path
+import { useCart } from '../context/CartContext'; // ✅ adjust path
+
 
 const featuredProducts = [
   {
@@ -47,9 +52,10 @@ const featuredProducts = [
   }
 ];
 
-
 export function FeaturedProducts() {
   const navigate = useNavigate();
+  const { addToCart } = useCart(); // ✅ from context
+
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -80,12 +86,20 @@ export function FeaturedProducts() {
     };
   }, []);
 
-  const handleBuyNow = (e: React.MouseEvent, productName: string) => {
+  // ✅ Add to cart
+  const handleAddToCart = (e: React.MouseEvent, productId: number) => {
     e.stopPropagation();
-    const message = `Hi, I want to buy:\n\nProduct: ${productName}`;
-    const whatsappUrl = `https://wa.me/917012426181?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+  
+    const fullProduct = products.find((p) => p.id === productId);
+    if (!fullProduct) return;
+  
+    const defaultPackSize = fullProduct.packSizes[0];
+  
+    addToCart(fullProduct, defaultPackSize, 1);
+  
+    toast.success(`${fullProduct.name} added to cart`);
   };
+  
 
   return (
     <section className="py-20 bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white">
@@ -93,15 +107,12 @@ export function FeaturedProducts() {
         <div className="text-center mb-16">
           <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
             <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
-            Featured Collection
+              Featured Collection
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
             Our Premium Products
           </h2>
-          {/* <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-4">
-            Manufactured & Sold by Roots & Rope Nutriment, Kerala
-          </p> */}
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
             100% Natural • Preservative Free • Traditionally Sourced
           </p>
@@ -138,19 +149,34 @@ export function FeaturedProducts() {
                     {product.tagline}
                   </span>
                 </div>
+
                 <h3 className="text-2xl font-bold text-[#004606] mb-2">
                   {product.name}
                 </h3>
+
                 <p className="text-gray-600 leading-relaxed mb-4">
                   {product.description}
                 </p>
+
+                {/* ✅ Add to Cart Button */}
                 <button
-                  onClick={(e) => handleBuyNow(e, product.name)}
+                  onClick={(e) => handleAddToCart(e, product.id)}
                   className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-500 ease-out flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  Buy Now
+                  Add to Cart
                 </button>
+
+                {/* ✅ Optional: "Go to Cart" small text link */}
+                {/* <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/cart');
+                  }}
+                  className="mt-2 w-full text-sm text-[#004606] underline"
+                >
+                  View Cart
+                </button> */}
               </div>
             </div>
           ))}
@@ -158,27 +184,6 @@ export function FeaturedProducts() {
 
         <div className="text-center space-y-6">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {/* <a
-              href="https://wa.me/917012426181?text=Hi,%20I%20want%20to%20buy%20products%20from%20Roots%20%26%20Rope%20Nutriment"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                inline-flex items-center justify-center gap-2
-                bg-[#004606] text-white font-semibold
-                px-6 py-3 text-sm
-                sm:px-8 sm:py-4 sm:text-base sm:font-bold
-                rounded-lg sm:rounded-xl
-                hover:bg-[#006609]
-                transition-all duration-300
-                shadow-md sm:shadow-xl
-                hover:shadow-lg sm:hover:shadow-2xl
-                active:scale-95 sm:hover:scale-105
-              "
-            >
-              Order Now
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a> */}
-
             <a
               href="#products"
               className="
@@ -198,7 +203,6 @@ export function FeaturedProducts() {
               View all Products
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
-
           </div>
         </div>
       </div>

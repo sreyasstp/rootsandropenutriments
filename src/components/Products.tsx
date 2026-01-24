@@ -3,16 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ShoppingCart } from 'lucide-react';
 import { products, categories } from '../data/products';
 
+import { toast } from 'react-toastify';
+import { useCart } from '../context/CartContext';
+
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [showAll, setShowAll] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
+
   const navigate = useNavigate();
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const filteredProducts = selectedCategory === 'All Products'
-    ? products
-    : products.filter(p => p.category === selectedCategory);
+  // ✅ Hook MUST be inside component
+  const { addToCart } = useCart();
+
+  const filteredProducts =
+    selectedCategory === 'All Products'
+      ? products
+      : products.filter((p) => p.category === selectedCategory);
 
   const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 12);
   const hasMoreProducts = filteredProducts.length > 12;
@@ -58,6 +66,20 @@ export function Products() {
     window.open(whatsappUrl, '_blank');
   };
 
+  // ✅ Add to cart MUST be inside component (because it uses addToCart)
+  const handleAddToCart = (e: React.MouseEvent, productId: number) => {
+    e.stopPropagation();
+
+    const fullProduct = products.find((p) => p.id === productId);
+    if (!fullProduct) return;
+
+    const defaultPackSize = fullProduct.packSizes[0];
+
+    addToCart(fullProduct, defaultPackSize, 1);
+
+    toast.success(`${fullProduct.name} added to cart ✅`);
+  };
+
   return (
     <section id="products" className="py-20 bg-[#f2ecdc]/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,9 +123,7 @@ export function Products() {
               ref={(el) => (productRefs.current[index] = el)}
               data-index={index}
               className={`bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden group hover:-translate-y-1 cursor-pointer w-full max-w-sm transition-all duration-700 ${
-                visibleProducts.has(index)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-8'
+                visibleProducts.has(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{
                 transitionDelay: visibleProducts.has(index) ? `${(index % 4) * 100}ms` : '0ms'
@@ -126,19 +146,24 @@ export function Products() {
 
                 <div className="mb-4">
                   <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-2xl font-bold text-[#004606]">₹{product.prices[0]}</span>
+                    <span className="text-2xl font-bold text-[#004606]">
+                      ₹{product.prices[0]}
+                    </span>
                     {product.prices.length > 1 && (
-                      <span className="text-sm text-gray-500">- ₹{product.prices[product.prices.length - 1]}</span>
+                      <span className="text-sm text-gray-500">
+                        - ₹{product.prices[product.prices.length - 1]}
+                      </span>
                     )}
                   </div>
-                  {/* <p className="text-sm text-gray-500 mb-2">Available Sizes:</p> */}
+
                   <div className="flex flex-wrap gap-2">
-                    {product.packSizes.map((size, index) => (
+                    {product.packSizes.map((size, i) => (
                       <span
-                        key={index}
+                        key={i}
                         className="bg-[#f2ecdc] text-[#004606] px-3 py-1 rounded-full text-sm font-medium"
                       >
-                        {size}{product.unit}
+                        {size}
+                        {product.unit}
                       </span>
                     ))}
                   </div>
@@ -146,12 +171,20 @@ export function Products() {
 
                 <div className="pt-4 border-t border-gray-100 space-y-3">
                   <button
-                    onClick={(e) => handleBuyNow(e, product.name)}
+                    onClick={(e) => handleAddToCart(e, product.id)}
                     className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <ShoppingCart className="w-5 h-5" />
-                    Buy Now
+                    Add to Cart
                   </button>
+                      /
+                  {/* <button
+                    onClick={(e) => handleBuyNow(e, product.name)}
+                    className="w-full bg-white border-2 border-[#004606] text-[#004606] font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 hover:bg-[#f2ecdc]"
+                  >
+                    Buy Now
+                  </button> */}
+
                   <span className="block text-xs text-gray-500 uppercase tracking-wide text-center">
                     {product.category}
                   </span>
