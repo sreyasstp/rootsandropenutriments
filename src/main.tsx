@@ -13,10 +13,13 @@ import { CheckoutPage } from "./pages/CheckoutPage";
 import { CartProvider } from './context/CartContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ScrollToTop } from "./components/ScrollToTop";
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+    <ScrollToTop />
       <CartProvider>
         <div className="min-h-screen bg-white">
           <Header />
