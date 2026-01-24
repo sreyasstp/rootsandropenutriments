@@ -21,13 +21,13 @@ export function CheckoutPage() {
 
   const handleWhatsAppCheckout = () => {
     if (!name.trim() || !phone.trim() || !address.trim()) {
-      alert("Please fill name, phone and address ✅");
+      alert("Please fill name, phone and address ");
       return;
     }
 
-    const message = `Hi Roots & Rope 👋
+    const message = `Hi
 
-I want to place an order ✅
+I want to place an order 
 
 Customer Details:
 Name: ${name}
@@ -153,7 +153,7 @@ Total Amount: ₹${cartTotal}
                   onClick={handleWhatsAppCheckout}
                   className="w-full bg-[#004606] hover:bg-[#006609] text-white font-bold py-3 rounded-lg transition-all duration-300"
                 >
-                  Place Order on WhatsApp ✅
+                  Place Order on WhatsApp
                 </button>
 
                 <p className="text-xs text-gray-500 text-center">
