@@ -88,7 +88,7 @@ export function Products() {
 
     addToCart(fullProduct, defaultPackSize, 1);
 
-    toast.success(`${fullProduct.name} added to cart ✅`);
+    toast.success(`${fullProduct.name} added to cart`);
   };
 
   return (

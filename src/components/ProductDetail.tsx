@@ -40,7 +40,7 @@ export function ProductDetail() {
   
     addToCart(product, packSizeOnly, quantity);
   
-    toast.success(`${product.name} added to cart ✅`);
+    toast.success(`${product.name} added to cart`);
   };
   
 
