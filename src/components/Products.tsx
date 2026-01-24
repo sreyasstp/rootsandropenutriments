@@ -11,11 +11,22 @@ export function Products() {
   const [showAll, setShowAll] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
 
+  // ✅ Mobile View Toggle (1 column or 2 columns) - mobile only
+  const [mobileView, setMobileView] = useState<'one' | 'two'>(() => {
+    const saved = localStorage.getItem('mobile_products_view');
+    return saved === 'two' ? 'two' : 'one';
+  });
+
   const navigate = useNavigate();
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // ✅ Hook MUST be inside component
   const { addToCart } = useCart();
+
+  // ✅ Save view preference
+  useEffect(() => {
+    localStorage.setItem('mobile_products_view', mobileView);
+  }, [mobileView]);
 
   const filteredProducts =
     selectedCategory === 'All Products'
@@ -66,7 +77,7 @@ export function Products() {
     window.open(whatsappUrl, '_blank');
   };
 
-  // ✅ Add to cart MUST be inside component (because it uses addToCart)
+  // ✅ Add to cart
   const handleAddToCart = (e: React.MouseEvent, productId: number) => {
     e.stopPropagation();
 
@@ -90,6 +101,7 @@ export function Products() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
             Explore our range of premium natural products, carefully sourced and processed for your family
           </p>
+
           <a
             href="/roots_and_rope_catalogue.pdf"
             download="Roots_and_Rope_Catalogue.pdf"
@@ -100,7 +112,8 @@ export function Products() {
           </a>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        {/* Category Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {categories.map((category) => (
             <button
               key={category}
@@ -116,17 +129,52 @@ export function Products() {
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+        {/* ✅ Mobile View Toggle */}
+        <div className="flex justify-center mb-10 md:hidden">
+          <div className="inline-flex bg-white border rounded-xl overflow-hidden shadow-sm">
+            <button
+              onClick={() => setMobileView('one')}
+              className={`px-5 py-2 text-sm font-semibold transition ${
+                mobileView === 'one'
+                  ? 'bg-[#004606] text-white'
+                  : 'text-[#004606] hover:bg-[#f2ecdc]'
+              }`}
+            >
+              1x
+            </button>
+            <button
+              onClick={() => setMobileView('two')}
+              className={`px-5 py-2 text-sm font-semibold transition ${
+                mobileView === 'two'
+                  ? 'bg-[#004606] text-white'
+                  : 'text-[#004606] hover:bg-[#f2ecdc]'
+              }`}
+            >
+              2x
+            </button>
+          </div>
+        </div>
+
+        {/* ✅ Grid */}
+        <div
+          className={`grid gap-6 justify-items-center ${
+            mobileView === 'two' ? 'grid-cols-2' : 'grid-cols-1'
+          } sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`}
+        >
           {displayedProducts.map((product, index) => (
             <div
               key={product.id}
               ref={(el) => (productRefs.current[index] = el)}
               data-index={index}
               className={`bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden group hover:-translate-y-1 cursor-pointer w-full max-w-sm transition-all duration-700 ${
-                visibleProducts.has(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                visibleProducts.has(index)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
               }`}
               style={{
-                transitionDelay: visibleProducts.has(index) ? `${(index % 4) * 100}ms` : '0ms'
+                transitionDelay: visibleProducts.has(index)
+                  ? `${(index % 4) * 100}ms`
+                  : '0ms'
               }}
               onClick={() => navigate(`/product/${product.id}`)}
             >
@@ -140,9 +188,7 @@ export function Products() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#004606] mb-2">
-                  {product.name}
-                </h3>
+                <h3 className="text-xl font-bold text-[#004606] mb-2">{product.name}</h3>
 
                 <div className="mb-4">
                   <div className="flex items-baseline gap-2 mb-3">
@@ -177,7 +223,8 @@ export function Products() {
                     <ShoppingCart className="w-5 h-5" />
                     Add to Cart
                   </button>
-                      /
+
+                  {/* Optional Buy Now */}
                   {/* <button
                     onClick={(e) => handleBuyNow(e, product.name)}
                     className="w-full bg-white border-2 border-[#004606] text-[#004606] font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 hover:bg-[#f2ecdc]"
@@ -194,12 +241,14 @@ export function Products() {
           ))}
         </div>
 
+        {/* No products */}
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No products found in this category</p>
           </div>
         )}
 
+        {/* Load More */}
         {hasMoreProducts && !showAll && (
           <div className="text-center mt-12">
             <button
