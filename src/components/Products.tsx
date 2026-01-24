@@ -130,7 +130,7 @@ export function Products() {
         </div>
 
         {/* ✅ Mobile View Toggle */}
-        <div className="flex justify-center mb-10 md:hidden">
+        {/* <div className="flex justify-center mb-10 md:hidden">
           <div className="inline-flex bg-white border rounded-xl overflow-hidden shadow-sm">
             <button
               onClick={() => setMobileView('one')}
@@ -153,7 +153,7 @@ export function Products() {
               2x
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* ✅ Grid */}
         <div
