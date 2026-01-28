@@ -111,9 +111,8 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
-          isScrolled ? 'shadow-md' : ''
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''
+          }`}
       >
         <div className="relative">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -157,7 +156,10 @@ export function Header() {
                         results.map((p) => (
                           <button
                             key={p.id}
-                            onClick={() => handleResultClick(p.id)}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              handleResultClick(p.id);
+                            }}
                             className="w-full flex items-center gap-3 p-3 hover:bg-[#f2ecdc]/40 text-left"
                           >
                             <img
