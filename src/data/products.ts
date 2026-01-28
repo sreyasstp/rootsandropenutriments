@@ -13,6 +13,7 @@ export interface Product {
 }
 
 export const products: Product[] = [
+ 
   {
     id: 1,
     name: 'Almonds',
@@ -174,6 +175,35 @@ export const products: Product[] = [
   },
   {
     id: 11,
+    name: 'Sprouted Ragi Flour',
+    packSizes: ['500', '1000'],
+    prices: [130, 250],
+    category: 'Grains & Cereals',
+    unit: 'g',
+    image: '/sprouted_raggi_flour.png',
+    description:
+      'Nutritious sprouted ragi flour made from carefully sprouted finger millet to enhance mineral absorption and digestibility.',
+    benefits: [
+      'High calcium content',
+      'Improved mineral absorption due to sprouting',
+      'Good for bone health',
+      'Supports digestion',
+      'Ideal for diabetics',
+      'Rich in iron'
+    ],
+    usage:
+      'Use to prepare ragi porridge, dosa, roti, malt, or healthy breakfast recipes.',
+    features: [
+      'Sprouted & Naturally Processed',
+      '100% Natural',
+      'No Preservatives',
+      'Stone Ground',
+      'Traditional Method'
+    ]
+  },
+  
+  {
+    id: 12,
     name: 'Jaggery',
     packSizes: ['500', '1000'],
     prices: [70, 130],
@@ -186,7 +216,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Unrefined']
   },
   {
-    id: 12,
+    id: 13,
     name: 'Puttu Podi',
     packSizes: ['500', '1000'],
     prices: [80, 150],
@@ -211,7 +241,7 @@ export const products: Product[] = [
   }
   ,
   {
-    id: 13,
+    id: 14,
     name: 'Raw Banana Powder',
     packSizes: ['100', '250', '500'],
     prices: [159, 390, 740],
@@ -224,7 +254,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'No Additives', 'Gluten-Free', 'Baby-Friendly']
   },
   {
-    id: 14,
+    id: 15,
     name: 'Arrow Root Powder',
     packSizes: ['100', '250', '500'],
     prices: [159, 390, 740],
@@ -250,7 +280,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 15,
+    id: 16,
     name: 'Turmeric Powder',
     packSizes: ['100', '250', '500'],
     prices: [69, 170, 320],
@@ -263,7 +293,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'High Curcumin Content']
   },
   {
-    id: 16,
+    id: 17,
     name: 'Chilli Powder',
     packSizes: ['100', '250', '500'],
     prices: [59, 145, 275],
@@ -276,7 +306,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Vibrant Color']
   },
   {
-    id: 17,
+    id: 18,
     name: 'Kashmiri Chilli Powder',
     packSizes: ['100', '250', '500'],
     prices: [79, 195, 370],
@@ -289,7 +319,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Authentic Kashmiri']
   },
   {
-    id: 18,
+    id: 19,
     name: 'Coriander Powder',
     packSizes: ['100', '250', '500'],
     prices: [49, 120, 230],
@@ -302,7 +332,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Freshly Ground']
   },
   {
-    id: 19,
+    id: 20,
     name: 'Garam Masala',
     packSizes: ['100', '250', '500'],
     prices: [109, 265, 275],
@@ -315,7 +345,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Traditional Blend']
   },
   {
-    id: 20,
+    id: 21,
     name: 'Chilli Flakes',
     packSizes: ['100', '250', '500'],
     prices: [59, 145, 275],
@@ -328,7 +358,7 @@ export const products: Product[] = [
     features: ['100% Natural', 'No Preservatives', 'Convenient']
   },
   {
-    id: 21,
+    id: 22,
     name: 'Sambar Powder',
     packSizes: ['100', '250', '500'],
     prices: [89, 215, 415],

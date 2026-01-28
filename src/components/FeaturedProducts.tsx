@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import { products } from '../data/products'; // ✅ adjust path
-import { useCart } from '../context/CartContext'; // ✅ adjust path
-
+import { products } from '../data/products';
+import { useCart } from '../context/CartContext';
 
 const featuredProducts = [
   {
@@ -54,156 +53,210 @@ const featuredProducts = [
 
 export function FeaturedProducts() {
   const navigate = useNavigate();
-  const { addToCart } = useCart(); // ✅ from context
+  const { addToCart } = useCart();
 
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // ✅ Selected pack per product
+  const [selectedPack, setSelectedPack] = useState<Record<number, string>>({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            const index = Number(entry.target.getAttribute('data-index'));
             setVisibleProducts((prev) => new Set(prev).add(index));
           }
         });
       },
-      {
-        threshold: 0.15,
-        rootMargin: '50px'
-      }
+      { threshold: 0.15, rootMargin: '50px' }
     );
 
-    productRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      productRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
+    productRefs.current.forEach((ref) => ref && observer.observe(ref));
+    return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
   }, []);
+
+  // ✅ Get price based on selected pack
+  const getPriceForPack = (product: any) => {
+    const selectedSize = selectedPack[product.id];
+    if (!selectedSize) return product.prices[0];
+
+    const index = product.packSizes.indexOf(selectedSize);
+    return index !== -1 ? product.prices[index] : product.prices[0];
+  };
+
+  // ✅ Pack select
+  const handlePackSelect = (
+    e: React.MouseEvent,
+    productId: number,
+    pack: string
+  ) => {
+    e.stopPropagation();
+    setSelectedPack((prev) => ({ ...prev, [productId]: pack }));
+  };
 
   // ✅ Add to cart
   const handleAddToCart = (e: React.MouseEvent, productId: number) => {
     e.stopPropagation();
-  
-    const fullProduct = products.find((p) => p.id === productId);
-    if (!fullProduct) return;
-  
-    const defaultPackSize = fullProduct.packSizes[0];
-  
-    addToCart(fullProduct, defaultPackSize, 1);
-  
-    toast.success(`${fullProduct.name} added to cart`);
+
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
+    const pack = selectedPack[productId];
+    if (!pack) {
+      toast.error('Please select a pack size');
+      return;
+    }
+
+    addToCart(product, pack, 1);
+    toast.success(`${product.name} (${pack}${product.unit}) added to cart`);
   };
-  
 
   return (
     <section className="py-20 bg-gradient-to-br from-[#f2ecdc] via-[#faf8f0] to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
         <div className="text-center mb-16">
-          <div className="inline-block bg-[#004606]/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-            <span className="text-[#004606] text-sm font-semibold uppercase tracking-wide">
+          <div className="inline-block bg-[#004606]/10 px-4 py-2 rounded-full mb-4">
+            <span className="text-[#004606] text-sm font-semibold uppercase">
               Featured Collection
             </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-[#004606] mb-6">
             Our Premium Products
           </h2>
-          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600">
             100% Natural • Preservative Free • Traditionally Sourced
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {featuredProducts.map((product, index) => (
-            <div
-              key={product.id}
-              ref={(el) => (productRefs.current[index] = el)}
-              data-index={index}
-              className={`group bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl cursor-pointer transition-all duration-1000 ease-out ${
-                visibleProducts.has(index)
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-12 scale-95'
-              } hover:-translate-y-2 hover:scale-105`}
-              style={{
-                transitionDelay: visibleProducts.has(index) ? `${index * 200}ms` : '0ms'
-              }}
-              onClick={() => navigate(`/product/${product.id}`)}
-            >
-              <div className="relative h-72 overflow-hidden bg-[#f2ecdc] flex items-center justify-center">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  loading="lazy"
-                  className="max-w-[90%] max-h-[90%] object-contain group-hover:scale-105 transition-transform duration-1000 ease-out"
-                />
-              </div>
+        {/* Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
+          {featuredProducts.map((item, index) => {
+            const product = products.find((p) => p.id === item.id);
+            if (!product) return null;
 
-              <div className="p-6">
-                <div className="mb-3">
-                  <span className="inline-block bg-[#004606]/5 text-[#004606] text-xs font-semibold px-3 py-1 rounded-full">
-                    {product.tagline}
+            return (
+              <div
+                key={item.id}
+                ref={(el) => (productRefs.current[index] = el)}
+                data-index={index}
+                onClick={() => navigate(`/product/${item.id}`)}
+                className={`group bg-white rounded-3xl overflow-hidden cursor-pointer
+                  shadow-[0_20px_50px_rgba(0,0,0,0.12)]
+                  hover:shadow-[0_30px_80px_rgba(0,0,0,0.18)]
+                  transition-all duration-700 ease-out
+                  ${
+                    visibleProducts.has(index)
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-12'
+                  }
+                  hover:-translate-y-2`}
+                style={{
+                  transitionDelay: visibleProducts.has(index)
+                    ? `${index * 150}ms`
+                    : '0ms'
+                }}
+              >
+               {/* Image */}
+<div className="relative h-72 bg-[#f2ecdc] flex items-center justify-center">
+  <img
+    src={item.image}
+    alt={item.name}
+    loading="lazy"
+    className="
+      max-w-[90%]
+      max-h-[90%]
+      object-contain
+      transition-transform duration-700 ease-out
+      group-hover:scale-105
+    "
+  />
+</div>
+
+
+                {/* Content */}
+                <div className="p-6">
+                  <span className="inline-block bg-[#004606]/5 text-[#004606] text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                    {item.tagline}
                   </span>
+
+                  <h3 className="text-2xl font-extrabold tracking-tight text-[#004606] mb-1">
+                    {item.name}
+                  </h3>
+
+                  {/* Price */}
+                  <div className="flex items-end gap-2 mb-3">
+                    <span className="text-3xl font-extrabold text-[#004606]">
+                      ₹{getPriceForPack(product)}
+                    </span>
+                    <span className="text-sm text-gray-400 line-through">
+                      {/* ₹{product.prices[product.prices.length - 1]} */}
+                    </span>
+                  </div>
+
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                    {item.description}
+                  </p>
+
+                  {/* Pack selector */}
+                  <div
+                    className="flex flex-wrap gap-2 mb-5"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {product.packSizes.map((size) => {
+                      const isSelected = selectedPack[item.id] === size;
+                      return (
+                        <button
+                          key={size}
+                          onClick={(e) =>
+                            handlePackSelect(e, item.id, size)
+                          }
+                          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all
+                            ${
+                              isSelected
+                                ? 'bg-[#004606] text-white shadow-md scale-105'
+                                : 'bg-[#f7f3e8] text-[#004606] border border-[#004606]/10 hover:border-[#004606]/40'
+                            }`}
+                        >
+                          {size}
+                          {product.unit}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* CTA */}
+                  <button
+                    onClick={(e) => handleAddToCart(e, item.id)}
+                    className="w-full bg-gradient-to-r from-[#004606] to-[#006609]
+                      hover:from-[#006609] hover:to-[#008c0f]
+                      text-white font-semibold py-3 rounded-lg
+                      shadow-lg hover:shadow-xl
+                      transition-all duration-300
+                      flex items-center justify-center gap-2
+                      active:scale-95"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Add to Cart
+                  </button>
                 </div>
-
-                <h3 className="text-2xl font-bold text-[#004606] mb-2">
-                  {product.name}
-                </h3>
-
-                <p className="text-gray-600 leading-relaxed mb-4">
-                  {product.description}
-                </p>
-
-                {/* ✅ Add to Cart Button */}
-                <button
-                  onClick={(e) => handleAddToCart(e, product.id)}
-                  className="w-full bg-[#004606] hover:bg-[#006609] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-500 ease-out flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  Add to Cart
-                </button>
-
-                {/* ✅ Optional: "Go to Cart" small text link */}
-                {/* <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate('/cart');
-                  }}
-                  className="mt-2 w-full text-sm text-[#004606] underline"
-                >
-                  View Cart
-                </button> */}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div className="text-center space-y-6">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#products"
-              className="
-                inline-flex items-center justify-center gap-2
-                bg-white text-[#004606] font-semibold
-                px-6 py-3 text-sm
-                sm:px-8 sm:py-4 sm:text-base sm:font-bold
-                rounded-lg sm:rounded-xl
-                border-2 border-[#004606]
-                hover:bg-[#f2ecdc]
-                transition-all duration-500 ease-out
-                shadow-md sm:shadow-xl
-                hover:shadow-lg sm:hover:shadow-2xl
-                active:scale-95 sm:hover:scale-105
-              "
-            >
-              View all Products
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
-          </div>
+        {/* Footer CTA */}
+        <div className="text-center">
+          <a
+            href="#products"
+            className="inline-flex items-center gap-2 bg-white text-[#004606] font-bold px-8 py-4 rounded-xl border-2 border-[#004606] hover:bg-[#f2ecdc] transition"
+          >
+            View all Products
+            <ArrowRight className="w-5 h-5" />
+          </a>
         </div>
       </div>
     </section>
