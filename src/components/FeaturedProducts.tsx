@@ -29,11 +29,12 @@ const featuredProducts = [
     description: 'Stable, high-quality oil suitable for regular cooking'
   },
   {
-    id: 6,
-    name: 'Coconut Oil',
-    image: '/coconut_oil.jpg',
-    tagline: 'Versatile & Pure',
-    description: 'Perfect for cooking, wellness, and everyday use'
+    id: 11,
+    name: 'Sprouted Ragi Flour',
+    image: '/sprouted_raggi_flour.png',
+    tagline: 'Sprouted for Better Nutrition',
+    description: 'Traditionally prepared ragi flour suitable for daily cooking and nourishment'
+    
   },
   {
     id: 5,
