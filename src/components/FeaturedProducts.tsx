@@ -12,45 +12,45 @@ const featuredProducts = [
     name: 'Raw Banana Powder',
     image: '/raw_banana_powder.jpg',
     tagline: 'Rich in Resistant Starch',
-    description: 'Easily digestible and traditionally used for baby food'
+    description: 'Easily digestible traditional powder commonly used for baby food and gut health'
   },
   {
     id: 14,
     name: 'Arrow Root Powder',
     image: '/arrowroot_powder.jpg',
     tagline: 'Gentle & Gluten-Free',
-    description: 'A natural superfood that supports gut health and digestion'
+    description: 'Natural gluten free powder that supports digestion and improves overall gut health'
   },
   {
     id: 7,
     name: 'Virgin Coconut Oil',
     image: '/virgin_coconut_oil.jpg',
     tagline: 'Pure & Hot Processed',
-    description: 'Stable, high-quality oil suitable for regular cooking'
+    description: 'Pure coconut oil suitable for daily cooking with stable nutrition and rich aroma'
   },
   {
     id: 11,
     name: 'Sprouted Ragi Flour',
     image: '/sprouted_raggi_flour.png',
     tagline: 'Sprouted for Better Nutrition',
-    description: 'Traditionally prepared ragi flour suitable for daily cooking and nourishment'
-    
+    description: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition'
   },
   {
     id: 5,
     name: 'Honey',
     image: '/honey.jpg',
     tagline: 'Raw & Unprocessed',
-    description: 'Pure natural sweetness sourced directly from nature'
+    description: 'Raw unprocessed honey sourced naturally for everyday immunity and healthy sweetness'
   },
   {
     id: 3,
     name: 'Almond Gum',
     image: '/almond_gum.jpg',
     tagline: 'Traditional Nourishment',
-    description: 'Time-tested natural food for strength and vitality'
+    description: 'Natural edible gum traditionally consumed for strength vitality and body cooling'
   }
 ];
+
 
 export function FeaturedProducts() {
   const navigate = useNavigate();
