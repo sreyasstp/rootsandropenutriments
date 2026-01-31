@@ -79,6 +79,20 @@ export function FeaturedProducts() {
     return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
   }, []);
 
+  useEffect(() => {
+    const defaultPacks: Record<number, string> = {};
+  
+    featuredProducts.forEach((item) => {
+      const product = products.find((p) => p.id === item.id);
+      if (product && product.packSizes.length > 0) {
+        defaultPacks[item.id] = product.packSizes[0]; // smallest size
+      }
+    });
+  
+    setSelectedPack(defaultPacks);
+  }, []);
+  
+
   // ✅ Get price based on selected pack
   const getPriceForPack = (product: any) => {
     const selectedSize = selectedPack[product.id];

@@ -42,6 +42,22 @@ export function Products() {
     return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
   }, [displayedProducts]);
 
+  useEffect(() => {
+    const defaultPacks: Record<number, string> = {};
+  
+    displayedProducts.forEach((product) => {
+      // Don't override if user already selected
+      if (!selectedPack[product.id] && product.packSizes?.length > 0) {
+        defaultPacks[product.id] = product.packSizes[0]; // smallest size
+      }
+    });
+  
+    if (Object.keys(defaultPacks).length > 0) {
+      setSelectedPack((prev) => ({ ...prev, ...defaultPacks }));
+    }
+  }, [displayedProducts]);
+  
+
   const getPriceForPack = (product: any) => {
     const selectedSize = selectedPack[product.id];
     if (!selectedSize) return product.prices[0];
