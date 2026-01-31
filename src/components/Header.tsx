@@ -5,10 +5,14 @@ import { useCart } from '../context/CartContext';
 import { CartDrawer } from './CartDrawer';
 import { products } from '../data/products';
 
-const SEARCH_SUGGESTIONS_LIMIT = 6;
+const SEARCH_SUGGESTIONS_LIMIT = 5;
 
 // 👉 Pick default products (can later be featured / bestseller)
-const defaultSearchProducts = products.slice(0, SEARCH_SUGGESTIONS_LIMIT);
+const DEFAULT_SEARCH_PRODUCT_IDS = [3, 14, 15, 11, 7];
+
+const defaultSearchProducts = products.filter((p) =>
+  DEFAULT_SEARCH_PRODUCT_IDS.includes(p.id)
+);
 
 export function Header() {
   const navigate = useNavigate();
