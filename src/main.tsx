@@ -13,41 +13,52 @@ import AdminRoutes from "./routes/AdminRoutes";
 import AdminLogin from "./pages/admin/AdminLogin";
 
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext"; // ✅ ADD THIS
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) throw new Error("Root element not found");
+
+createRoot(root).render(
   <StrictMode>
-    <BrowserRouter>
-      <ScrollToTop />
-      <CartProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || ""}>
+      <BrowserRouter>
+        <ScrollToTop />
 
-        <Routes>
+        {/* ✅ AUTH PROVIDER MUST WRAP HEADER */}
+        <AuthProvider>
+          <CartProvider>
+            <Routes>
 
-          {/* 🌐 PUBLIC WEBSITE */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<App />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/catalogue" element={<CataloguePage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-          </Route>
+              {/* 🌐 PUBLIC WEBSITE */}
+              <Route element={<PublicLayout />}>
+                <Route index element={<App />} />
+                <Route path="product/:id" element={<ProductDetail />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route path="catalogue" element={<CataloguePage />} />
+                <Route path="checkout" element={<CheckoutPage />} />
+              </Route>
 
-          {/* 🔐 ADMIN (NO HEADER / FOOTER) */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/*" element={<AdminRoutes />} />
+              {/* 🔐 ADMIN */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/*" element={<AdminRoutes />} />
 
-        </Routes>
+            </Routes>
 
-        <ToastContainer
-          position="bottom-center"
-          autoClose={1500}
-          hideProgressBar
-        />
+            <ToastContainer
+              position="bottom-center"
+              autoClose={1500}
+              hideProgressBar
+            />
+          </CartProvider>
+        </AuthProvider>
 
-      </CartProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   </StrictMode>
 );

@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
 
 import { Hero } from "./components/Hero";
 import { FeaturedProducts } from "./components/FeaturedProducts";
@@ -19,11 +18,7 @@ const About = lazy(() =>
   }))
 );
 
-const AdminLogin = lazy(() =>
-  import("./pages/admin/AdminLogin")
-);
-
-function HomePage() {
+function App() {
   return (
     <>
       <Hero />
@@ -41,17 +36,6 @@ function HomePage() {
 
       <WhatsAppFloat />
     </>
-  );
-}
-
-function App() {
-  return (
-    <Suspense fallback={<div />}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-      </Routes>
-    </Suspense>
   );
 }
 
