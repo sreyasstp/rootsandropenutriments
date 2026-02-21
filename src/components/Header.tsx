@@ -221,7 +221,7 @@ export function Header() {
                     {link.label}
                   </a>
                 ))}
-                {!user ? (
+                {/* {!user ? (
     <GoogleLoginButton />
   ) : (
     <div className="flex items-center gap-3">
@@ -236,7 +236,7 @@ export function Header() {
         Logout
       </button>
     </div>
-  )}
+  )} */}
 
                 <button onClick={handleCartClick} className="relative p-2">
                   <ShoppingCart className="w-6 h-6 text-[#004606]" />
