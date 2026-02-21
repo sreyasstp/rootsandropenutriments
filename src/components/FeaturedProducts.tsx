@@ -16,10 +16,10 @@ const featuredProducts = [
   },
   {
     id: 14,
-    name: 'Arrow Root Powder',
+    name: 'Arrowroot Powder',
     image: '/arrowroot_powder.jpg',
     tagline: 'Gentle & Gluten-Free',
-    description: 'Natural gluten free powder that supports digestion and improves overall gut health'
+    description: 'Natural gluten-free powder that supports digestion and improves overall gut health'
   },
   {
     id: 7,
@@ -47,7 +47,7 @@ const featuredProducts = [
     name: 'Almond Gum',
     image: '/almond_gum.jpg',
     tagline: 'Traditional Nourishment',
-    description: 'Natural edible gum traditionally consumed for strength vitality and body cooling'
+    description: 'Natural edible gum traditionally consumed for strength, vitality, and body cooling'
   }
 ];
 

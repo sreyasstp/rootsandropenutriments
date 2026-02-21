@@ -255,7 +255,7 @@ export const products: Product[] = [
   },
   {
     id: 15,
-    name: 'Arrow Root Powder',
+    name: 'Arrowroot Powder',
     packSizes: ['100', '250', '500'],
     prices: [159, 390, 760],
     category: 'Health Powders',
