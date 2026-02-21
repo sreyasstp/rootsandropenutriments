@@ -329,6 +329,44 @@ export function Header() {
               </div>
             </div>
           )}
+          {/* Mobile Menu */}
+{isMobileMenuOpen && (
+  <div className="md:hidden bg-white border-t shadow-lg">
+    <div className="px-4 py-4 flex flex-col gap-4">
+      {navLinks.map((link) => (
+        <a
+          key={link.href}
+          href={link.href}
+          onClick={(e) => handleNavClick(e, link.href)}
+          className="text-[#004606] font-medium py-2 border-b last:border-b-0"
+        >
+          {link.label}
+        </a>
+      ))}
+
+      {/* Optional: Login / Logout */}
+      {/* {!user ? (
+        <GoogleLoginButton />
+      ) : (
+        <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-2">
+            <img
+              src={user.picture}
+              className="w-8 h-8 rounded-full"
+            />
+            <span className="text-sm font-medium">{user.name}</span>
+          </div>
+          <button
+            onClick={logout}
+            className="text-sm text-red-600 font-medium"
+          >
+            Logout
+          </button>
+        </div>
+      )} */}
+    </div>
+  </div>
+)}
         </div>
       </header>
 
