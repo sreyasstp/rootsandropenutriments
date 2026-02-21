@@ -96,7 +96,7 @@ export const products: Product[] = [
     id: 6,
     name: 'Coconut Oil',
     packSizes: ['500', '1000'],
-    prices: [400, 700],
+    prices: [400, 750],
     category: 'Natural Products',
     unit: 'ml',
     image: '/coconut_oil.jpg',
@@ -204,7 +204,7 @@ export const products: Product[] = [
   
   {
     id: 12,
-    name: 'Jaggery',
+    name: 'Jaggery Powder',
     packSizes: ['500', '1000'],
     prices: [70, 130],
     category: 'Grains & Cereals',
