@@ -4,8 +4,6 @@ import { Menu, X, ShoppingCart, Search } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { CartDrawer } from './CartDrawer';
 import { products } from '../data/products';
-import GoogleLoginButton from './GoogleLoginButton';
-import { useAuth } from "../context/AuthContext";
 
 const SEARCH_SUGGESTIONS_LIMIT = 5;
 
@@ -14,12 +12,9 @@ const DEFAULT_SEARCH_PRODUCT_IDS = [3, 14, 15, 11, 7];
 
 const defaultSearchProducts = products.filter((p) =>
   DEFAULT_SEARCH_PRODUCT_IDS.includes(p.id)
-); 
-
+);
 
 export function Header() {
-  const { user, logout } = useAuth();
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -128,8 +123,9 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
+          isScrolled ? 'shadow-md' : ''
+        }`}
       >
         <div className="relative">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -221,22 +217,6 @@ export function Header() {
                     {link.label}
                   </a>
                 ))}
-                {/* {!user ? (
-    <GoogleLoginButton />
-  ) : (
-    <div className="flex items-center gap-3">
-      <img
-        src={user.picture}
-        className="w-8 h-8 rounded-full"
-      />
-      <button
-        onClick={logout}
-        className="text-sm text-red-600 font-medium"
-      >
-        Logout
-      </button>
-    </div>
-  )} */}
 
                 <button onClick={handleCartClick} className="relative p-2">
                   <ShoppingCart className="w-6 h-6 text-[#004606]" />
@@ -329,44 +309,6 @@ export function Header() {
               </div>
             </div>
           )}
-          {/* Mobile Menu */}
-{isMobileMenuOpen && (
-  <div className="md:hidden bg-white border-t shadow-lg">
-    <div className="px-4 py-4 flex flex-col gap-4">
-      {navLinks.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          onClick={(e) => handleNavClick(e, link.href)}
-          className="text-[#004606] font-medium py-2 border-b last:border-b-0"
-        >
-          {link.label}
-        </a>
-      ))}
-
-      {/* Optional: Login / Logout */}
-      {/* {!user ? (
-        <GoogleLoginButton />
-      ) : (
-        <div className="flex items-center justify-between pt-2">
-          <div className="flex items-center gap-2">
-            <img
-              src={user.picture}
-              className="w-8 h-8 rounded-full"
-            />
-            <span className="text-sm font-medium">{user.name}</span>
-          </div>
-          <button
-            onClick={logout}
-            className="text-sm text-red-600 font-medium"
-          >
-            Logout
-          </button>
-        </div>
-      )} */}
-    </div>
-  </div>
-)}
         </div>
       </header>
 
