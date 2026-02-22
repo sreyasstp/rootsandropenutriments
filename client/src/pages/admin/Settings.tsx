@@ -11,63 +11,69 @@ export default function Settings() {
   const [customerEmail, setCustomerEmail] = useState(true);
 
   const handleSave = () => {
-    // 🔜 Replace with API call later
     toast.success("Settings saved successfully");
   };
 
   return (
     <AdminLayout>
-      <h2 className="text-2xl font-bold mb-6">Settings</h2>
+      {/* HEADER */}
+      <div className="mb-5">
+        <h2 className="text-xl md:text-2xl font-semibold">
+          Settings
+        </h2>
+      </div>
 
-      <div className="bg-white rounded-xl shadow p-6 space-y-8">
+      <div className="max-w-4xl bg-white border rounded-xl shadow-sm p-5 md:p-6 space-y-8">
 
-        {/* Store Info */}
+        {/* STORE INFO */}
         <section>
-          <h3 className="text-lg font-semibold mb-4">Store Information</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-4">
+            Store Information
+          </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 Store Name
               </label>
               <input
                 value={storeName}
                 onChange={(e) => setStoreName(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#004606]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 Support Email
               </label>
               <input
                 type="email"
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#004606]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 Contact Phone
               </label>
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border rounded-lg px-3 py-2 text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 Currency
               </label>
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="w-full border rounded-lg px-4 py-2"
+                className="w-full border rounded-lg px-3 py-2 text-sm"
               >
                 <option value="INR">INR (₹)</option>
                 <option value="USD">USD ($)</option>
@@ -77,38 +83,44 @@ export default function Settings() {
           </div>
         </section>
 
-        {/* Notifications */}
+        {/* EMAIL NOTIFICATIONS */}
         <section>
-          <h3 className="text-lg font-semibold mb-4">Email Notifications</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-4">
+            Email Notifications
+          </h3>
 
-          <div className="space-y-4">
-            <label className="flex items-center gap-3">
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
               <input
                 type="checkbox"
                 checked={orderEmail}
                 onChange={() => setOrderEmail(!orderEmail)}
-                className="w-4 h-4"
+                className="w-4 h-4 accent-[#004606]"
               />
-              <span>Send email on new orders</span>
+              <span className="text-sm">
+                Send email on new orders
+              </span>
             </label>
 
-            <label className="flex items-center gap-3">
+            <label className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
               <input
                 type="checkbox"
                 checked={customerEmail}
                 onChange={() => setCustomerEmail(!customerEmail)}
-                className="w-4 h-4"
+                className="w-4 h-4 accent-[#004606]"
               />
-              <span>Send email on new customer registration</span>
+              <span className="text-sm">
+                Send email on new customer registration
+              </span>
             </label>
           </div>
         </section>
 
-        {/* Save Button */}
+        {/* SAVE ACTION */}
         <div className="flex justify-end">
           <button
             onClick={handleSave}
-            className="bg-[#004606] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006609]"
+            className="bg-[#004606] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#006609]"
           >
             Save Settings
           </button>

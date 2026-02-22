@@ -27,49 +27,40 @@ export default function Products() {
 
   return (
     <AdminLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Products</h2>
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-xl md:text-2xl font-semibold">Products</h2>
         <button
           onClick={() => navigate("/admin/products/new")}
-          className="bg-[#004606] text-white px-4 py-2 rounded"
+          className="bg-[#004606] text-white px-4 py-2 rounded-lg text-sm md:text-base"
         >
           Add Product
         </button>
       </div>
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-  <table className="w-full text-sm">
-    <thead className="bg-gray-50 border-b text-gray-700">
-      <tr>
-        <th className="px-5 py-3 text-left font-semibold">Product</th>
-        <th className="px-5 py-3 text-left font-semibold">Category</th>
-        <th className="px-5 py-3 text-left font-semibold">Packs</th>
-        <th className="px-5 py-3 text-left font-semibold">Price</th>
-        <th className="px-5 py-3 text-left font-semibold">Updated</th>
-        <th className="px-5 py-3 text-right font-semibold">Actions</th>
-      </tr>
-    </thead>
 
-    <tbody className="divide-y">
-      {products.map((p) => (
-        <tr
-          key={p._id}
-          className="hover:bg-gray-50 transition"
-        >
-          {/* Product */}
-          <td className="px-5 py-4">
-            <div className="font-medium text-gray-900">
-              {p.name}
+      {/* ================= MOBILE VIEW ================= */}
+      <div className="space-y-4 md:hidden">
+        {products.map((p) => (
+          <div
+            key={p._id}
+            className="bg-white border rounded-xl p-4 shadow-sm"
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-semibold text-gray-900">
+                  {p.name}
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {p.category}
+                </p>
+              </div>
+
+              <div className="text-right text-sm font-medium">
+                ₹{Math.min(...p.prices)} – ₹{Math.max(...p.prices)}
+              </div>
             </div>
-          </td>
 
-          {/* Category */}
-          <td className="px-5 py-4 text-gray-700">
-            {p.category}
-          </td>
-
-          {/* Packs */}
-          <td className="px-5 py-4">
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1 mt-3">
               {p.packSizes.map((size) => (
                 <span
                   key={size}
@@ -80,49 +71,109 @@ export default function Products() {
                 </span>
               ))}
             </div>
-          </td>
 
-          {/* Price */}
-          <td className="px-5 py-4 text-gray-800 font-medium">
-            ₹{Math.min(...p.prices)} – ₹{Math.max(...p.prices)}
-          </td>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-xs text-gray-400">
+                Updated{" "}
+                {p.updatedAt
+                  ? new Date(p.updatedAt).toLocaleDateString()
+                  : "—"}
+              </span>
 
-          {/* Updated */}
-          <td className="px-5 py-4 text-gray-500 text-xs">
-            {p.updatedAt
-              ? new Date(p.updatedAt).toLocaleDateString()
-              : "—"}
-          </td>
+              <div className="flex gap-3">
+                <button
+                  onClick={() =>
+                    navigate(`/admin/products/${p._id}/edit`)
+                  }
+                  className="text-blue-600 text-sm font-medium"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => setConfirmId(p._id!)}
+                  className="text-red-500 text-sm font-medium"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-          {/* Actions */}
-          <td className="px-5 py-4 text-right space-x-3">
-            <button
-              onClick={() =>
-                navigate(`/admin/products/${p._id}/edit`)
-              }
-              className="text-blue-600 hover:underline font-medium"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => setConfirmId(p._id!)}
-              className="text-red-500 hover:underline font-medium"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+      {/* ================= DESKTOP VIEW ================= */}
+      <div className="hidden md:block bg-white rounded-xl border overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50 border-b text-gray-700">
+            <tr>
+              <th className="px-5 py-3 text-left">Product</th>
+              <th className="px-5 py-3 text-left">Category</th>
+              <th className="px-5 py-3 text-left">Packs</th>
+              <th className="px-5 py-3 text-left">Price</th>
+              <th className="px-5 py-3 text-left">Updated</th>
+              <th className="px-5 py-3 text-right">Actions</th>
+            </tr>
+          </thead>
 
+          <tbody className="divide-y">
+            {products.map((p) => (
+              <tr key={p._id} className="hover:bg-gray-50">
+                <td className="px-5 py-4 font-medium">
+                  {p.name}
+                </td>
+                <td className="px-5 py-4">{p.category}</td>
+
+                <td className="px-5 py-4">
+                  <div className="flex flex-wrap gap-1">
+                    {p.packSizes.map((size) => (
+                      <span
+                        key={size}
+                        className="px-2 py-0.5 rounded-full text-xs bg-[#f2ecdc] text-[#004606]"
+                      >
+                        {size}
+                        {p.unit}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+
+                <td className="px-5 py-4 font-medium">
+                  ₹{Math.min(...p.prices)} – ₹{Math.max(...p.prices)}
+                </td>
+
+                <td className="px-5 py-4 text-xs text-gray-500">
+                  {p.updatedAt
+                    ? new Date(p.updatedAt).toLocaleDateString()
+                    : "—"}
+                </td>
+
+                <td className="px-5 py-4 text-right space-x-3">
+                  <button
+                    onClick={() =>
+                      navigate(`/admin/products/${p._id}/edit`)
+                    }
+                    className="text-blue-600 hover:underline"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => setConfirmId(p._id!)}
+                    className="text-red-500 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* DELETE CONFIRMATION */}
       {confirmId && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-sm">
-            <h3 className="text-lg font-bold mb-2">
+            <h3 className="text-lg font-semibold mb-2">
               Delete Product?
             </h3>
             <p className="text-sm text-gray-600 mb-4">
