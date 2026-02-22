@@ -5,63 +5,24 @@ import { toast } from 'react-toastify';
 
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
-
-const featuredProducts = [
-  {
-    id: 13,
-    name: 'Raw Banana Powder',
-    image: '/raw_banana_powder.jpg',
-    tagline: 'Rich in Resistant Starch',
-    description: 'Easily digestible traditional powder commonly used for baby food and gut health'
-  },
-  {
-    id: 14,
-    name: 'Arrow Root Powder',
-    image: '/arrowroot_powder.jpg',
-    tagline: 'Gentle & Gluten-Free',
-    description: 'Natural gluten free powder that supports digestion and improves overall gut health'
-  },
-  {
-    id: 7,
-    name: 'Virgin Coconut Oil',
-    image: '/virgin_coconut_oil.jpg',
-    tagline: 'Pure & Hot Processed',
-    description: 'Pure coconut oil suitable for daily cooking with stable nutrition and rich aroma'
-  },
-  {
-    id: 11,
-    name: 'Sprouted Ragi Flour',
-    image: '/sprouted_raggi_flour.png',
-    tagline: 'Sprouted for Better Nutrition',
-    description: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition'
-  },
-  {
-    id: 5,
-    name: 'Honey',
-    image: '/honey.jpg',
-    tagline: 'Raw & Unprocessed',
-    description: 'Raw unprocessed honey sourced naturally for everyday immunity and healthy sweetness'
-  },
-  {
-    id: 3,
-    name: 'Almond Gum',
-    image: '/almond_gum.jpg',
-    tagline: 'Traditional Nourishment',
-    description: 'Natural edible gum traditionally consumed for strength vitality and body cooling'
-  }
-];
-
+import type { Product } from '../data/products';
 
 export function FeaturedProducts() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
+  // ✅ derive featured products from master list
+  const featuredProducts: Product[] = products.filter(
+    (product) => product.isFeatured
+  );
+
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // ✅ Selected pack per product
+  // ✅ selected pack per product
   const [selectedPack, setSelectedPack] = useState<Record<number, string>>({});
 
+  // intersection observer animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -76,25 +37,27 @@ export function FeaturedProducts() {
     );
 
     productRefs.current.forEach((ref) => ref && observer.observe(ref));
-    return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+    return () =>
+      productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
   }, []);
 
+  // set default pack (smallest)
   useEffect(() => {
-    const defaultPacks: Record<number, string> = {};
+    setSelectedPack((prev) => {
+      const updated = { ...prev };
   
-    featuredProducts.forEach((item) => {
-      const product = products.find((p) => p.id === item.id);
-      if (product && product.packSizes.length > 0) {
-        defaultPacks[item.id] = product.packSizes[0]; // smallest size
-      }
+      featuredProducts.forEach((product) => {
+        if (!updated[product.id] && product.packSizes.length > 0) {
+          updated[product.id] = product.packSizes[0];
+        }
+      });
+  
+      return updated;
     });
-  
-    setSelectedPack(defaultPacks);
-  }, []);
-  
+  }, [featuredProducts]);
 
-  // ✅ Get price based on selected pack
-  const getPriceForPack = (product: any) => {
+  // get price for selected pack
+  const getPriceForPack = (product: Product) => {
     const selectedSize = selectedPack[product.id];
     if (!selectedSize) return product.prices[0];
 
@@ -102,7 +65,7 @@ export function FeaturedProducts() {
     return index !== -1 ? product.prices[index] : product.prices[0];
   };
 
-  // ✅ Pack select
+  // pack select
   const handlePackSelect = (
     e: React.MouseEvent,
     productId: number,
@@ -112,14 +75,11 @@ export function FeaturedProducts() {
     setSelectedPack((prev) => ({ ...prev, [productId]: pack }));
   };
 
-  // ✅ Add to cart
-  const handleAddToCart = (e: React.MouseEvent, productId: number) => {
+  // add to cart
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
 
-    const product = products.find((p) => p.id === productId);
-    if (!product) return;
-
-    const pack = selectedPack[productId];
+    const pack = selectedPack[product.id];
     if (!pack) {
       toast.error('Please select a pack size');
       return;
@@ -149,118 +109,107 @@ export function FeaturedProducts() {
 
         {/* Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
-          {featuredProducts.map((item, index) => {
-            const product = products.find((p) => p.id === item.id);
-            if (!product) return null;
-
-            return (
-              <div
-                key={item.id}
-                ref={(el) => (productRefs.current[index] = el)}
-                data-index={index}
-                onClick={() => navigate(`/product/${item.id}`)}
-                className={`group bg-white rounded-3xl overflow-hidden cursor-pointer
-                  shadow-[0_20px_50px_rgba(0,0,0,0.12)]
-                  hover:shadow-[0_30px_80px_rgba(0,0,0,0.18)]
-                  transition-all duration-700 ease-out
-                  ${
-                    visibleProducts.has(index)
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-12'
-                  }
-                  hover:-translate-y-2`}
-                style={{
-                  transitionDelay: visibleProducts.has(index)
-                    ? `${index * 150}ms`
-                    : '0ms'
-                }}
-              >
-               {/* Image */}
-<div className="relative h-72 bg-[#f2ecdc] flex items-center justify-center">
-  <img
-    src={item.image}
-    alt={item.name}
-    loading="lazy"
-    className="
-      max-w-[90%]
-      max-h-[90%]
-      object-contain
-      transition-transform duration-700 ease-out
-      group-hover:scale-105
-    "
-  />
-</div>
-
-
-                {/* Content */}
-                <div className="p-6">
-                  <span className="inline-block bg-[#004606]/5 text-[#004606] text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                    {item.tagline}
-                  </span>
-
-                  <h3 className="text-2xl font-extrabold tracking-tight text-[#004606] mb-1">
-                    {item.name}
-                  </h3>
-
-                  {/* Price */}
-                  <div className="flex items-end gap-2 mb-3">
-                    <span className="text-3xl font-extrabold text-[#004606]">
-                      ₹{getPriceForPack(product)}
-                    </span>
-                    <span className="text-sm text-gray-400 line-through">
-                      {/* ₹{product.prices[product.prices.length - 1]} */}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-                    {item.description}
-                  </p>
-
-                  {/* Pack selector */}
-                  <div
-                    className="flex flex-wrap gap-2 mb-5"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {product.packSizes.map((size) => {
-                      const isSelected = selectedPack[item.id] === size;
-                      return (
-                        <button
-                          key={size}
-                          onClick={(e) =>
-                            handlePackSelect(e, item.id, size)
-                          }
-                          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all
-                            ${
-                              isSelected
-                                ? 'bg-[#004606] text-white shadow-md scale-105'
-                                : 'bg-[#f7f3e8] text-[#004606] border border-[#004606]/10 hover:border-[#004606]/40'
-                            }`}
-                        >
-                          {size}
-                          {product.unit}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* CTA */}
-                  <button
-                    onClick={(e) => handleAddToCart(e, item.id)}
-                    className="w-full bg-gradient-to-r from-[#004606] to-[#006609]
-                      hover:from-[#006609] hover:to-[#008c0f]
-                      text-white font-semibold py-3 rounded-lg
-                      shadow-lg hover:shadow-xl
-                      transition-all duration-300
-                      flex items-center justify-center gap-2
-                      active:scale-95"
-                  >
-                    <ShoppingCart className="w-5 h-5" />
-                    Add to Cart
-                  </button>
-                </div>
+          {featuredProducts.map((product, index) => (
+            <div
+              key={product.id}
+              ref={(el) => (productRefs.current[index] = el)}
+              data-index={index}
+              onClick={() => navigate(`/product/${product.id}`)}
+              className={`group bg-white rounded-3xl overflow-hidden cursor-pointer
+                shadow-[0_20px_50px_rgba(0,0,0,0.12)]
+                hover:shadow-[0_30px_80px_rgba(0,0,0,0.18)]
+                transition-all duration-700 ease-out
+                ${
+                  visibleProducts.has(index)
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-12'
+                }
+                hover:-translate-y-2`}
+              style={{
+                transitionDelay: visibleProducts.has(index)
+                  ? `${index * 150}ms`
+                  : '0ms'
+              }}
+            >
+              {/* Image */}
+              <div className="relative h-72 bg-[#f2ecdc] flex items-center justify-center">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                  className="max-w-[90%] max-h-[90%] object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                />
               </div>
-            );
-          })}
+
+              {/* Content */}
+              <div className="p-6">
+                {product.tagline && (
+                  <span className="inline-block bg-[#004606]/5 text-[#004606] text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                    {product.tagline}
+                  </span>
+                )}
+
+                <h3 className="text-2xl font-extrabold tracking-tight text-[#004606] mb-1">
+                  {product.name}
+                </h3>
+
+                {/* Price */}
+                <div className="flex items-end gap-2 mb-3">
+                  <span className="text-3xl font-extrabold text-[#004606]">
+                    ₹{getPriceForPack(product)}
+                  </span>
+                </div>
+
+                {product.featuredDescription && (
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                    {product.featuredDescription}
+                  </p>
+                )}
+
+                {/* Pack selector */}
+                <div
+                  className="flex flex-wrap gap-2 mb-5"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {product.packSizes.map((size) => {
+                    const isSelected = selectedPack[product.id] === size;
+                    return (
+                      <button
+                        key={size}
+                        onClick={(e) =>
+                          handlePackSelect(e, product.id, size)
+                        }
+                        className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all
+                          ${
+                            isSelected
+                              ? 'bg-[#004606] text-white shadow-md scale-105'
+                              : 'bg-[#f7f3e8] text-[#004606] border border-[#004606]/10 hover:border-[#004606]/40'
+                          }`}
+                      >
+                        {size}
+                        {product.unit}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={(e) => handleAddToCart(e, product)}
+                  className="w-full bg-gradient-to-r from-[#004606] to-[#006609]
+                    hover:from-[#006609] hover:to-[#008c0f]
+                    text-white font-semibold py-3 rounded-lg
+                    shadow-lg hover:shadow-xl
+                    transition-all duration-300
+                    flex items-center justify-center gap-2
+                    active:scale-95"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Footer CTA */}
