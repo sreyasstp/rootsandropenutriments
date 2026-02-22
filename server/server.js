@@ -11,7 +11,11 @@ const app = express();
 // ✅ CORS FIX
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",          // local dev
+      "https://server-rooots.onrender.com/" // deployed frontend
+    ],
+
     credentials: true,
   })
 );
