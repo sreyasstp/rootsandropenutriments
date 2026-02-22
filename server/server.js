@@ -30,7 +30,8 @@ app.use(
   })
 );
 
-app.options("*", cors()); // 🔥 FIXES PREFLIGHT
+// ✅ EXPRESS 5 FIX
+app.options("/*", cors());
 
 app.use(express.json());
 
