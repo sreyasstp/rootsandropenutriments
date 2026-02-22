@@ -8,19 +8,25 @@ const menu = [
   { name: "Settings", path: "/admin/settings" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  mobile = false,
+  onSelect,
+}: {
+  mobile?: boolean;
+  onSelect?: () => void;
+}) {
   return (
     <aside
-      className="
+      className={`
         w-64
         min-h-screen
         bg-[#f2ecdc]
         text-[#004606]
         border-r border-[#e3dccb]
-        hidden md:flex
-        flex-col
+        flex flex-col
         flex-shrink-0
-      "
+        ${mobile ? "" : "hidden md:flex"}
+      `}
     >
       {/* LOGO */}
       <div className="flex items-center justify-center px-4 py-6 border-b border-[#e3dccb]">
@@ -37,6 +43,7 @@ export default function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={onSelect}
             className={({ isActive }) =>
               `block px-4 py-2 rounded-lg text-sm font-medium transition ${
                 isActive

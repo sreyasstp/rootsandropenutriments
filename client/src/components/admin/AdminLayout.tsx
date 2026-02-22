@@ -11,15 +11,15 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* DESKTOP SIDEBAR */}
       <Sidebar />
 
-      {/* MOBILE SIDEBAR OVERLAY */}
+      {/* MOBILE SIDEBAR */}
       {open && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-50 md:hidden">
           <div
             className="absolute inset-0 bg-black/40"
             onClick={() => setOpen(false)}
           />
-          <div className="relative z-50 w-64 h-full bg-[#f2ecdc]">
-            <Sidebar />
+          <div className="relative h-full">
+            <Sidebar mobile onSelect={() => setOpen(false)} />
           </div>
         </div>
       )}
