@@ -8,15 +8,15 @@ import { useCart } from '../context/CartContext';
 
 const featuredProducts = [
   {
-    id: 13,
+    id: 14,
     name: 'Raw Banana Powder',
     image: '/raw_banana_powder.jpg',
     tagline: 'Rich in Resistant Starch',
     description: 'Easily digestible traditional powder commonly used for baby food and gut health'
   },
   {
-    id: 14,
-    name: 'Arrow Root Powder',
+    id: 15,
+    name: 'Arrowroot Powder',
     image: '/arrowroot_powder.jpg',
     tagline: 'Gentle & Gluten-Free',
     description: 'Natural gluten free powder that supports digestion and improves overall gut health'
