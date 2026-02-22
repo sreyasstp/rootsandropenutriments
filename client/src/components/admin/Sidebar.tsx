@@ -10,8 +10,18 @@ const menu = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 min-h-screen bg-[#f2ecdc] text-[#004606] flex flex-col border-r border-[#e3dccb]">
-
+    <aside
+      className="
+        w-64
+        min-h-screen
+        bg-[#f2ecdc]
+        text-[#004606]
+        border-r border-[#e3dccb]
+        hidden md:flex
+        flex-col
+        flex-shrink-0
+      "
+    >
       {/* LOGO */}
       <div className="flex items-center justify-center px-4 py-6 border-b border-[#e3dccb]">
         <img
@@ -28,10 +38,10 @@ export default function Sidebar() {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `block px-4 py-2 rounded-lg font-medium transition ${
+              `block px-4 py-2 rounded-lg text-sm font-medium transition ${
                 isActive
                   ? "bg-[#004606] text-white shadow-sm"
-                  : "hover:bg-[#e9e2cf] text-[#004606]"
+                  : "hover:bg-[#e9e2cf]"
               }`
             }
           >
@@ -39,7 +49,6 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
-
     </aside>
   );
 }
