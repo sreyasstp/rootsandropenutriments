@@ -1,15 +1,33 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex bg-gray-100">
+
+      {/* DESKTOP SIDEBAR */}
       <Sidebar />
 
+      {/* MOBILE SIDEBAR OVERLAY */}
+      {open && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setOpen(false)}
+          />
+          <div className="relative z-50 w-64 h-full bg-[#f2ecdc]">
+            <Sidebar />
+          </div>
+        </div>
+      )}
+
+      {/* MAIN */}
       <div className="flex-1 flex flex-col">
-        <Topbar />
-        <main className="p-6">{children}</main>
+        <Topbar onMenuClick={() => setOpen(true)} />
+        <main className="p-4 md:p-6">{children}</main>
       </div>
     </div>
   );
