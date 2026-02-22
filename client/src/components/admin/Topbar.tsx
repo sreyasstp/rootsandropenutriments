@@ -26,7 +26,7 @@ export default function Topbar({
         </button>
 
         <h1 className="font-semibold text-lg">
-          Admin Dashboard
+          Dashboard
         </h1>
       </div>
 
