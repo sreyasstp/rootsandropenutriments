@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",          // local dev
-      "https://server-rooots.onrender.com/" // deployed frontend
+      "https://rootsandrope.com"
     ],
 
     credentials: true,
