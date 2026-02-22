@@ -1,6 +1,11 @@
 export interface Product {
   id: number;
   name: string;
+
+  // ✅ ADD BELOW
+  isFeatured?: boolean;
+  tagline?: string;
+  featuredDescription?: string;
   packSizes: string[];
   prices: number[];
   category: string;
@@ -43,6 +48,9 @@ export const products: Product[] = [
   {
     id: 3,
     name: 'Almond Gum',
+    isFeatured: true,
+    tagline: 'Traditional Nourishment',
+    featuredDescription: 'Natural edible gum traditionally consumed for strength, vitality, and body cooling',
     packSizes: ['100', '250'],
     prices: [90, 200],
     category: 'Dry Fruits & Nuts',
@@ -82,6 +90,9 @@ export const products: Product[] = [
   {
     id: 5,
     name: 'Honey',
+    isFeatured: true,
+    tagline: 'Raw & Unprocessed',
+    featuredDescription: 'Raw unprocessed honey sourced naturally for everyday immunity and healthy sweetness',
     packSizes: ['400', '700'],
     prices: [280, 480],
     category: 'Natural Products',
@@ -96,7 +107,7 @@ export const products: Product[] = [
     id: 6,
     name: 'Coconut Oil',
     packSizes: ['500', '1000'],
-    prices: [400, 700],
+    prices: [400, 750],
     category: 'Natural Products',
     unit: 'ml',
     image: '/coconut_oil.jpg',
@@ -108,6 +119,9 @@ export const products: Product[] = [
   {
     id: 7,
     name: 'Virgin Coconut Oil',
+    isFeatured: true,
+    tagline: 'Pure & Hot Processed',
+    featuredDescription: 'Pure coconut oil suitable for daily cooking with stable nutrition and rich aroma',
     packSizes: ['100', '200'],
     prices: [180, 350],
     category: 'Natural Products',
@@ -176,6 +190,9 @@ export const products: Product[] = [
   {
     id: 11,
     name: 'Sprouted Ragi Flour',
+  isFeatured: true,
+  tagline: 'Sprouted for Better Nutrition',
+  featuredDescription: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition',
     packSizes: ['500', '1000'],
     prices: [130, 250],
     category: 'Grains & Cereals',
@@ -204,7 +221,7 @@ export const products: Product[] = [
   
   {
     id: 12,
-    name: 'Jaggery',
+    name: 'Jaggery Powder',
     packSizes: ['500', '1000'],
     prices: [70, 130],
     category: 'Grains & Cereals',
@@ -243,8 +260,11 @@ export const products: Product[] = [
   {
     id: 14,
     name: 'Raw Banana Powder',
+    isFeatured: true,
+  tagline: 'Rich in Resistant Starch',
+  featuredDescription: 'Easily digestible traditional powder commonly used for baby food and gut health',
     packSizes: ['100', '250', '500'],
-    prices: [159, 390, 740],
+    prices: [159, 390, 760],
     category: 'Health Powders',
     unit: 'g',
     image: '/raw_banana_powder.jpg',
@@ -255,9 +275,12 @@ export const products: Product[] = [
   },
   {
     id: 15,
-    name: 'Arrow Root Powder',
+    name: 'Arrowroot Powder',
+    isFeatured: true,
+    tagline: 'Gentle & Gluten-Free',
+    featuredDescription: 'Natural gluten-free powder that supports digestion and improves overall gut health',
     packSizes: ['100', '250', '500'],
-    prices: [159, 390, 740],
+    prices: [159, 390, 760],
     category: 'Health Powders',
     unit: 'g',
     image: '/arrowroot_powder.jpg',
@@ -283,7 +306,7 @@ export const products: Product[] = [
     id: 16,
     name: 'Turmeric Powder',
     packSizes: ['100', '250', '500'],
-    prices: [69, 170, 320],
+    prices: [69, 170, 335],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/turmeric.jpg',
@@ -296,7 +319,7 @@ export const products: Product[] = [
     id: 17,
     name: 'Chilli Powder',
     packSizes: ['100', '250', '500'],
-    prices: [59, 145, 275],
+    prices: [59, 145, 285],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/red_chilli_powder.jpg',
@@ -309,7 +332,7 @@ export const products: Product[] = [
     id: 18,
     name: 'Kashmiri Chilli Powder',
     packSizes: ['100', '250', '500'],
-    prices: [79, 195, 370],
+    prices: [89, 220, 430],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/kasmiri_chilli_powder.jpg',
@@ -322,7 +345,7 @@ export const products: Product[] = [
     id: 19,
     name: 'Coriander Powder',
     packSizes: ['100', '250', '500'],
-    prices: [49, 120, 230],
+    prices: [49, 120, 240],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/coriander_powder.jpg',
@@ -335,7 +358,7 @@ export const products: Product[] = [
     id: 20,
     name: 'Garam Masala',
     packSizes: ['100', '250', '500'],
-    prices: [109, 265, 275],
+    prices: [109, 265, 525],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/garam_masala.jpg',
@@ -348,7 +371,7 @@ export const products: Product[] = [
     id: 21,
     name: 'Chilli Flakes',
     packSizes: ['100', '250', '500'],
-    prices: [59, 145, 275],
+    prices: [59, 145, 285],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/chilli_flakes.jpg',
@@ -361,7 +384,7 @@ export const products: Product[] = [
     id: 22,
     name: 'Sambar Powder',
     packSizes: ['100', '250', '500'],
-    prices: [89, 215, 415],
+    prices: [89, 215, 430],
     category: 'Spices & Masalas',
     unit: 'g',
     image: '/sambhar_powder.jpg',
