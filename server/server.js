@@ -30,9 +30,6 @@ app.use(
   })
 );
 
-// ✅ EXPRESS 5 FIX
-app.options("/*", cors());
-
 app.use(express.json());
 
 app.use("/api/admin", require("./routes/admin.routes"));
