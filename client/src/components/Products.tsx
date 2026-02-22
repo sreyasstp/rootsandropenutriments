@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useCart } from "../context/CartContext";
 import { getProducts } from "../services/productApi";
 import { Product } from "../types/Product";
+const USE_API = false; // 🔴 set to false temporarily
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -21,11 +22,40 @@ export function Products() {
   const { addToCart } = useCart();
 
   // ✅ API FIRST → JSON FALLBACK
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     try {
+  //       const apiProducts = await getProducts();
+  //       setProducts(apiProducts);
+  //     } catch (err) {
+  //       console.error("API failed, using local JSON", err);
+  //       toast.warn("Using offline product data");
+  //       setProducts(localProducts as Product[]);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadProducts();
+  // }, []);
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const apiProducts = await getProducts();
-        setProducts(apiProducts);
+        if (USE_API) {
+          const apiProducts = await getProducts();
+  
+          // Extra safety check
+          if (!apiProducts || apiProducts.length === 0) {
+            throw new Error("Empty API response");
+          }
+  
+          setProducts(apiProducts);
+        } else {
+          // 🔥 Force JSON temporarily
+          console.warn("API disabled, using local JSON");
+          setProducts(localProducts as Product[]);
+        }
       } catch (err) {
         console.error("API failed, using local JSON", err);
         toast.warn("Using offline product data");
@@ -34,7 +64,7 @@ export function Products() {
         setLoading(false);
       }
     };
-
+  
     loadProducts();
   }, []);
 
