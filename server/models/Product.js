@@ -14,10 +14,12 @@ const ProductSchema = new mongoose.Schema(
     usage: String,
     features: [String],
 
-    // ✅ ADD BELOW
     isFeatured: { type: Boolean, default: false },
     tagline: { type: String },
     featuredDescription: { type: String },
   },
   { timestamps: true }
 );
+
+// ✅ THIS LINE FIXES YOUR ERROR
+module.exports = mongoose.model("Product", ProductSchema);
