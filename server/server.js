@@ -14,6 +14,7 @@ app.use(
       const allowedOrigins = [
         "http://localhost:5173",
         "https://rootsandrope.com",
+        "https://www.rootsandrope.com",
       ];
 
       if (!origin) return callback(null, true);
@@ -21,6 +22,7 @@ app.use(
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("CORS blocked:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
