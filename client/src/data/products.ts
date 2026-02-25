@@ -244,7 +244,7 @@ export const products: Product[] = [
   {
     id: 24,
     name: 'Brown Rice Flour',
-    packSizes: ['500,1000'],
+    packSizes: ['500','1000'],
     prices: [150, 300], // per kg
     category: 'Grains & Cereals',
     unit: 'g',
