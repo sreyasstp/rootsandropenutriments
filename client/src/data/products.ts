@@ -18,7 +18,7 @@ export interface Product {
 }
 
 export const products: Product[] = [
- 
+
   {
     id: 1,
     name: 'Almonds',
@@ -190,9 +190,9 @@ export const products: Product[] = [
   {
     id: 11,
     name: 'Sprouted Ragi Flour',
-  isFeatured: true,
-  tagline: 'Sprouted for Better Nutrition',
-  featuredDescription: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition',
+    isFeatured: true,
+    tagline: 'Sprouted for Better Nutrition',
+    featuredDescription: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition',
     packSizes: ['500', '1000'],
     prices: [130, 250],
     category: 'Grains & Cereals',
@@ -220,11 +220,11 @@ export const products: Product[] = [
   },
   {
     id: 23,
-    name: 'Brown Rice',
-    packSizes: ['50% Bran', '70% Bran', '90% Bran'],
-    prices: [120, 120, 120], // per kg
+    name: 'Brown Rice (50% ,70%, 90% barn)',
+    packSizes: ['1000'],
+    prices: [120], // per kg
     category: 'Grains & Cereals',
-    unit: 'kg',
+    unit: 'g',
     image: '/barn_rice.png',
     description: 'Naturally processed brown rice with controlled bran levels for better nutrition and digestion.',
     benefits: [
@@ -264,7 +264,7 @@ export const products: Product[] = [
       'Traditional processing'
     ]
   },
-  
+
   {
     id: 12,
     name: 'Jaggery Powder',
@@ -307,8 +307,8 @@ export const products: Product[] = [
     id: 14,
     name: 'Raw Banana Powder',
     isFeatured: true,
-  tagline: 'Rich in Resistant Starch',
-  featuredDescription: 'Easily digestible traditional powder commonly used for baby food and gut health',
+    tagline: 'Rich in Resistant Starch',
+    featuredDescription: 'Easily digestible traditional powder commonly used for baby food and gut health',
     packSizes: ['100', '250', '500'],
     prices: [159, 390, 760],
     category: 'Health Powders',
