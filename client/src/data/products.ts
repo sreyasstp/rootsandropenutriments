@@ -220,7 +220,7 @@ export const products: Product[] = [
   },
   {
     id: 23,
-    name: 'Brown Rice (50% ,70%, 90% barn)',
+    name: 'Brown Rice',
     packSizes: ['1' ,'2', '3'],
     prices: [120,240,360], // per kg
     category: 'Grains & Cereals',
