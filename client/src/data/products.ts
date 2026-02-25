@@ -221,10 +221,10 @@ export const products: Product[] = [
   {
     id: 23,
     name: 'Brown Rice (50% ,70%, 90% barn)',
-    packSizes: ['1000'],
-    prices: [120], // per kg
+    packSizes: ['1' ,'2', '3'],
+    prices: [120,240,360], // per kg
     category: 'Grains & Cereals',
-    unit: 'g',
+    unit: 'Kg',
     image: '/barn_rice.png',
     description: 'Naturally processed brown rice with controlled bran levels for better nutrition and digestion.',
     benefits: [
@@ -244,8 +244,8 @@ export const products: Product[] = [
   {
     id: 24,
     name: 'Brown Rice Flour',
-    packSizes: ['1000'],
-    prices: [150], // per kg
+    packSizes: ['500,1000'],
+    prices: [150, 300], // per kg
     category: 'Grains & Cereals',
     unit: 'g',
     image: '/barn_rice_powder.png',
