@@ -218,6 +218,52 @@ export const products: Product[] = [
       'Traditional Method'
     ]
   },
+  {
+    id: 23,
+    name: 'Brown Rice',
+    packSizes: ['50% Bran', '70% Bran', '90% Bran'],
+    prices: [120, 120, 120], // per kg
+    category: 'Grains & Cereals',
+    unit: 'kg',
+    image: '/barn_rice.png',
+    description: 'Naturally processed brown rice with controlled bran levels for better nutrition and digestion.',
+    benefits: [
+      'Rich in dietary fiber',
+      'Better digestion',
+      'Helps maintain blood sugar levels',
+      'More nutritious than white rice'
+    ],
+    usage: 'Wash and cook like regular rice. Suitable for daily meals and health-conscious diets.',
+    features: [
+      'Available in 50%, 70%, and 90% bran',
+      'No polishing',
+      'Naturally processed',
+      'No preservatives'
+    ]
+  },
+  {
+    id: 24,
+    name: 'Brown Rice Flour',
+    packSizes: ['1000'],
+    prices: [150], // per kg
+    category: 'Grains & Cereals',
+    unit: 'g',
+    image: '/barn_rice_powder.png',
+    description: 'Stone-ground brown rice flour made from nutrient-rich brown rice.',
+    benefits: [
+      'High fiber content',
+      'Gluten-free',
+      'Easy to digest',
+      'Good for gut health'
+    ],
+    usage: 'Ideal for making rotis, dosa, porridge, and traditional recipes.',
+    features: [
+      'Stone ground',
+      '100% Brown rice',
+      'No preservatives',
+      'Traditional processing'
+    ]
+  },
   
   {
     id: 12,
