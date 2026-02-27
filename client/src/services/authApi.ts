@@ -1,12 +1,25 @@
-import axios from "axios";
+import { supabase } from "./supabaseClient";
 
-const BASE_URL =
-  import.meta.env.VITE_API_URL || "https://server-rooots.onrender.com";
-
-export const googleLoginApi = async (token: string) => {
-  const res = await axios.post(`${BASE_URL}/api/auth/google`, {
-    token,
+/** Sign in with Google using Supabase OAuth (popup/redirect flow) */
+export async function signInWithGoogle() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin,
+    },
   });
+  if (error) throw error;
+}
 
-  return res.data;
-};
+/** Sign out the current user */
+export async function signOut() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+}
+
+/** Get current session (used on app load) */
+export async function getSession() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw error;
+  return data.session;
+}

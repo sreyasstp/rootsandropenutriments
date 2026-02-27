@@ -1,12 +1,26 @@
-import axios from "axios";
+import { supabase } from "./supabaseClient";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://server-rooots.onrender.com";
-
-export const adminLogin = async (email: string, password: string) => {
-  const response = await axios.post(`${API_BASE_URL}/api/admin/login`, {
+/**
+ * Admin login using Supabase email/password auth.
+ * The admin must exist in Supabase Auth (not just the admins table).
+ * Create admins via: supabase.auth.admin.createUser() or Supabase dashboard.
+ */
+export async function adminLogin(email: string, password: string) {
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  return response.data;
-};
+  if (error) throw error;
+  return data;
+}
+
+export async function adminLogout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+}
+
+export async function getAdminSession() {
+  const { data } = await supabase.auth.getSession();
+  return data.session;
+}

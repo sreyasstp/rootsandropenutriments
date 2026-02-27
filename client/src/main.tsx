@@ -6,7 +6,7 @@ import App from "./App";
 import { ProductDetail } from "./components/ProductDetail";
 import { ContactPage } from "./pages/ContactPage";
 import { CataloguePage } from "./pages/CataloguePage";
-import { CheckoutPage } from "./pages/CheckoutPage";
+import { CheckoutPage } from "./pages/user/CheckoutPage";
 
 import PublicLayout from "./layouts/PublicLayout";
 import AdminRoutes from "./routes/AdminRoutes";
@@ -20,6 +20,13 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "./index.css";
+import { AdminAuthProvider } from "./context/AdminauthContext";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminMap from "./routes/AdminMap";
+import { OrderConfirmPage } from "./pages/user/OrderConfirmPage";
+import { MyProfilePage } from "./pages/user/MyProfile";
+import { MyOrdersPage } from "./pages/admin/MyOrders";
+import { OrderDetailPage } from "./pages/user/OrderDetail";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Root element not found");
@@ -31,32 +38,38 @@ createRoot(root).render(
         <ScrollToTop />
 
         {/* ✅ AUTH PROVIDER MUST WRAP HEADER */}
-        <AuthProvider>
-          <CartProvider>
-            <Routes>
+        <CartProvider>
+          <AuthProvider>
+            <AdminAuthProvider>
+              <Routes>
 
-              {/* 🌐 PUBLIC WEBSITE */}
-              <Route element={<PublicLayout />}>
-                <Route index element={<App />} />
-                <Route path="product/:id" element={<ProductDetail />} />
-                <Route path="contact" element={<ContactPage />} />
-                <Route path="catalogue" element={<CataloguePage />} />
-                <Route path="checkout" element={<CheckoutPage />} />
-              </Route>
+                {/* 🌐 PUBLIC WEBSITE */}
+                <Route element={<PublicLayout />}>
+                  <Route index element={<App />} />
+                  <Route path="product/:slug" element={<ProductDetail />} />
+                  <Route path="contact" element={<ContactPage />} />
+                  <Route path="catalogue" element={<CataloguePage />} />
+                  <Route path="checkout" element={<CheckoutPage />} />
+                  <Route path="order-confirm" element={<OrderConfirmPage />} />
+                  <Route path="profile" element={<MyProfilePage />} />
+                  <Route path="orders" element={<MyOrdersPage />} />
+                  <Route path="order-detail/:id" element={<OrderDetailPage />} />
+                </Route>
 
-              {/* 🔐 ADMIN */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/*" element={<AdminRoutes />} />
+                {/* 🔐 ADMIN */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/*" element={<AdminRoutes children={<AdminMap />} />} />
 
-            </Routes>
+              </Routes>
 
-            <ToastContainer
-              position="bottom-center"
-              autoClose={1500}
-              hideProgressBar
-            />
-          </CartProvider>
-        </AuthProvider>
+              <ToastContainer
+                position="bottom-center"
+                autoClose={1500}
+                hideProgressBar
+              />
+            </AdminAuthProvider>
+          </AuthProvider>
+        </CartProvider>
 
       </BrowserRouter>
     </GoogleOAuthProvider>

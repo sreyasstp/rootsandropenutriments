@@ -1,18 +1,17 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { ChevronDown, ShoppingCart } from "lucide-react";
-import { products as localProducts, categories } from "../data/products";
-import { toast } from "react-toastify";
-import { useCart } from "../context/CartContext";
-import { getProducts } from "../services/productApi";
-import { Product } from "../types/Product";
-const USE_API = false; // 🔴 set to false temporarily
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronDown, ShoppingCart } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { useCart } from '../context/CartContext';
+import { getProducts, getCategories } from '../services/productApi';
+import { Product, getDefaultVariant, getPriceForSize } from '../types/Product';
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(['All Products']);
   const [loading, setLoading] = useState(true);
 
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
+  const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [showAll, setShowAll] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
   const [selectedPack, setSelectedPack] = useState<Record<string, string>>({});
@@ -21,107 +20,62 @@ export function Products() {
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { addToCart } = useCart();
 
-  // ✅ API FIRST → JSON FALLBACK
-  // useEffect(() => {
-  //   const loadProducts = async () => {
-  //     try {
-  //       const apiProducts = await getProducts();
-  //       setProducts(apiProducts);
-  //     } catch (err) {
-  //       console.error("API failed, using local JSON", err);
-  //       toast.warn("Using offline product data");
-  //       setProducts(localProducts as Product[]);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   loadProducts();
-  // }, []);
-
+  // Load products + categories from Supabase
   useEffect(() => {
-    const loadProducts = async () => {
+    const load = async () => {
       try {
-        if (USE_API) {
-          const apiProducts = await getProducts();
-  
-          // Extra safety check
-          if (!apiProducts || apiProducts.length === 0) {
-            throw new Error("Empty API response");
-          }
-  
-          setProducts(apiProducts);
-        } else {
-          // 🔥 Force JSON temporarily
-          console.warn("API disabled, using local JSON");
-          setProducts(localProducts as Product[]);
-        }
+        const [prods, cats] = await Promise.all([getProducts(), getCategories()]);
+        setProducts(prods);
+        setCategories(cats);
       } catch (err) {
-        console.error("API failed, using local JSON", err);
-        toast.warn("Using offline product data");
-        setProducts(localProducts as Product[]);
+        console.error('Failed to load products', err);
+        toast.error('Could not load products. Please try again.');
       } finally {
         setLoading(false);
       }
     };
-  
-    loadProducts();
+    load();
   }, []);
 
   const filteredProducts =
-    selectedCategory === "All Products"
+    selectedCategory === 'All Products'
       ? products
       : products.filter((p) => p.category === selectedCategory);
 
-  const displayedProducts = showAll
-    ? filteredProducts
-    : filteredProducts.slice(0, 12);
-
+  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 12);
   const hasMoreProducts = filteredProducts.length > 12;
 
-  // ✅ Intersection animation
+  // Intersection animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
+            const index = Number(entry.target.getAttribute('data-index'));
             setVisibleProducts((prev) => new Set(prev).add(index));
           }
         });
       },
-      { threshold: 0.1, rootMargin: "50px" }
+      { threshold: 0.1, rootMargin: '50px' }
     );
 
     productRefs.current.forEach((ref) => ref && observer.observe(ref));
-    return () =>
-      productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+    return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
   }, [displayedProducts]);
 
-  // ✅ Default pack selection
+  // Set default pack selection to the default variant
   useEffect(() => {
     const defaults: Record<string, string> = {};
-
-    displayedProducts.forEach((product: any) => {
-      const key = product._id ?? product.id;
-      if (!selectedPack[key] && product.packSizes?.length > 0) {
-        defaults[key] = product.packSizes[0];
+    displayedProducts.forEach((product) => {
+      if (!selectedPack[product.id]) {
+        const defaultVariant = getDefaultVariant(product);
+        if (defaultVariant) defaults[product.id] = defaultVariant.pack_size;
       }
     });
-
     if (Object.keys(defaults).length > 0) {
       setSelectedPack((prev) => ({ ...prev, ...defaults }));
     }
   }, [displayedProducts]);
-
-  const getPriceForPack = (product: any) => {
-    const key = product._id ?? product.id;
-    const selectedSize = selectedPack[key];
-    if (!selectedSize) return product.prices[0];
-
-    const index = product.packSizes.indexOf(selectedSize);
-    return index !== -1 ? product.prices[index] : product.prices[0];
-  };
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -130,39 +84,27 @@ export function Products() {
     productRefs.current = [];
   };
 
-  const handlePackSelect = (
-    e: React.MouseEvent,
-    productKey: string,
-    pack: string
-  ) => {
+  const handlePackSelect = (e: React.MouseEvent, productId: string, packSize: string) => {
     e.stopPropagation();
-    setSelectedPack((prev) => ({ ...prev, [productKey]: pack }));
+    setSelectedPack((prev) => ({ ...prev, [productId]: packSize }));
   };
 
-  const handleAddToCart = (e: React.MouseEvent, productKey: string) => {
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
 
-    const product: any = products.find(
-      (p: any) => p._id === productKey || p.id === productKey
-    );
-
-    if (!product) return;
-
-    const pack = selectedPack[productKey];
-    if (!pack) {
-      toast.error("Please select a pack size");
+    const packSize = selectedPack[product.id];
+    if (!packSize) {
+      toast.error('Please select a pack size');
       return;
     }
 
-    addToCart(product, pack, 1);
-    toast.success(`${product.name} (${pack}${product.unit}) added to cart`);
+    addToCart(product, packSize, 1);
+    toast.success(`${product.name} (${packSize}${product.unit}) added to cart`);
   };
 
   if (loading) {
     return (
-      <div className="py-20 text-center text-gray-500">
-        Loading products…
-      </div>
+      <div className="py-20 text-center text-gray-500">Loading products…</div>
     );
   }
 
@@ -171,12 +113,8 @@ export function Products() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-[#004606] mb-4">
-            Our Products
-          </h2>
-          <p className="text-lg text-gray-600">
-            Premium natural products for your family
-          </p>
+          <h2 className="text-4xl font-bold text-[#004606] mb-4">Our Products</h2>
+          <p className="text-lg text-gray-600">Premium natural products for your family</p>
         </div>
 
         {/* Categories */}
@@ -185,11 +123,10 @@ export function Products() {
             <button
               key={category}
               onClick={() => handleCategoryChange(category)}
-              className={`px-6 py-3 rounded-lg font-medium transition ${
-                selectedCategory === category
-                  ? "bg-[#004606] text-white"
-                  : "bg-white text-[#004606]"
-              }`}
+              className={`px-6 py-3 rounded-lg font-medium transition ${selectedCategory === category
+                ? 'bg-[#004606] text-white'
+                : 'bg-white text-[#004606]'
+                }`}
             >
               {category}
             </button>
@@ -198,20 +135,20 @@ export function Products() {
 
         {/* Products Grid */}
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {displayedProducts.map((product: any, index) => {
-            const key = product._id ?? product.id;
+          {displayedProducts.map((product, index) => {
+            const currentPackSize = selectedPack[product.id];
+            const price = getPriceForSize(product, currentPackSize);
 
             return (
               <div
-                key={key}
+                key={product.id}
                 ref={(el) => (productRefs.current[index] = el)}
                 data-index={index}
-                onClick={() => navigate(`/product/${key}`)}
-                className={`bg-white rounded-xl shadow-md cursor-pointer transition-all duration-700 ${
-                  visibleProducts.has(index)
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
+                onClick={() => navigate(`/product/${product.slug}`)}
+                className={`bg-white rounded-xl shadow-md cursor-pointer transition-all duration-700 ${visibleProducts.has(index)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
+                  }`}
               >
                 {/* Image */}
                 <div className="h-64 bg-[#f2ecdc] flex items-center justify-center">
@@ -224,34 +161,27 @@ export function Products() {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#004606] mb-2">
-                    {product.name}
-                  </h3>
+                  <h3 className="text-xl font-bold text-[#004606] mb-2">{product.name}</h3>
 
-                  <div className="text-2xl font-bold text-[#004606] mb-4">
-                    ₹{getPriceForPack(product)}
-                  </div>
+                  <div className="text-2xl font-bold text-[#004606] mb-4">₹{price}</div>
 
                   {/* Pack sizes */}
                   <div
                     className="flex flex-wrap gap-2 mb-4"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {product.packSizes.map((size: string) => {
-                      const selected = selectedPack[key] === size;
+                    {product.product_variants.map((variant) => {
+                      const selected = selectedPack[product.id] === variant.pack_size;
                       return (
                         <button
-                          key={size}
-                          onClick={(e) =>
-                            handlePackSelect(e, key, size)
-                          }
-                          className={`px-4 py-1.5 rounded-full text-sm font-semibold ${
-                            selected
-                              ? "bg-[#004606] text-white"
-                              : "bg-[#f2ecdc] text-[#004606]"
-                          }`}
+                          key={variant.id}
+                          onClick={(e) => handlePackSelect(e, product.id, variant.pack_size)}
+                          className={`px-4 py-1.5 rounded-full text-sm font-semibold ${selected
+                            ? 'bg-[#004606] text-white'
+                            : 'bg-[#f2ecdc] text-[#004606]'
+                            }`}
                         >
-                          {size}
+                          {variant.pack_size}
                           {product.unit}
                         </button>
                       );
@@ -260,7 +190,7 @@ export function Products() {
 
                   {/* Add to cart */}
                   <button
-                    onClick={(e) => handleAddToCart(e, key)}
+                    onClick={(e) => handleAddToCart(e, product)}
                     className="w-full bg-[#004606] text-white py-3 rounded-lg flex items-center justify-center gap-2"
                   >
                     <ShoppingCart className="w-5 h-5" />

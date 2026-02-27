@@ -5,7 +5,7 @@ const menu = [
   { name: "Products", path: "/admin/products" },
   { name: "Orders", path: "/admin/orders" },
   { name: "Customers", path: "/admin/customers" },
-  { name: "Settings", path: "/admin/settings" },
+  // { name: "Settings", path: "/admin/settings" }
 ];
 
 export default function Sidebar({
@@ -45,10 +45,9 @@ export default function Sidebar({
             to={item.path}
             onClick={onSelect}
             className={({ isActive }) =>
-              `block px-4 py-2 rounded-lg text-sm font-medium transition ${
-                isActive
-                  ? "bg-[#004606] text-white shadow-sm"
-                  : "hover:bg-[#e9e2cf]"
+              `block px-4 py-2 rounded-lg text-sm font-medium transition ${isActive
+                ? "bg-[#004606] text-white shadow-sm"
+                : "hover:bg-[#e9e2cf]"
               }`
             }
           >

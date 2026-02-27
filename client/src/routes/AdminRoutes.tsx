@@ -1,21 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "../pages/admin/Dashboard";
-import Products from "../pages/admin/Products";
-import Orders from "../pages/admin/Orders";
-import Customers from "../pages/admin/Customers";
-import Settings from "../pages/admin/Settings";
-import ProductFormPage from "../pages/admin/ProductFormPage";
+import { Navigate } from 'react-router-dom';
+import { useAdminAuth } from '../context/AdminauthContext';
 
-export default function AdminRoutes() {
-  return (
-    <Routes>
-      <Route path="dashboard" element={<Dashboard />} />
-      <Route path="products" element={<Products />} />
-      <Route path="orders" element={<Orders />} />
-      <Route path="customers" element={<Customers />} />
-      <Route path="settings" element={<Settings />} />
-      <Route path="products/new" element={<ProductFormPage />} />
-      <Route path="products/:id/edit" element={<ProductFormPage />} />
-    </Routes>
-  );
+export default function AdminRoute({ children }: { children: React.ReactNode }) {
+  const { isAdmin, loading } = useAdminAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-500">
+        Loading…
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return <>{children}</>;
 }

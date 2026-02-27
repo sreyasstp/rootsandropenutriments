@@ -1,16 +1,14 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { Product } from "../data/products";
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Product, getPriceForSize } from '../types/Product';
 
 export interface CartItem {
-  productId: number;
+  productId: string;   // UUID
+  variantId?: string;
   name: string;
   image: string;
-  category: string;
-
-  packSize: string; // "250" etc
-  unit: string; // g/ml
+  unit: string;
+  packSize: string;
   price: number;
-
   quantity: number;
 }
 
@@ -18,84 +16,69 @@ interface CartContextType {
   cartItems: CartItem[];
   cartCount: number;
   cartTotal: number;
-
-  addToCart: (product: Product, selectedPackSize: string, quantity?: number) => void;
-  removeFromCart: (productId: number, packSize: string) => void;
-
-  increaseQty: (productId: number, packSize: string) => void;
-  decreaseQty: (productId: number, packSize: string) => void;
-
+  addToCart: (product: Product, packSize: string, quantity: number) => void;
+  removeFromCart: (productId: string, packSize: string) => void;
+  increaseQty: (productId: string, packSize: string) => void;
+  decreaseQty: (productId: string, packSize: string) => void;
   clearCart: () => void;
+  /** Merges a guest cart into the current cart (called after login) */
+  mergeCart: (guestItems: CartItem[]) => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CART_STORAGE_KEY = 'rnr_cart';
 
-const STORAGE_KEY = "roots_rope_cart_v1";
+const CartContext = createContext<CartContextType | null>(null);
 
-const getPriceByPackSize = (product: Product, packSize: string): number => {
-  const index = product.packSizes.findIndex((p) => p === packSize);
-  if (index === -1) return product.prices[0];
-  return product.prices[index];
-};
-
-// ✅ Lazy load cart from localStorage
-const loadCartFromStorage = (): CartItem[] => {
+function loadFromStorage(): CartItem[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as CartItem[]) : [];
   } catch {
     return [];
   }
-};
+}
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(loadCartFromStorage);
+function saveToStorage(items: CartItem[]) {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch { }
+}
 
-  // ✅ Save to localStorage whenever cart updates
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cartItems, setCartItems] = useState<CartItem[]>(loadFromStorage);
+
+  // Persist to localStorage on every change
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
+    saveToStorage(cartItems);
   }, [cartItems]);
 
-  const cartCount = useMemo(() => {
-    return cartItems.length; // ✅ unique items count
-  }, [cartItems]);
-  
-  const cartTotal = useMemo(() => {
-    return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  }, [cartItems]);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // ✅ FINAL addToCart (normalized packsize)
-  const addToCart = (product: Product, selectedPackSize: string, quantity: number = 1) => {
-    // ✅ normalize: "250g" -> "250"
-    const normalizedPackSize = selectedPackSize.replace(product.unit, "").trim();
-
-    const price = getPriceByPackSize(product, normalizedPackSize);
+  const addToCart = (product: Product, packSize: string, quantity: number) => {
+    const variant = product.product_variants.find((v) => v.pack_size === packSize);
+    const price = variant?.price ?? getPriceForSize(product, packSize);
 
     setCartItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (x) => x.productId === product.id && x.packSize === normalizedPackSize
+      const existing = prev.find(
+        (item) => item.productId === product.id && item.packSize === packSize
       );
-
-      // ✅ If exists, increase qty
-      if (existingIndex !== -1) {
-        const updated = [...prev];
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + quantity,
-        };
-        return updated;
+      if (existing) {
+        return prev.map((item) =>
+          item.productId === product.id && item.packSize === packSize
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
       }
-
-      // ✅ If new, add fresh item
       return [
         ...prev,
         {
           productId: product.id,
+          variantId: variant?.id,
           name: product.name,
-          image: product.image,
-          category: product.category,
-          packSize: normalizedPackSize,
-          unit: product.unit,
+          image: product.image ?? '',
+          unit: product.unit ?? '',
+          packSize,
           price,
           quantity,
         },
@@ -103,52 +86,83 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeFromCart = (productId: number, packSize: string) => {
+  /**
+   * Merge guest cart into current cart.
+   * If a guest item already exists (same productId + packSize), quantities are summed.
+   * Called by AuthContext right after login.
+   */
+  const mergeCart = (guestItems: CartItem[]) => {
+    if (guestItems.length === 0) return;
+    setCartItems((prev) => {
+      let merged = [...prev];
+      for (const guestItem of guestItems) {
+        const idx = merged.findIndex(
+          (i) => i.productId === guestItem.productId && i.packSize === guestItem.packSize
+        );
+        if (idx !== -1) {
+          merged[idx] = {
+            ...merged[idx],
+            quantity: merged[idx].quantity + guestItem.quantity,
+          };
+        } else {
+          merged.push(guestItem);
+        }
+      }
+      return merged;
+    });
+  };
+
+  const removeFromCart = (productId: string, packSize: string) => {
     setCartItems((prev) =>
-      prev.filter((x) => !(x.productId === productId && x.packSize === packSize))
+      prev.filter((item) => !(item.productId === productId && item.packSize === packSize))
     );
   };
 
-  const increaseQty = (productId: number, packSize: string) => {
+  const increaseQty = (productId: string, packSize: string) => {
     setCartItems((prev) =>
-      prev.map((x) =>
-        x.productId === productId && x.packSize === packSize
-          ? { ...x, quantity: x.quantity + 1 }
-          : x
+      prev.map((item) =>
+        item.productId === productId && item.packSize === packSize
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       )
     );
   };
 
-  const decreaseQty = (productId: number, packSize: string) => {
+  const decreaseQty = (productId: string, packSize: string) => {
     setCartItems((prev) =>
       prev
-        .map((x) =>
-          x.productId === productId && x.packSize === packSize
-            ? { ...x, quantity: x.quantity - 1 }
-            : x
+        .map((item) =>
+          item.productId === productId && item.packSize === packSize
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
         )
-        .filter((x) => x.quantity > 0)
+        .filter((item) => item.quantity > 0)
     );
   };
 
   const clearCart = () => setCartItems([]);
 
-  const value: CartContextType = {
-    cartItems,
-    cartCount,
-    cartTotal,
-    addToCart,
-    removeFromCart,
-    increaseQty,
-    decreaseQty,
-    clearCart,
-  };
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        cartCount,
+        cartTotal,
+        addToCart,
+        removeFromCart,
+        increaseQty,
+        decreaseQty,
+        clearCart,
+        mergeCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
 
-export const useCart = () => {
+export function useCart() {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error("useCart must be used inside CartProvider");
+  if (!ctx) throw new Error('useCart must be used within CartProvider');
   return ctx;
-};
+}

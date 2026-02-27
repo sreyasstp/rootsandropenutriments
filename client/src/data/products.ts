@@ -18,7 +18,7 @@ export interface Product {
 }
 
 export const products: Product[] = [
-
+ 
   {
     id: 1,
     name: 'Almonds',
@@ -190,9 +190,9 @@ export const products: Product[] = [
   {
     id: 11,
     name: 'Sprouted Ragi Flour',
-    isFeatured: true,
-    tagline: 'Sprouted for Better Nutrition',
-    featuredDescription: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition',
+  isFeatured: true,
+  tagline: 'Sprouted for Better Nutrition',
+  featuredDescription: 'Sprouted ragi flour prepared traditionally for daily nourishment and balanced nutrition',
     packSizes: ['500', '1000'],
     prices: [130, 250],
     category: 'Grains & Cereals',
@@ -218,53 +218,7 @@ export const products: Product[] = [
       'Traditional Method'
     ]
   },
-  {
-    id: 23,
-    name: 'Brown Rice',
-    packSizes: ['1' ,'2', '3'],
-    prices: [120,240,360], // per kg
-    category: 'Grains & Cereals',
-    unit: 'Kg',
-    image: '/barn_rice.png',
-    description: 'Naturally processed brown rice with controlled bran levels for better nutrition and digestion.',
-    benefits: [
-      'Rich in dietary fiber',
-      'Better digestion',
-      'Helps maintain blood sugar levels',
-      'More nutritious than white rice'
-    ],
-    usage: 'Wash and cook like regular rice. Suitable for daily meals and health-conscious diets.',
-    features: [
-      'Available in 50%, 70%, and 90% bran',
-      'No polishing',
-      'Naturally processed',
-      'No preservatives'
-    ]
-  },
-  {
-    id: 24,
-    name: 'Brown Rice Flour',
-    packSizes: ['500','1000'],
-    prices: [75, 150], // per kg
-    category: 'Grains & Cereals',
-    unit: 'g',
-    image: '/barn_rice_powder.png',
-    description: 'Stone-ground brown rice flour made from nutrient-rich brown rice.',
-    benefits: [
-      'High fiber content',
-      'Gluten-free',
-      'Easy to digest',
-      'Good for gut health'
-    ],
-    usage: 'Ideal for making rotis, dosa, porridge, and traditional recipes.',
-    features: [
-      'Stone ground',
-      '100% Brown rice',
-      'No preservatives',
-      'Traditional processing'
-    ]
-  },
-
+  
   {
     id: 12,
     name: 'Jaggery Powder',
@@ -307,8 +261,8 @@ export const products: Product[] = [
     id: 14,
     name: 'Raw Banana Powder',
     isFeatured: true,
-    tagline: 'Rich in Resistant Starch',
-    featuredDescription: 'Easily digestible traditional powder commonly used for baby food and gut health',
+  tagline: 'Rich in Resistant Starch',
+  featuredDescription: 'Easily digestible traditional powder commonly used for baby food and gut health',
     packSizes: ['100', '250', '500'],
     prices: [159, 390, 760],
     category: 'Health Powders',
