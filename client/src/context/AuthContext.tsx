@@ -15,46 +15,52 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   const { mergeCart, cartItems } = useCart();
-
   const guestCartRef = useRef(cartItems);
 
+  // Store guest cart before login
   useEffect(() => {
     if (!user) guestCartRef.current = cartItems;
   }, [cartItems, user]);
 
   useEffect(() => {
+    let isMounted = true;
 
-    // Initial session check
-    supabase.auth.getSession().then(async ({ data }) => {
-      const session = data.session;
-      setSession(session);
-      setUser(session?.user ?? null);
+    const initAuth = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        const session = data.session;
 
-      // 🔥 NEW: Create user immediately if session already exists
-      if (session?.user) {
-        await createUserIfNotExists(session.user);
+        if (!isMounted) return;
+
+        setSession(session);
+        setUser(session?.user ?? null);
+
+        if (session?.user) {
+          await createUserIfNotExists(session.user);
+        }
+      } catch (err) {
+        console.error("Auth init error:", err);
+      } finally {
+        if (isMounted) setLoading(false);
       }
+    };
 
-      setLoading(false);
-    });
+    initAuth();
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
 
-        // 🔥 NEW: Create user on first login
         if (event === 'SIGNED_IN' && session?.user) {
           await createUserIfNotExists(session.user);
-        }
 
-        if (event === 'SIGNED_IN') {
           // Merge guest cart
           if (guestCartRef.current.length > 0) {
             mergeCart(guestCartRef.current);
@@ -71,8 +77,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     );
 
-    return () => listener.subscription.unsubscribe();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      isMounted = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []); // intentionally empty
 
   const login = async () => {
     guestCartRef.current = cartItems;
@@ -90,10 +99,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
+export const useAuth = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
-}
+};
