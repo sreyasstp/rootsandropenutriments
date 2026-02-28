@@ -25,22 +25,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const guestCartRef = useRef(cartItems);
   const mergeCartRef = useRef(mergeCart);
 
-  // Keep mergeCartRef current so the listener never has a stale closure
   useEffect(() => {
     mergeCartRef.current = mergeCart;
   }, [mergeCart]);
 
-  // Store guest cart while logged out
   useEffect(() => {
     if (!user) guestCartRef.current = cartItems;
   }, [cartItems, user]);
 
   useEffect(() => {
-    // Register listener FIRST so no auth events are missed
+    console.log("🟡 AuthProvider mounted");
+
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log("🟢 Auth Event:", event);
+        console.log("🟢 Session:", session);
+
         if (event === 'TOKEN_REFRESH_FAILED') {
-          console.warn('Token refresh failed');
+          console.warn('🔴 Token refresh failed');
           await supabase.auth.signOut();
           setUser(null);
           setSession(null);
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         if (event === 'SIGNED_OUT') {
+          console.log("🔵 SIGNED_OUT");
           setUser(null);
           setSession(null);
           setLoading(false);
@@ -56,53 +59,73 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         if (session?.user) {
+          console.log("🟢 User found:", session.user.email);
           setSession(session);
           setUser(session.user);
-          await createUserIfNotExists(session.user);
+
+          try {
+            console.log("🟡 Creating user if not exists...");
+            await createUserIfNotExists(session.user);
+            console.log("🟢 User sync done");
+          } catch (e) {
+            console.error("🔴 createUserIfNotExists failed:", e);
+          }
         }
 
         if (event === 'SIGNED_IN' && session?.user) {
-          // Merge guest cart into logged-in cart
+          console.log("🟢 SIGNED_IN — merging cart");
+
           if (guestCartRef.current.length > 0) {
+            console.log("🟡 Merging guest cart:", guestCartRef.current);
             mergeCartRef.current(guestCartRef.current);
             guestCartRef.current = [];
           }
 
-          // Post-login redirect
           const redirect = sessionStorage.getItem('post_login_redirect');
           if (redirect) {
+            console.log("🟡 Redirecting to:", redirect);
             sessionStorage.removeItem('post_login_redirect');
             setTimeout(() => window.location.replace(redirect), 100);
           }
         }
 
-        // Always mark loading done after we've handled the event
+        console.log("🟢 Auth event handled → loading false");
         setLoading(false);
       }
     );
 
-    // Handle OAuth redirect, then let the listener above react to the session change
     const handleOAuthRedirect = async () => {
       try {
+        console.log("🟡 Checking OAuth redirect...");
+
         const url = new URL(window.location.href);
         const hasOAuthCode =
           url.searchParams.get('code') || url.hash.includes('access_token');
 
+        console.log("🟡 hasOAuthCode:", hasOAuthCode);
+
         if (hasOAuthCode) {
-          // This will trigger SIGNED_IN in the listener above, which sets loading=false
-          await supabase.auth.exchangeCodeForSession(window.location.href);
+          console.log("🟡 Exchanging code for session...");
+          const res = await supabase.auth.exchangeCodeForSession(window.location.href);
+          console.log("🟢 exchangeCodeForSession result:", res);
+
           window.history.replaceState({}, document.title, url.pathname);
         } else {
-          // No OAuth redirect — check for an existing session
+          console.log("🟡 No OAuth redirect — checking session");
+
           const { data: { session } } = await supabase.auth.getSession();
+
+          console.log("🟢 Existing session:", session);
+
           if (!session) {
-            // No session at all, nothing to wait for
+            console.log("🔴 No session found");
             setLoading(false);
+          } else {
+            console.log("🟢 Session exists — waiting for INITIAL_SESSION event");
           }
-          // If a session exists, onAuthStateChange fires INITIAL_SESSION and handles it
         }
       } catch (err) {
-        console.error('Auth recovery failed:', err);
+        console.error('🔴 Auth recovery failed:', err);
         setLoading(false);
       }
     };
@@ -115,11 +138,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async () => {
+    console.log("🟡 Login started");
     guestCartRef.current = cartItems;
     await signInWithGoogle();
   };
 
   const logout = async () => {
+    console.log("🟡 Logout started");
     await signOut();
     setUser(null);
     setSession(null);
