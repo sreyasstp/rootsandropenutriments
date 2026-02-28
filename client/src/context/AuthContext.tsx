@@ -3,6 +3,7 @@ import { Session, User } from '@supabase/supabase-js';
 import { signInWithGoogle, signOut } from '../services/authApi';
 import { useCart } from './CartContext';
 import { supabase } from '../services/supabaseClient';
+import { createUserIfNotExists } from '../services/customersApi';
 
 interface AuthContextType {
   user: User | null;
@@ -40,6 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(session?.user ?? null);
 
       if (event === 'SIGNED_IN') {
+        if (session?.user) {
+          // Create customer row on first sign-in. Safe to call every time — idempotent.
+          createUserIfNotExists(session.user);
+        }
+
         // Merge whatever was in the guest cart into the now-authenticated cart
         if (guestCartRef.current.length > 0) {
           mergeCart(guestCartRef.current);
