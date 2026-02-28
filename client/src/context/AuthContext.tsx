@@ -23,46 +23,51 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { mergeCart, cartItems } = useCart();
   const guestCartRef = useRef(cartItems);
 
-  // Store guest cart before login
+  // store guest cart before login
   useEffect(() => {
     if (!user) guestCartRef.current = cartItems;
   }, [cartItems, user]);
 
   useEffect(() => {
-    let isMounted = true;
-
     const safeLoadSession = async () => {
       try {
-    
-        // ⭐ MOBILE FIX — ensure OAuth redirect handled
-        await supabase.auth.exchangeCodeForSession(window.location.href);
-    
-        const { data, error } = await supabase.auth.getSession();
-    
-        if (error || !data.session) {
-          await supabase.auth.signOut();
-          localStorage.clear();
+        const url = new URL(window.location.href);
+        const hasOAuthCode =
+          url.searchParams.get("code") ||
+          url.hash.includes("access_token");
+
+        // ⭐ ONLY run this after Google redirect
+        if (hasOAuthCode) {
+          await supabase.auth.exchangeCodeForSession(window.location.href);
+          window.history.replaceState({}, document.title, url.pathname);
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          setUser(null);
+          setSession(null);
+          setLoading(false);
           return;
         }
-    
-        const { data: userData, error: userError } = await supabase.auth.getUser();
-    
-        if (userError || !userData?.user) {
-          console.warn("Invalid session detected. Clearing...");
+
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
           await supabase.auth.signOut();
-          localStorage.clear();
+          setUser(null);
+          setSession(null);
+          setLoading(false);
           return;
         }
-    
-        setSession(data.session);
-        setUser(userData.user);
-    
-        await createUserIfNotExists(userData.user);
-    
+
+        setSession(session);
+        setUser(user);
+
+        await createUserIfNotExists(user);
+
       } catch (err) {
         console.error("Auth recovery failed:", err);
-        await supabase.auth.signOut();
-        localStorage.clear();
       } finally {
         setLoading(false);
       }
@@ -74,15 +79,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       async (event, session) => {
 
         if (event === 'TOKEN_REFRESH_FAILED') {
-          console.warn("Token refresh failed. Resetting auth...");
+          console.warn("Token refresh failed");
           await supabase.auth.signOut();
-          localStorage.clear();
-          window.location.reload();
+          setUser(null);
+          setSession(null);
           return;
         }
 
         if (event === 'SIGNED_OUT') {
-          localStorage.clear();
           setUser(null);
           setSession(null);
           return;
@@ -94,11 +98,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (event === 'SIGNED_IN' && session?.user) {
           await createUserIfNotExists(session.user);
 
+          // merge guest cart
           if (guestCartRef.current.length > 0) {
             mergeCart(guestCartRef.current);
             guestCartRef.current = [];
           }
 
+          // post login redirect
           const redirect = sessionStorage.getItem('post_login_redirect');
           if (redirect) {
             sessionStorage.removeItem('post_login_redirect');
@@ -109,7 +115,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
     return () => {
-      isMounted = false;
       listener.subscription.unsubscribe();
     };
   }, []);
@@ -121,10 +126,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     await signOut();
-    localStorage.clear();
-    sessionStorage.clear();
     setUser(null);
     setSession(null);
+    sessionStorage.clear();
   };
 
   return (
