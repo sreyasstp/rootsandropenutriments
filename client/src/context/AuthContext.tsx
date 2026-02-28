@@ -31,43 +31,72 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let isMounted = true;
 
-    const initAuth = async () => {
+    const safeLoadSession = async () => {
       try {
-        const { data } = await supabase.auth.getSession();
-        const session = data.session;
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error || !data.session) {
+          await supabase.auth.signOut();
+          return;
+        }
+
+        // Validate session by calling Supabase
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+
+        if (userError || !userData?.user) {
+          console.warn("Invalid session detected. Clearing...");
+          await supabase.auth.signOut();
+          localStorage.clear();
+          return;
+        }
 
         if (!isMounted) return;
 
-        setSession(session);
-        setUser(session?.user ?? null);
+        setSession(data.session);
+        setUser(userData.user);
 
-        if (session?.user) {
-          await createUserIfNotExists(session.user);
-        }
+        await createUserIfNotExists(userData.user);
+
       } catch (err) {
-        console.error("Auth init error:", err);
+        console.error("Auth recovery failed:", err);
+        await supabase.auth.signOut();
+        localStorage.clear();
       } finally {
         if (isMounted) setLoading(false);
       }
     };
 
-    initAuth();
+    safeLoadSession();
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+
+        if (event === 'TOKEN_REFRESH_FAILED') {
+          console.warn("Token refresh failed. Resetting auth...");
+          await supabase.auth.signOut();
+          localStorage.clear();
+          window.location.reload();
+          return;
+        }
+
+        if (event === 'SIGNED_OUT') {
+          localStorage.clear();
+          setUser(null);
+          setSession(null);
+          return;
+        }
+
         setSession(session);
         setUser(session?.user ?? null);
 
         if (event === 'SIGNED_IN' && session?.user) {
           await createUserIfNotExists(session.user);
 
-          // Merge guest cart
           if (guestCartRef.current.length > 0) {
             mergeCart(guestCartRef.current);
             guestCartRef.current = [];
           }
 
-          // Redirect after login
           const redirect = sessionStorage.getItem('post_login_redirect');
           if (redirect) {
             sessionStorage.removeItem('post_login_redirect');
@@ -81,7 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isMounted = false;
       listener.subscription.unsubscribe();
     };
-  }, []); // intentionally empty
+  }, []);
 
   const login = async () => {
     guestCartRef.current = cartItems;
@@ -90,6 +119,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     await signOut();
+    localStorage.clear();
+    sessionStorage.clear();
     setUser(null);
     setSession(null);
   };
