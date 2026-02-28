@@ -92,26 +92,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
    * Called by AuthContext right after login.
    */
   const mergeCart = (guestItems: CartItem[]) => {
-    if (guestItems.length === 0) return;
+    if (!guestItems.length) return;
+  
     setCartItems((prev) => {
-      let merged = [...prev];
-      for (const guestItem of guestItems) {
-        const idx = merged.findIndex(
-          (i) => i.productId === guestItem.productId && i.packSize === guestItem.packSize
+      const merged = [...prev];
+  
+      guestItems.forEach((guestItem) => {
+        const existingIndex = merged.findIndex(
+          (i) =>
+            i.productId === guestItem.productId &&
+            i.packSize === guestItem.packSize
         );
-        if (idx !== -1) {
-          merged[idx] = {
-            ...merged[idx],
-            quantity: merged[idx].quantity + guestItem.quantity,
+  
+        if (existingIndex !== -1) {
+          // 🔥 Prevent stacking — keep highest qty only
+          merged[existingIndex] = {
+            ...merged[existingIndex],
+            quantity: Math.max(
+              merged[existingIndex].quantity,
+              guestItem.quantity
+            ),
           };
         } else {
           merged.push(guestItem);
         }
-      }
+      });
+  
       return merged;
     });
   };
-
   const removeFromCart = (productId: string, packSize: string) => {
     setCartItems((prev) =>
       prev.filter((item) => !(item.productId === productId && item.packSize === packSize))
