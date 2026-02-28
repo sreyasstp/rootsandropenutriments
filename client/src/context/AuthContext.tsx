@@ -3,6 +3,7 @@ import { Session, User } from '@supabase/supabase-js';
 import { signInWithGoogle, signOut } from '../services/authApi';
 import { useCart } from './CartContext';
 import { supabase } from '../services/supabaseClient';
+import { createUserIfNotExists } from '../services/customersApi';
 
 interface AuthContextType {
   user: User | null;
@@ -21,46 +22,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const { mergeCart, cartItems } = useCart();
 
-  // Keep a snapshot of the guest cart so we can merge it after login.
-  // We use a ref so the auth listener closure doesn't go stale.
   const guestCartRef = useRef(cartItems);
+
   useEffect(() => {
     if (!user) guestCartRef.current = cartItems;
   }, [cartItems, user]);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      setLoading(false);
-    });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    // Initial session check
+    supabase.auth.getSession().then(async ({ data }) => {
+      const session = data.session;
       setSession(session);
       setUser(session?.user ?? null);
 
-      if (event === 'SIGNED_IN') {
-        // Merge whatever was in the guest cart into the now-authenticated cart
-        if (guestCartRef.current.length > 0) {
-          mergeCart(guestCartRef.current);
-          guestCartRef.current = [];
+      // 🔥 NEW: Create user immediately if session already exists
+      if (session?.user) {
+        await createUserIfNotExists(session.user);
+      }
+
+      setLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+
+        // 🔥 NEW: Create user on first login
+        if (event === 'SIGNED_IN' && session?.user) {
+          await createUserIfNotExists(session.user);
         }
 
-        // Honour any post-login redirect (e.g. from Buy Now)
-        const redirect = sessionStorage.getItem('post_login_redirect');
-        if (redirect) {
-          sessionStorage.removeItem('post_login_redirect');
-          // Small delay so the auth state settles first
-          setTimeout(() => window.location.replace(redirect), 100);
+        if (event === 'SIGNED_IN') {
+          // Merge guest cart
+          if (guestCartRef.current.length > 0) {
+            mergeCart(guestCartRef.current);
+            guestCartRef.current = [];
+          }
+
+          // Redirect after login
+          const redirect = sessionStorage.getItem('post_login_redirect');
+          if (redirect) {
+            sessionStorage.removeItem('post_login_redirect');
+            setTimeout(() => window.location.replace(redirect), 100);
+          }
         }
       }
-    });
+    );
 
     return () => listener.subscription.unsubscribe();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const login = async () => {
-    guestCartRef.current = cartItems; // snapshot before redirect
+    guestCartRef.current = cartItems;
     await signInWithGoogle();
   };
 

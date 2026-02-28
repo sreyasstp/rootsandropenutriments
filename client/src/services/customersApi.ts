@@ -33,3 +33,33 @@ export async function getCustomers(): Promise<Customer[]> {
         order_count: countMap[u.id] ?? 0,
     })) as Customer[];
 }
+
+export async function createUserIfNotExists(authUser: any) {
+    if (!authUser?.email) return;
+
+    // check if already exists
+    const { data: existing, error: findError } = await supabase
+        .from('users')
+        .select('id')
+        .eq('email', authUser.email)
+        .single();
+
+    if (existing) return existing;
+
+    // create new user
+    const { data, error } = await supabase
+        .from('users')
+        .insert({
+            id: authUser.id, // 🔥 IMPORTANT → match Supabase Auth ID
+            email: authUser.email,
+            name: authUser.user_metadata?.full_name || '',
+            picture: authUser.user_metadata?.avatar_url || '',
+            provider: authUser.app_metadata?.provider || 'google'
+        })
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    return data;
+}
