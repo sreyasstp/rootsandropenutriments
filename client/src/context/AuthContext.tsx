@@ -33,36 +33,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const safeLoadSession = async () => {
       try {
+    
+        // ⭐ MOBILE FIX — ensure OAuth redirect handled
+        await supabase.auth.exchangeCodeForSession(window.location.href);
+    
         const { data, error } = await supabase.auth.getSession();
-
+    
         if (error || !data.session) {
           await supabase.auth.signOut();
+          localStorage.clear();
           return;
         }
-
-        // Validate session by calling Supabase
+    
         const { data: userData, error: userError } = await supabase.auth.getUser();
-
+    
         if (userError || !userData?.user) {
           console.warn("Invalid session detected. Clearing...");
           await supabase.auth.signOut();
           localStorage.clear();
           return;
         }
-
-        if (!isMounted) return;
-
+    
         setSession(data.session);
         setUser(userData.user);
-
+    
         await createUserIfNotExists(userData.user);
-
+    
       } catch (err) {
         console.error("Auth recovery failed:", err);
         await supabase.auth.signOut();
         localStorage.clear();
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
     };
 
