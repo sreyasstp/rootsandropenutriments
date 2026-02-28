@@ -22,11 +22,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const { mergeCart, cartItems } = useCart();
 
-  // Keep a snapshot of the guest cart so we can merge it after login.
-  // We use a ref so the auth listener closure doesn't go stale.
+  // Snapshot of guest cart before login
   const guestCartRef = useRef(cartItems);
+
+  // 🔥 Guard to prevent multiple merges
+  const hasMergedCartRef = useRef(false);
+
   useEffect(() => {
-    if (!user) guestCartRef.current = cartItems;
+    if (!user) {
+      guestCartRef.current = cartItems;
+    }
   }, [cartItems, user]);
 
   useEffect(() => {
@@ -42,21 +47,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (event === 'SIGNED_IN') {
         if (session?.user) {
-          // Create customer row on first sign-in. Safe to call every time — idempotent.
           createUserIfNotExists(session.user);
         }
 
-        // Merge whatever was in the guest cart into the now-authenticated cart
-        if (guestCartRef.current.length > 0) {
+        // ✅ Merge guest cart ONLY ONCE
+        if (!hasMergedCartRef.current && guestCartRef.current.length > 0) {
           mergeCart(guestCartRef.current);
+
+          // Clear guest snapshot + localStorage to prevent re-merging
           guestCartRef.current = [];
+          localStorage.removeItem('rnr_cart');
+
+          hasMergedCartRef.current = true;
         }
 
-        // Honour any post-login redirect (e.g. from Buy Now)
+        // Post-login redirect
         const redirect = sessionStorage.getItem('post_login_redirect');
         if (redirect) {
           sessionStorage.removeItem('post_login_redirect');
-          // Small delay so the auth state settles first
           setTimeout(() => window.location.replace(redirect), 100);
         }
       }
@@ -67,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async () => {
     guestCartRef.current = cartItems; // snapshot before redirect
+    hasMergedCartRef.current = false; // allow merge for this login
     await signInWithGoogle();
   };
 
@@ -74,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await signOut();
     setUser(null);
     setSession(null);
+    hasMergedCartRef.current = false; // allow merge next login
   };
 
   return (
