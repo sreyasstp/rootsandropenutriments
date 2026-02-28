@@ -9,5 +9,20 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     detectSessionInUrl: true,
     flowType: 'pkce'
+  },
+  global: {
+    fetch: async (url, options = {}) => {
+
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session?.access_token) {
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${session.access_token}`,
+        };
+      }
+
+      return fetch(url, options);
+    }
   }
 });

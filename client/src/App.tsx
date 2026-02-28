@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { useAuth } from "./context/AuthContext";
 
 import { Hero } from "./components/Hero";
 import { FeaturedProducts } from "./components/FeaturedProducts";
@@ -19,6 +20,15 @@ const About = lazy(() =>
 );
 
 function App() {
+  const { loading } = useAuth();
+
+  // ⭐ WAIT until Supabase restores session
+  if (loading) {
+    return null; 
+    // OR loader UI
+    // return <div className="h-screen flex items-center justify-center">Loading...</div>;
+  }
+
   return (
     <>
       <Hero />
