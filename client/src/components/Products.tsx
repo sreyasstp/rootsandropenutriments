@@ -23,17 +23,31 @@ export function Products() {
   // Load products + categories from Supabase
   useEffect(() => {
     const load = async () => {
+      console.log("🚀 Load started");
+  
       try {
-        const [prods, cats] = await Promise.all([getProducts(), getCategories()]);
+        console.log("📡 Calling Supabase APIs...");
+  
+        const [prods, cats] = await Promise.all([
+          getProducts(),
+          getCategories()
+        ]);
+  
+        console.log("✅ Products response:", prods);
+        console.log("✅ Categories response:", cats);
+  
         setProducts(prods);
         setCategories(cats);
+  
       } catch (err) {
-        console.error('Failed to load products', err);
-        toast.error('Could not load products. Please try again.');
+        console.error("❌ Failed to load products:", err);
+        toast.error("Could not load products. Please try again.");
       } finally {
+        console.log("🏁 Load finished");
         setLoading(false);
       }
     };
+  
     load();
   }, []);
 
