@@ -21,98 +21,93 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const { mergeCart, cartItems } = useCart();
-  const guestCartRef = useRef(cartItems);
 
-  // store guest cart before login
+  const guestCartRef = useRef(cartItems);
+  const mergeCartRef = useRef(mergeCart);
+
+  // Keep mergeCartRef current so the listener never has a stale closure
+  useEffect(() => {
+    mergeCartRef.current = mergeCart;
+  }, [mergeCart]);
+
+  // Store guest cart while logged out
   useEffect(() => {
     if (!user) guestCartRef.current = cartItems;
   }, [cartItems, user]);
 
   useEffect(() => {
-    const safeLoadSession = async () => {
-      try {
-        const url = new URL(window.location.href);
-        const hasOAuthCode =
-          url.searchParams.get("code") ||
-          url.hash.includes("access_token");
-
-        // ⭐ ONLY run this after Google redirect
-        if (hasOAuthCode) {
-          await supabase.auth.exchangeCodeForSession(window.location.href);
-          window.history.replaceState({}, document.title, url.pathname);
-        }
-
-        const { data: { session } } = await supabase.auth.getSession();
-
-        if (!session) {
-          setUser(null);
-          setSession(null);
-          setLoading(false);
-          return;
-        }
-
-        const { data: { user } } = await supabase.auth.getUser();
-
-        if (!user) {
-          await supabase.auth.signOut();
-          setUser(null);
-          setSession(null);
-          setLoading(false);
-          return;
-        }
-
-        setSession(session);
-        setUser(user);
-
-        await createUserIfNotExists(user);
-
-      } catch (err) {
-        console.error("Auth recovery failed:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    safeLoadSession();
-
+    // Register listener FIRST so no auth events are missed
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-
         if (event === 'TOKEN_REFRESH_FAILED') {
-          console.warn("Token refresh failed");
+          console.warn('Token refresh failed');
           await supabase.auth.signOut();
           setUser(null);
           setSession(null);
+          setLoading(false);
           return;
         }
 
         if (event === 'SIGNED_OUT') {
           setUser(null);
           setSession(null);
+          setLoading(false);
           return;
         }
 
-        setSession(session);
-        setUser(session?.user ?? null);
+        if (session?.user) {
+          setSession(session);
+          setUser(session.user);
+          await createUserIfNotExists(session.user);
+        }
 
         if (event === 'SIGNED_IN' && session?.user) {
-          await createUserIfNotExists(session.user);
-
-          // merge guest cart
+          // Merge guest cart into logged-in cart
           if (guestCartRef.current.length > 0) {
-            mergeCart(guestCartRef.current);
+            mergeCartRef.current(guestCartRef.current);
             guestCartRef.current = [];
           }
 
-          // post login redirect
+          // Post-login redirect
           const redirect = sessionStorage.getItem('post_login_redirect');
           if (redirect) {
             sessionStorage.removeItem('post_login_redirect');
             setTimeout(() => window.location.replace(redirect), 100);
           }
         }
+
+        // Always mark loading done after we've handled the event
+        setLoading(false);
       }
     );
+
+    // Handle OAuth redirect, then let the listener above react to the session change
+    const handleOAuthRedirect = async () => {
+      try {
+        const url = new URL(window.location.href);
+        const hasOAuthCode =
+          url.searchParams.get('code') || url.hash.includes('access_token');
+
+        if (hasOAuthCode) {
+          // This will trigger SIGNED_IN in the listener above, which sets loading=false
+          await supabase.auth.exchangeCodeForSession(window.location.href);
+          window.history.replaceState({}, document.title, url.pathname);
+        } else {
+          // No OAuth redirect — check for an existing session
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session) {
+            // No session at all, nothing to wait for
+            setLoading(false);
+          }
+          // If a session exists, onAuthStateChange fires INITIAL_SESSION and handles it
+        }
+      } catch (err) {
+        console.error('Auth recovery failed:', err);
+        setLoading(false);
+      }
+    };
+
+    handleOAuthRedirect();
 
     return () => {
       listener.subscription.unsubscribe();
