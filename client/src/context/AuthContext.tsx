@@ -29,6 +29,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const hasMergedCartRef = useRef(false);
 
   useEffect(() => {
+
+    const refreshSession = async () => {
+      const { data, error } = await supabase.auth.refreshSession();
+  
+      if (!error && data.session) {
+        setSession(data.session);
+        setUser(data.session.user);
+      }
+    };
+  
+    const handleFocus = () => {
+      refreshSession();
+    };
+  
+    window.addEventListener('focus', handleFocus);
+  
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
+  
+  }, []);
+
+  useEffect(() => {
     if (!user) {
       guestCartRef.current = cartItems;
     }
@@ -41,32 +64,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+
       setSession(session);
       setUser(session?.user ?? null);
-
+    
+      // 🔥 Handle ALL recovery cases
+      if (event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
+        setSession(session);
+        setUser(session?.user ?? null);
+        return;
+      }
+    
       if (event === 'SIGNED_IN') {
+    
         if (session?.user) {
-          createUserIfNotExists(session.user);
+          await createUserIfNotExists(session.user);
         }
-
-        // ✅ Merge guest cart ONLY ONCE
+    
         if (!hasMergedCartRef.current && guestCartRef.current.length > 0) {
           mergeCart(guestCartRef.current);
-
-          // Clear guest snapshot + localStorage to prevent re-merging
           guestCartRef.current = [];
           localStorage.removeItem('rnr_cart');
-
           hasMergedCartRef.current = true;
         }
-
-        // Post-login redirect
+    
         const redirect = sessionStorage.getItem('post_login_redirect');
         if (redirect) {
           sessionStorage.removeItem('post_login_redirect');
           setTimeout(() => window.location.replace(redirect), 100);
         }
+      }
+    
+      // 🚨 Auto logout if refresh fails
+      if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setSession(null);
       }
     });
 
