@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ShoppingCart } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext'; // 🔥 added
 import { getProducts, getCategories } from '../services/productApi';
 import { Product, getDefaultVariant, getPriceForSize } from '../types/Product';
 
 export function Products() {
+
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(['All Products']);
   const [loading, setLoading] = useState(true);
@@ -20,25 +22,40 @@ export function Products() {
   const productRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { addToCart } = useCart();
 
+  // 🔥 Auth state
+  const { session, loading: authLoading } = useAuth();
+
   // Load products + categories from Supabase
   useEffect(() => {
+
+    console.log("👤 Auth loading:", authLoading);
+    console.log("🔐 Session:", session);
+
+    if (authLoading) {
+      console.log("⏳ Waiting for auth...");
+      return;
+    }
+
     const load = async () => {
+
       console.log("🚀 Load started");
-  
+
       try {
         console.log("📡 Calling Supabase APIs...");
-  
+        console.log("JWT present?", !!session?.access_token);
+
         const [prods, cats] = await Promise.all([
           getProducts(),
           getCategories()
         ]);
-  
+
         console.log("✅ Products response:", prods);
+        console.log("📦 Product count:", prods?.length);
         console.log("✅ Categories response:", cats);
-  
+
         setProducts(prods);
         setCategories(cats);
-  
+
       } catch (err) {
         console.error("❌ Failed to load products:", err);
         toast.error("Could not load products. Please try again.");
@@ -47,9 +64,10 @@ export function Products() {
         setLoading(false);
       }
     };
-  
+
     load();
-  }, []);
+
+  }, [authLoading, session]);
 
   const filteredProducts =
     selectedCategory === 'All Products'
@@ -61,11 +79,14 @@ export function Products() {
 
   // Intersection animation
   useEffect(() => {
+    console.log("👀 Observing products:", displayedProducts.length);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute('data-index'));
+            console.log("🎯 Visible product index:", index);
             setVisibleProducts((prev) => new Set(prev).add(index));
           }
         });
@@ -75,23 +96,34 @@ export function Products() {
 
     productRefs.current.forEach((ref) => ref && observer.observe(ref));
     return () => productRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+
   }, [displayedProducts]);
 
-  // Set default pack selection to the default variant
+  // Set default pack selection
   useEffect(() => {
+
+    console.log("📦 Setting default packs");
+
     const defaults: Record<string, string> = {};
+
     displayedProducts.forEach((product) => {
       if (!selectedPack[product.id]) {
         const defaultVariant = getDefaultVariant(product);
-        if (defaultVariant) defaults[product.id] = defaultVariant.pack_size;
+        if (defaultVariant) {
+          defaults[product.id] = defaultVariant.pack_size;
+          console.log("🟢 Default pack set:", product.name, defaultVariant.pack_size);
+        }
       }
     });
+
     if (Object.keys(defaults).length > 0) {
       setSelectedPack((prev) => ({ ...prev, ...defaults }));
     }
+
   }, [displayedProducts]);
 
   const handleCategoryChange = (category: string) => {
+    console.log("📂 Category changed:", category);
     setSelectedCategory(category);
     setShowAll(false);
     setVisibleProducts(new Set());
@@ -100,6 +132,7 @@ export function Products() {
 
   const handlePackSelect = (e: React.MouseEvent, productId: string, packSize: string) => {
     e.stopPropagation();
+    console.log("📦 Pack selected:", productId, packSize);
     setSelectedPack((prev) => ({ ...prev, [productId]: packSize }));
   };
 
@@ -107,6 +140,8 @@ export function Products() {
     e.stopPropagation();
 
     const packSize = selectedPack[product.id];
+    console.log("🛒 Add to cart:", product.name, packSize);
+
     if (!packSize) {
       toast.error('Please select a pack size');
       return;
@@ -116,11 +151,14 @@ export function Products() {
     toast.success(`${product.name} (${packSize}${product.unit}) added to cart`);
   };
 
-  if (loading) {
+  if (loading || authLoading) {
+    console.log("⏳ UI Loading...");
     return (
       <div className="py-20 text-center text-gray-500">Loading products…</div>
     );
   }
+
+  console.log("🟢 Rendering products:", displayedProducts.length);
 
   return (
     <section id="products" className="py-20 bg-[#f2ecdc]/30">
