@@ -25,90 +25,94 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Snapshot of guest cart before login
   const guestCartRef = useRef(cartItems);
 
-  // 🔥 Guard to prevent multiple merges
+  // Prevent multiple merges
   const hasMergedCartRef = useRef(false);
 
-  useEffect(() => {
-
-    const refreshSession = async () => {
-      const { data, error } = await supabase.auth.refreshSession();
-  
-      if (!error && data.session) {
-        setSession(data.session);
-        setUser(data.session.user);
-      }
-    };
-  
-    const handleFocus = () => {
-      refreshSession();
-    };
-  
-    window.addEventListener('focus', handleFocus);
-  
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-    };
-  
-  }, []);
-
+  // Save guest cart until login
   useEffect(() => {
     if (!user) {
       guestCartRef.current = cartItems;
     }
   }, [cartItems, user]);
 
+  // Refresh session when tab wakes up (idle fix)
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    const handleFocus = async () => {
+      try {
+        await supabase.auth.refreshSession();
+      } catch {}
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, []);
+
+  // 🔥 MAIN AUTH INIT (Correct order)
+  useEffect(() => {
+
+    const initAuth = async () => {
+
+      // 1️⃣ Handle OAuth redirect FIRST
+      const { data: urlSession } = await supabase.auth.getSessionFromUrl();
+
+      if (urlSession?.session) {
+        setSession(urlSession.session);
+        setUser(urlSession.session.user);
+
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      // 2️⃣ Restore existing session
+      const { data } = await supabase.auth.getSession();
+
       setSession(data.session);
       setUser(data.session?.user ?? null);
       setLoading(false);
-    });
+    };
 
+    initAuth();
+
+    // 3️⃣ Attach listener AFTER init
     const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
 
       setSession(session);
       setUser(session?.user ?? null);
-    
-      // 🔥 Handle ALL recovery cases
-      if (event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
-        setSession(session);
-        setUser(session?.user ?? null);
-        return;
-      }
-    
+
       if (event === 'SIGNED_IN') {
-    
+
         if (session?.user) {
           await createUserIfNotExists(session.user);
         }
-    
+
         if (!hasMergedCartRef.current && guestCartRef.current.length > 0) {
           mergeCart(guestCartRef.current);
           guestCartRef.current = [];
           localStorage.removeItem('rnr_cart');
           hasMergedCartRef.current = true;
         }
-    
+
         const redirect = sessionStorage.getItem('post_login_redirect');
         if (redirect) {
           sessionStorage.removeItem('post_login_redirect');
           setTimeout(() => window.location.replace(redirect), 100);
         }
       }
-    
-      // 🚨 Auto logout if refresh fails
+
       if (event === 'SIGNED_OUT') {
         setUser(null);
         setSession(null);
       }
+
     });
 
     return () => listener.subscription.unsubscribe();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  }, []);
 
   const login = async () => {
-    guestCartRef.current = cartItems; // snapshot before redirect
-    hasMergedCartRef.current = false; // allow merge for this login
+    guestCartRef.current = cartItems;
+    hasMergedCartRef.current = false;
     await signInWithGoogle();
   };
 
@@ -116,7 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await signOut();
     setUser(null);
     setSession(null);
-    hasMergedCartRef.current = false; // allow merge next login
+    hasMergedCartRef.current = false;
   };
 
   return (
