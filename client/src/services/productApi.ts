@@ -16,7 +16,6 @@ const PRODUCT_SELECT = `
 
 export async function getProducts(): Promise<Product[]> {
 
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -29,7 +28,6 @@ export async function getProducts(): Promise<Product[]> {
 
 /** Primary product lookup — by URL slug (e.g. "raw-banana-powder") */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -43,7 +41,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 /** UUID lookup — used by admin / internal links */
 export async function getProductById(id: string): Promise<Product | null> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -55,7 +52,6 @@ export async function getProductById(id: string): Promise<Product | null> {
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -68,7 +64,6 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 }
 
 export async function getCategories(): Promise<string[]> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('product_categories')
@@ -78,7 +73,6 @@ export async function getCategories(): Promise<string[]> {
 }
 
 export async function searchProducts(query: string): Promise<Product[]> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -93,7 +87,6 @@ export async function searchProducts(query: string): Promise<Product[]> {
 // ─── Admin ────────────────────────────────────────────────────────────────────
 
 export async function getAllProductsAdmin(): Promise<Product[]> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data, error } = await supabase
     .from('products')
@@ -142,7 +135,6 @@ export function productToFormData(p: Product): ProductFormData {
 }
 
 export async function createProduct(form: ProductFormData): Promise<void> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { data: product, error: pe } = await supabase
     .from('products')
@@ -170,7 +162,6 @@ export async function createProduct(form: ProductFormData): Promise<void> {
 }
 
 export async function updateProduct(id: string, form: ProductFormData): Promise<void> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
 
   const { error: pe } = await supabase
     .from('products')
@@ -200,7 +191,6 @@ export async function updateProduct(id: string, form: ProductFormData): Promise<
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  await supabase.auth.refreshSession(); // 🔥 ensure valid token
   const { error } = await supabase
     .from('products').update({ is_active: false }).eq('id', id);
   if (error) throw error;
