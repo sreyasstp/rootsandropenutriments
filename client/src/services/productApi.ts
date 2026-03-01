@@ -12,88 +12,157 @@ const PRODUCT_SELECT = `
   )
 `;
 
-// ─── Public ───────────────────────────────────────────────────────────────────
+// 🔥 Helper to log full Supabase error
+function logError(tag: string, error: any) {
+  console.error(`❌ ${tag}`);
+  console.error('Message:', error?.message);
+  console.error('Code:', error?.code);
+  console.error('Details:', error?.details);
+  console.error('Hint:', error?.hint);
+}
+
+// ─── Public ─────────────────────────────────────────
 
 export async function getProducts(): Promise<Product[]> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .eq('is_active', true)
+      .order('created_at', { ascending: true });
 
+    if (error) {
+      logError('getProducts error', error);
+      throw error;
+    }
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .eq('is_active', true)
-    .order('created_at', { ascending: true });
-  if (error) throw error;
-  return (data ?? []) as Product[];
+    return (data ?? []) as Product[];
+  } catch (e) {
+    console.error('🚨 getProducts network/auth failure:', e);
+    throw e;
+  }
 }
 
-/** Primary product lookup — by URL slug (e.g. "raw-banana-powder") */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .single();
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .eq('slug', slug)
-    .eq('is_active', true)
-    .single();
-  if (error) return null;
-  return data as Product;
+    if (error) {
+      logError('getProductBySlug error', error);
+      return null;
+    }
+
+    return data as Product;
+  } catch (e) {
+    console.error('🚨 getProductBySlug network/auth failure:', e);
+    return null;
+  }
 }
 
-/** UUID lookup — used by admin / internal links */
 export async function getProductById(id: string): Promise<Product | null> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .eq('id', id)
+      .single();
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .eq('id', id)
-    .single();
-  if (error) return null;
-  return data as Product;
+    if (error) {
+      logError('getProductById error', error);
+      return null;
+    }
+
+    return data as Product;
+  } catch (e) {
+    console.error('🚨 getProductById network/auth failure:', e);
+    return null;
+  }
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .eq('is_active', true)
+      .eq('is_featured', true)
+      .order('created_at', { ascending: true });
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .eq('is_active', true)
-    .eq('is_featured', true)
-    .order('created_at', { ascending: true });
-  if (error) throw error;
-  return (data ?? []) as Product[];
+    if (error) {
+      logError('getFeaturedProducts error', error);
+      throw error;
+    }
+
+    return (data ?? []) as Product[];
+  } catch (e) {
+    console.error('🚨 getFeaturedProducts network/auth failure:', e);
+    throw e;
+  }
 }
 
 export async function getCategories(): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('product_categories')
+      .select('category');
 
-  const { data, error } = await supabase
-    .from('product_categories')
-    .select('category');
-  if (error) throw error;
-  return ['All Products', ...(data ?? []).map((r: any) => r.category)];
+    if (error) {
+      logError('getCategories error', error);
+      throw error;
+    }
+
+    return ['All Products', ...(data ?? []).map((r: any) => r.category)];
+  } catch (e) {
+    console.error('🚨 getCategories network/auth failure:', e);
+    throw e;
+  }
 }
 
 export async function searchProducts(query: string): Promise<Product[]> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .eq('is_active', true)
+      .or(`name.ilike.%${query}%,category.ilike.%${query}%`)
+      .limit(5);
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .eq('is_active', true)
-    .or(`name.ilike.%${query}%,category.ilike.%${query}%`)
-    .limit(5);
-  if (error) throw error;
-  return (data ?? []) as Product[];
+    if (error) {
+      logError('searchProducts error', error);
+      throw error;
+    }
+
+    return (data ?? []) as Product[];
+  } catch (e) {
+    console.error('🚨 searchProducts network/auth failure:', e);
+    throw e;
+  }
 }
 
-// ─── Admin ────────────────────────────────────────────────────────────────────
+// ─── Admin ─────────────────────────────────────────
 
 export async function getAllProductsAdmin(): Promise<Product[]> {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_SELECT)
+      .order('created_at', { ascending: true });
 
-  const { data, error } = await supabase
-    .from('products')
-    .select(PRODUCT_SELECT)
-    .order('created_at', { ascending: true });
-  if (error) throw error;
-  return (data ?? []) as Product[];
+    if (error) {
+      logError('getAllProductsAdmin error', error);
+      throw error;
+    }
+
+    return (data ?? []) as Product[];
+  } catch (e) {
+    console.error('🚨 getAllProductsAdmin network/auth failure:', e);
+    throw e;
+  }
 }
 
 export interface ProductFormData {
@@ -122,12 +191,19 @@ export function nameToSlug(name: string): string {
 export function productToFormData(p: Product): ProductFormData {
   const sorted = [...p.product_variants].sort((a, b) => Number(a.pack_size) - Number(b.pack_size));
   return {
-    name: p.name, category: p.category, unit: p.unit ?? 'g',
-    image: p.image ?? '', description: p.description ?? '',
-    benefits: p.benefits ?? [], usage: p.usage ?? '',
-    features: p.features ?? [], is_featured: p.is_featured ?? false,
-    tagline: p.tagline ?? '', featured_description: p.featured_description ?? '',
-    is_active: p.is_active ?? true, slug: p.slug ?? '',
+    name: p.name,
+    category: p.category,
+    unit: p.unit ?? 'g',
+    image: p.image ?? '',
+    description: p.description ?? '',
+    benefits: p.benefits ?? [],
+    usage: p.usage ?? '',
+    features: p.features ?? [],
+    is_featured: p.is_featured ?? false,
+    tagline: p.tagline ?? '',
+    featured_description: p.featured_description ?? '',
+    is_active: p.is_active ?? true,
+    slug: p.slug ?? '',
     pack_sizes: sorted.map((v) => v.pack_size),
     prices: sorted.map((v) => v.price),
     stocks: sorted.map((v) => v.stock),
