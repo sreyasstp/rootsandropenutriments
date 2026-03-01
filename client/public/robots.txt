@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Allow important crawling
+Allow: /product/
+Allow: /products
+
+# Block unnecessary system files
+Disallow: /admin
+Disallow: /checkout
+Disallow: /cart
+Disallow: /login
+Disallow: /account
+Disallow: /api
+Disallow: /*?*
+
+# Sitemap location
+Sitemap: https://www.rootsandrope.com/sitemap.xml
